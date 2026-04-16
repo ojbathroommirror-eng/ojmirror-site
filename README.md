@@ -1,6 +1,6 @@
 # MirrorCraft WordPress Local Setup
 
-This project contains a local Docker-based WordPress environment and a custom theme scaffold at `wp-content/themes/mirrorcraft`.
+This project contains a local Docker-based WordPress environment and a rebuilt custom theme at `wp-content/themes/mirrorcraft`.
 
 ## Quick start
 
@@ -25,18 +25,20 @@ docker compose up -d
 5. In the WordPress admin:
 
 - Activate the `MirrorCraft` theme
-- Install and activate `Advanced Custom Fields`
-- Create pages such as `Home`, `About`, `Products`, `Applications`, and `Contact`
+- Create pages such as `Home`, `About`, `Products`, `Applications`, `Projects`, `FAQs`, and `Contact`
 - Set `Home` as the static front page
 - Assign the included page templates where needed
 
 ## Included theme templates
 
-- Front page: homepage sections with editable ACF fields
+- Front page: rebuilt homepage focused on products, applications, and quote flow
 - About Page template
 - Products Page template
 - Applications Page template
+- Projects Page template
+- FAQs Page template
 - Contact Page template
+- Download Catalogue Page template
 - Product Category Page template
 
 ## Recommended page setup
@@ -45,23 +47,17 @@ docker compose up -d
 - `About` using `About Page`
 - `Products` using `Products Page`
 - `Applications` using `Applications Page`
+- `Projects` using `Projects Page`
+- `FAQs` using `FAQs Page`
 - `Contact` using `Contact Page`
 - Product category pages using `Product Category Page`
+- Optional download page using `Download Catalogue Page`
 
-## ACF-backed editing
+## Editing model
 
-The theme registers local ACF field groups in `wp-content/themes/mirrorcraft/inc/acf-fields.php`.
+The current rebuilt theme does not require Advanced Custom Fields.
 
-After ACF is activated, you will get:
-
-- Homepage content fields
-- About page content fields
-- Products page content fields
-- Applications page content fields
-- Contact page content fields
-- Site Settings for footer/contact information
-
-Custom template pages now also render the native WordPress page editor content. This means you can use Gutenberg blocks in the page body for visual editing, including images, galleries, columns, buttons, and rich text sections, while keeping the theme's fixed sections and ACF-managed fields.
+Custom template pages render the native WordPress page editor content. This means you can use Gutenberg blocks in the page body for visual editing, including images, galleries, columns, buttons, and rich text sections, while keeping the rebuilt theme structure and conversion-focused sections.
 
 ## Useful commands
 
