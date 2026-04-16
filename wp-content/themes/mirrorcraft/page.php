@@ -4,6 +4,7 @@
     <section class="page-hero">
       <div class="shell page-hero-shell page-hero-shell-basic">
         <div class="page-hero-copy">
+          <?php mirrorcraft_render_breadcrumbs(); ?>
           <p class="eyebrow"><?php esc_html_e('Page', 'mirrorcraft'); ?></p>
           <h1><?php the_title(); ?></h1>
           <?php if (mirrorcraft_get_page_summary(get_the_ID()) !== '') : ?>
@@ -12,7 +13,7 @@
         </div>
         <aside class="page-hero-aside">
           <span class="feature-tag"><?php esc_html_e('Quick route', 'mirrorcraft'); ?></span>
-          <p><?php esc_html_e('Need product support, a project quote, or a custom brief? The new site keeps those paths visible from every page.', 'mirrorcraft'); ?></p>
+          <p><?php esc_html_e('Need product guidance, application support, or a quote-ready discussion? Use the main routes to move into the right conversation quickly.', 'mirrorcraft'); ?></p>
           <a class="text-link" href="<?php echo esc_url(mirrorcraft_link_by_slug('contact', '/contact/')); ?>"><?php esc_html_e('Open contact page', 'mirrorcraft'); ?></a>
         </aside>
       </div>

@@ -363,28 +363,24 @@ function mirrorcraft_get_application_section_page_overrides($data, $post_id = fa
 function mirrorcraft_default_faq_items() {
   return array(
     array(
-      'question' => __('Are your LED mirrors dimmable and anti-fog?', 'mirrorcraft'),
-      'answer'   => __('Yes. Dimming and anti-fog options can be provided depending on the product model and project requirements.', 'mirrorcraft'),
+      'question' => __('Can you customize LED bathroom mirrors and lighted medicine cabinets?', 'mirrorcraft'),
+      'answer'   => __('Yes. OJMIRROR supports custom dimensions, mirror shapes, lighting layouts, feature combinations, frame directions, and cabinet configurations for project and OEM orders.', 'mirrorcraft'),
     ),
     array(
-      'question' => __('Can I customize the size, shape, and cabinet configuration?', 'mirrorcraft'),
-      'answer'   => __('Yes. We support customized dimensions, shapes, lighting layouts, and cabinet configurations for OEM and project orders.', 'mirrorcraft'),
+      'question' => __('Do you support OEM and private label mirror programs?', 'mirrorcraft'),
+      'answer'   => __('Yes. We support OEM, ODM, branded packaging direction, and custom product development for distributors, importers, and private label buyers.', 'mirrorcraft'),
     ),
     array(
-      'question' => __('Can I request a sample before placing a bulk order?', 'mirrorcraft'),
-      'answer'   => __('Yes. Sample planning is a standard part of many project workflows, especially when teams need to confirm size, finish, lighting, and installation fit before mass production.', 'mirrorcraft'),
+      'question' => __('Can we request a sample before placing a bulk order?', 'mirrorcraft'),
+      'answer'   => __('Yes. Sample review is an important step for projects that need to confirm finish, size, lighting behavior, and installation fit before full production.', 'mirrorcraft'),
     ),
     array(
-      'question' => __('What is the MOQ and production lead time?', 'mirrorcraft'),
-      'answer'   => __('MOQ and lead time depend on product complexity, finish requirements, electronics, and order quantity. We usually confirm both after the specification route and sample requirements are clear.', 'mirrorcraft'),
+      'question' => __('Are your mirrors suitable for bathroom environments?', 'mirrorcraft'),
+      'answer'   => __('Yes. Bathroom-use mirror programs are developed for humid-use scenarios, with final specifications confirmed according to the selected model and target market.', 'mirrorcraft'),
     ),
     array(
       'question' => __('Can you discuss certification-related requirements?', 'mirrorcraft'),
       'answer'   => __('Yes. We can discuss certification direction according to the target application, destination requirement, and selected product route.', 'mirrorcraft'),
-    ),
-    array(
-      'question' => __('Are your products suitable for bathroom environments?', 'mirrorcraft'),
-      'answer'   => __('Our illuminated bathroom products are developed for humid-use scenarios, with specifications confirmed according to the selected model and target application.', 'mirrorcraft'),
     ),
   );
 }
@@ -654,165 +650,261 @@ function mirrorcraft_link_by_slug($slug, $fallback = '/') {
   return $link_cache[$cache_key];
 }
 
+function mirrorcraft_get_breadcrumb_items() {
+  if (is_front_page()) {
+    return array();
+  }
+
+  $items = array(
+    array(
+      'label' => __('Home', 'mirrorcraft'),
+      'url'   => home_url('/'),
+    ),
+  );
+
+  if (is_page()) {
+    $page_id = get_queried_object_id();
+    $ancestor_ids = array_reverse(get_post_ancestors($page_id));
+
+    foreach ($ancestor_ids as $ancestor_id) {
+      $items[] = array(
+        'label' => get_the_title($ancestor_id),
+        'url'   => get_permalink($ancestor_id),
+      );
+    }
+
+    $items[] = array(
+      'label' => get_the_title($page_id),
+      'url'   => '',
+    );
+
+    return $items;
+  }
+
+  if (is_singular('post')) {
+    $posts_page_id = (int) get_option('page_for_posts');
+
+    if ($posts_page_id) {
+      $items[] = array(
+        'label' => get_the_title($posts_page_id),
+        'url'   => get_permalink($posts_page_id),
+      );
+    }
+
+    $items[] = array(
+      'label' => get_the_title(get_queried_object_id()),
+      'url'   => '',
+    );
+
+    return $items;
+  }
+
+  if (is_search()) {
+    $items[] = array(
+      'label' => sprintf(__('Search: %s', 'mirrorcraft'), get_search_query()),
+      'url'   => '',
+    );
+
+    return $items;
+  }
+
+  if (is_archive()) {
+    $items[] = array(
+      'label' => wp_strip_all_tags(get_the_archive_title()),
+      'url'   => '',
+    );
+
+    return $items;
+  }
+
+  if (is_404()) {
+    $items[] = array(
+      'label' => __('Not found', 'mirrorcraft'),
+      'url'   => '',
+    );
+  }
+
+  return $items;
+}
+
+function mirrorcraft_render_breadcrumbs() {
+  $items = mirrorcraft_get_breadcrumb_items();
+
+  if (count($items) < 2) {
+    return;
+  }
+
+  echo '<nav class="site-breadcrumbs" aria-label="' . esc_attr__('Breadcrumb', 'mirrorcraft') . '">';
+  echo '<ol class="site-breadcrumbs__list">';
+
+  foreach ($items as $index => $item) {
+    $is_last = $index === array_key_last($items);
+
+    echo '<li class="site-breadcrumbs__item">';
+
+    if (!$is_last && !empty($item['url'])) {
+      echo '<a href="' . esc_url($item['url']) . '">' . esc_html($item['label']) . '</a>';
+    } else {
+      echo '<span>' . esc_html($item['label']) . '</span>';
+    }
+
+    echo '</li>';
+  }
+
+  echo '</ol>';
+  echo '</nav>';
+}
+
+function mirrorcraft_get_breadcrumb_schema_items() {
+  $items = mirrorcraft_get_breadcrumb_items();
+
+  if (count($items) < 2) {
+    return array();
+  }
+
+  $schema_items = array();
+
+  foreach ($items as $index => $item) {
+    $schema_items[] = array(
+      '@type'    => 'ListItem',
+      'position' => $index + 1,
+      'name'     => $item['label'],
+      'item'     => !empty($item['url']) ? $item['url'] : mirrorcraft_get_canonical_url(),
+    );
+  }
+
+  return $schema_items;
+}
+
 function mirrorcraft_get_product_category_pages() {
   return array(
-    'bathroom-mirrors' => array(
-      'title'          => __('Bathroom Mirrors', 'mirrorcraft'),
-      'path'           => 'products/bathroom-mirrors',
+    'led-bathroom-mirrors' => array(
+      'title'          => __('LED Bathroom Mirrors', 'mirrorcraft'),
+      'path'           => 'products/led-bathroom-mirrors',
       'image_key'      => 'bathroom-mirror',
-      'intro'          => __('Bathroom mirror programs built around practical installation, contemporary styling, and the specification needs of residential and hospitality buyers.', 'mirrorcraft'),
-      'overview_title' => __('Bathroom Mirror Overview', 'mirrorcraft'),
-      'overview_text'  => __('This category covers modern bathroom mirror directions that balance appearance, moisture-area suitability, and flexible project support.', 'mirrorcraft'),
+      'intro'          => __('Custom LED bathroom mirrors with anti-fog, dimming, CCT control, touch sensors, and project-ready customization for hospitality, residential, and commercial supply.', 'mirrorcraft'),
+      'overview_title' => __('LED Bathroom Mirror Overview', 'mirrorcraft'),
+      'overview_text'  => __('This route covers backlit, front-lit, framed, round, arched, and custom LED bathroom mirror programs built around practical installation and specification control.', 'mirrorcraft'),
       'buyer_tags'     => array(
-        __('Residential and hospitality focused', 'mirrorcraft'),
-        __('Framed and frameless directions', 'mirrorcraft'),
-        __('Specification support', 'mirrorcraft'),
-        __('Private label options', 'mirrorcraft'),
+        __('Hospitality and residential focused', 'mirrorcraft'),
+        __('Backlit / front-lit / framed directions', 'mirrorcraft'),
+        __('Anti-fog and dimming options', 'mirrorcraft'),
+        __('OEM / ODM support', 'mirrorcraft'),
       ),
       'features'       => array(
-        array('item_text' => __('Clean silhouettes for modern bathrooms', 'mirrorcraft')),
-        array('item_text' => __('Flexible shapes, finishes, and sizing', 'mirrorcraft')),
-        array('item_text' => __('Suitable for residential and project supply', 'mirrorcraft')),
+        array('item_text' => __('Backlit, front-lit, framed, round, and arched LED mirror formats', 'mirrorcraft')),
+        array('item_text' => __('Anti-fog, dimming, CCT control, touch sensor, and smart feature options', 'mirrorcraft')),
+        array('item_text' => __('Custom sizing, finish direction, packaging, and private label support', 'mirrorcraft')),
       ),
       'options'        => array(
-        array('item_text' => __('Frame and edge style customization', 'mirrorcraft')),
-        array('item_text' => __('Wall-mounted and vanity-oriented formats', 'mirrorcraft')),
-        array('item_text' => __('Packaging support for import programs', 'mirrorcraft')),
+        array('item_text' => __('Frame, edge, and mounting configuration adjustments', 'mirrorcraft')),
+        array('item_text' => __('Lighting behavior tailored to the target market and application', 'mirrorcraft')),
+        array('item_text' => __('Branding and export packaging planning for B2B orders', 'mirrorcraft')),
       ),
       'use_cases'      => array(
-        __('Bathroom brands that need a core mirror category', 'mirrorcraft'),
-        __('Apartment and renovation buyers sourcing practical mirror lines', 'mirrorcraft'),
-        __('Distributors building complete bathroom assortments', 'mirrorcraft'),
+        __('Hotel bathroom programs and guestroom upgrades', 'mirrorcraft'),
+        __('Apartment and multifamily developments', 'mirrorcraft'),
+        __('Importers and distributors building branded mirror assortments', 'mirrorcraft'),
       ),
-      'closing'        => __('Share your target style direction, quantity range, and market requirements to receive a bathroom mirror proposal.', 'mirrorcraft'),
+      'closing'        => __('Share your target size range, feature mix, and destination market to receive a workable LED bathroom mirror proposal.', 'mirrorcraft'),
     ),
-    'medicine-cabinets' => array(
-      'title'          => __('Medicine Cabinets', 'mirrorcraft'),
-      'path'           => 'products/medicine-cabinets',
+    'lighted-medicine-cabinets' => array(
+      'title'          => __('Lighted Medicine Cabinets', 'mirrorcraft'),
+      'path'           => 'products/lighted-medicine-cabinets',
       'image_key'      => 'medicine-cabinet',
-      'intro'          => __('Lighted medicine cabinets that combine mirror presentation, storage function, and clean wall-mounted design for modern bathrooms.', 'mirrorcraft'),
-      'overview_title' => __('Medicine Cabinet Overview', 'mirrorcraft'),
-      'overview_text'  => __('This line is aimed at buyers who need both mirror lighting and practical cabinet storage in one product category.', 'mirrorcraft'),
+      'intro'          => __('Lighted medicine cabinet programs that combine mirror presentation, cabinet storage, and clean installation logic for higher-value bathroom projects.', 'mirrorcraft'),
+      'overview_title' => __('Lighted Medicine Cabinet Overview', 'mirrorcraft'),
+      'overview_text'  => __('This route is designed for buyers who need both mirror lighting and cabinet utility in one specification-ready category.', 'mirrorcraft'),
       'buyer_tags'     => array(
         __('Storage plus illumination', 'mirrorcraft'),
-        __('Project and retail suitable', 'mirrorcraft'),
-        __('Cabinet depth options', 'mirrorcraft'),
+        __('Hospitality and multifamily relevant', 'mirrorcraft'),
+        __('Surface mount and recessed directions', 'mirrorcraft'),
         __('OEM / ODM available', 'mirrorcraft'),
       ),
       'features'       => array(
-        array('item_text' => __('Integrated mirror and cabinet structure', 'mirrorcraft')),
-        array('item_text' => __('Lighting layouts for modern bathroom use', 'mirrorcraft')),
-        array('item_text' => __('Premium appearance with practical storage', 'mirrorcraft')),
+        array('item_text' => __('Mirror-plus-cabinet structure with storage-led bathroom planning', 'mirrorcraft')),
+        array('item_text' => __('Lighting layouts, anti-fog, and switch options for project use', 'mirrorcraft')),
+        array('item_text' => __('Cabinet depth, shelving, and door configuration support', 'mirrorcraft')),
       ),
       'options'        => array(
-        array('item_text' => __('Cabinet size, door, and shelf configuration', 'mirrorcraft')),
-        array('item_text' => __('Lighting, anti-fog, and switch options', 'mirrorcraft')),
-        array('item_text' => __('Branding and export packaging support', 'mirrorcraft')),
+        array('item_text' => __('Custom sizing, internal storage layout, and mounting direction', 'mirrorcraft')),
+        array('item_text' => __('Lighting behavior matched to the bathroom specification route', 'mirrorcraft')),
+        array('item_text' => __('Branding, labeling, and export packaging support', 'mirrorcraft')),
       ),
       'use_cases'      => array(
         __('Hospitality and residential projects that need storage utility', 'mirrorcraft'),
-        __('Bathroom brands adding higher-value cabinet lines', 'mirrorcraft'),
-        __('Importers looking for combined function and design', 'mirrorcraft'),
+        __('Bathroom brands adding a higher-value cabinet line', 'mirrorcraft'),
+        __('Importers looking for mirror and storage in one product route', 'mirrorcraft'),
       ),
-      'closing'        => __('Tell us the cabinet dimensions, feature requirements, and target market so we can quote the right medicine cabinet route.', 'mirrorcraft'),
+      'closing'        => __('Tell us the cabinet dimensions, storage expectations, and target market so we can quote the right lighted medicine cabinet route.', 'mirrorcraft'),
     ),
-    'decorative-mirrors' => array(
-      'title'          => __('Decorative Mirrors', 'mirrorcraft'),
-      'path'           => 'products/decorative-mirrors',
+    'framed-led-mirrors' => array(
+      'title'          => __('Framed LED Mirrors', 'mirrorcraft'),
+      'path'           => 'products/framed-led-mirrors',
       'image_key'      => 'bathroom-mirror',
-      'intro'          => __('Decorative framed mirror programs for premium bathrooms, design-led interiors, and buyers who need a stronger style story.', 'mirrorcraft'),
-      'overview_title' => __('Decorative Mirror Overview', 'mirrorcraft'),
-      'overview_text'  => __('Framed mirrors help buyers create more distinctive bathroom and hospitality collections without losing practical product flexibility.', 'mirrorcraft'),
+      'intro'          => __('Framed LED mirror programs for premium bathrooms, hospitality interiors, and buyers who need a stronger decorative and branded story.', 'mirrorcraft'),
+      'overview_title' => __('Framed LED Mirror Overview', 'mirrorcraft'),
+      'overview_text'  => __('Framed LED mirrors help buyers build more distinctive collections without losing practical bathroom functionality or OEM flexibility.', 'mirrorcraft'),
       'buyer_tags'     => array(
-        __('Decorative edge styling', 'mirrorcraft'),
+        __('Framed decorative styling', 'mirrorcraft'),
         __('Premium finish direction', 'mirrorcraft'),
         __('Retail and hospitality friendly', 'mirrorcraft'),
         __('Customization support', 'mirrorcraft'),
       ),
       'features'       => array(
-        array('item_text' => __('Stronger decorative presentation', 'mirrorcraft')),
-        array('item_text' => __('Frame finish choices for different markets', 'mirrorcraft')),
-        array('item_text' => __('Suitable for premium bathroom collections', 'mirrorcraft')),
+        array('item_text' => __('Framed LED presentation for premium bathroom collections', 'mirrorcraft')),
+        array('item_text' => __('Frame finish choices for different market directions', 'mirrorcraft')),
+        array('item_text' => __('Custom sizes, shapes, and lighting options for project programs', 'mirrorcraft')),
       ),
       'options'        => array(
         array('item_text' => __('Frame material and color selection', 'mirrorcraft')),
-        array('item_text' => __('Round, rectangular, and shaped formats', 'mirrorcraft')),
-        array('item_text' => __('Private label packaging and brand styling', 'mirrorcraft')),
+        array('item_text' => __('Round, rectangular, arched, and shaped LED formats', 'mirrorcraft')),
+        array('item_text' => __('Private label packaging and style direction for import programs', 'mirrorcraft')),
       ),
       'use_cases'      => array(
-        __('Retail buyers selling decorative bathroom mirror lines', 'mirrorcraft'),
-        __('Hospitality projects with stronger design requirements', 'mirrorcraft'),
-        __('Importers building premium interior assortments', 'mirrorcraft'),
+        __('Retail buyers selling framed LED bathroom mirror lines', 'mirrorcraft'),
+        __('Hospitality projects with stronger visual design requirements', 'mirrorcraft'),
+        __('Importers building premium mirror assortments', 'mirrorcraft'),
       ),
-      'closing'        => __('Send your preferred frame style, size range, and finish direction to receive a decorative mirror quotation.', 'mirrorcraft'),
+      'closing'        => __('Send your preferred frame style, lighting direction, and finish requirements to receive a framed LED mirror quotation.', 'mirrorcraft'),
     ),
     'makeup-mirrors' => array(
-      'title'          => __('Makeup Mirrors', 'mirrorcraft'),
+      'title'          => __('Makeup / Vanity Mirrors', 'mirrorcraft'),
       'path'           => 'products/makeup-mirrors',
       'image_key'      => 'makeup-mirror',
-      'intro'          => __('Makeup mirror collections for hotels, salons, vanity areas, and beauty-focused buyers who need clear close-up lighting performance.', 'mirrorcraft'),
+      'intro'          => __('Makeup and vanity mirror programs with focused task lighting, cleaner grooming visibility, and customization support for beauty, salon, residential, and branded retail use.', 'mirrorcraft'),
       'overview_title' => __('Makeup Mirror Overview', 'mirrorcraft'),
-      'overview_text'  => __('This line is built for daily grooming and beauty use, with practical wall-mounted and vanity-friendly formats.', 'mirrorcraft'),
+      'overview_text'  => __('This route is designed for buyers who need closer-range lighting performance, vanity-friendly formats, and stronger styling direction for beauty-related environments.', 'mirrorcraft'),
       'buyer_tags'     => array(
-        __('Beauty and vanity use', 'mirrorcraft'),
-        __('Wall-mounted options', 'mirrorcraft'),
-        __('Hospitality and salon fit', 'mirrorcraft'),
-        __('Sample support available', 'mirrorcraft'),
-      ),
-      'features'       => array(
-        array('item_text' => __('Clear close-up mirror function', 'mirrorcraft')),
-        array('item_text' => __('Lighting support for beauty use', 'mirrorcraft')),
-        array('item_text' => __('Compact formats for hotel and vanity programs', 'mirrorcraft')),
-      ),
-      'options'        => array(
-        array('item_text' => __('Arm style, finish, and mounting options', 'mirrorcraft')),
-        array('item_text' => __('Magnification and lighting configuration', 'mirrorcraft')),
-        array('item_text' => __('Retail and hospitality packaging support', 'mirrorcraft')),
-      ),
-      'use_cases'      => array(
-        __('Hotel bathroom and guestroom vanity programs', 'mirrorcraft'),
-        __('Salon and beauty space sourcing', 'mirrorcraft'),
-        __('Retail buyers selling grooming mirror products', 'mirrorcraft'),
-      ),
-      'closing'        => __('Tell us your finish, mounting, and lighting requirements to receive a makeup mirror recommendation and quotation.', 'mirrorcraft'),
-    ),
-    'full-length-mirrors' => array(
-      'title'          => __('Full Length Mirrors', 'mirrorcraft'),
-      'path'           => 'products/full-length-mirrors',
-      'image_key'      => 'makeup-mirror',
-      'intro'          => __('Full-length mirror programs for dressing areas, hospitality rooms, retail spaces, and residential interiors that need a stronger vertical format.', 'mirrorcraft'),
-      'overview_title' => __('Full Length Mirror Overview', 'mirrorcraft'),
-      'overview_text'  => __('This category supports buyers who need large-format mirrors with a clean silhouette and optional illuminated presentation.', 'mirrorcraft'),
-      'buyer_tags'     => array(
-        __('Vertical mirror format', 'mirrorcraft'),
-        __('Retail and hospitality suitable', 'mirrorcraft'),
-        __('Optional illuminated styling', 'mirrorcraft'),
+        __('Beauty and grooming focused', 'mirrorcraft'),
+        __('Task-lighting friendly', 'mirrorcraft'),
+        __('Vanity and salon applications', 'mirrorcraft'),
         __('OEM / ODM support', 'mirrorcraft'),
       ),
       'features'       => array(
-        array('item_text' => __('Space-enhancing full-length presentation', 'mirrorcraft')),
-        array('item_text' => __('Suitable for dressing and fitting scenarios', 'mirrorcraft')),
-        array('item_text' => __('Flexible framing and mounting direction', 'mirrorcraft')),
+        array('item_text' => __('Task-lighting mirror formats for makeup and grooming use', 'mirrorcraft')),
+        array('item_text' => __('Wall-mounted, countertop, and vanity-oriented configurations', 'mirrorcraft')),
+        array('item_text' => __('Custom sizing, frame direction, and branding support', 'mirrorcraft')),
       ),
       'options'        => array(
-        array('item_text' => __('Freestanding and wall-mounted possibilities', 'mirrorcraft')),
-        array('item_text' => __('Frame finishes and illumination choices', 'mirrorcraft')),
-        array('item_text' => __('Project and retail packaging support', 'mirrorcraft')),
+        array('item_text' => __('Lighting behavior tuned for close-up grooming visibility', 'mirrorcraft')),
+        array('item_text' => __('Custom shape, finish, and mounting direction', 'mirrorcraft')),
+        array('item_text' => __('Private label packaging and beauty-brand development support', 'mirrorcraft')),
       ),
       'use_cases'      => array(
-        __('Hospitality rooms and apartment dressing areas', 'mirrorcraft'),
-        __('Retail fitting and display environments', 'mirrorcraft'),
-        __('Interior brands that need large-format mirror options', 'mirrorcraft'),
+        __('Salon and beauty service environments', 'mirrorcraft'),
+        __('Vanity-focused residential and hospitality spaces', 'mirrorcraft'),
+        __('Retail buyers building beauty-led mirror assortments', 'mirrorcraft'),
       ),
-      'closing'        => __('Share the format, finish direction, and market type to receive a full-length mirror proposal.', 'mirrorcraft'),
+      'closing'        => __('Share your target use environment, lighting preference, and quantity plan to receive a workable vanity mirror quotation.', 'mirrorcraft'),
     ),
     'custom-led-mirrors' => array(
       'title'          => __('Custom LED Mirrors', 'mirrorcraft'),
       'path'           => 'products/custom-led-mirrors',
-      'image_key'      => 'medicine-cabinet',
-      'intro'          => __('Custom LED mirror development for brands, wholesalers, and project buyers who need spec-driven products rather than off-the-shelf models.', 'mirrorcraft'),
+      'image_key'      => 'bathroom-mirror',
+      'intro'          => __('OEM and ODM custom LED mirror development for brands, wholesalers, designers, and project buyers who need spec-driven products rather than off-the-shelf models.', 'mirrorcraft'),
       'overview_title' => __('Custom Program Overview', 'mirrorcraft'),
-      'overview_text'  => __('This route is designed for buyers who need their own combination of size, lighting, features, packaging, and branding support.', 'mirrorcraft'),
+      'overview_text'  => __('This route is designed for buyers who need control over size, shape, lighting, frame style, packaging, and brand direction.', 'mirrorcraft'),
       'buyer_tags'     => array(
         __('OEM / ODM route', 'mirrorcraft'),
         __('Private label packaging', 'mirrorcraft'),
@@ -820,9 +912,9 @@ function mirrorcraft_get_product_category_pages() {
         __('Quotation and sample consultation', 'mirrorcraft'),
       ),
       'features'       => array(
-        array('item_text' => __('Custom dimensions, layouts, and structures', 'mirrorcraft')),
-        array('item_text' => __('Lighting and functional feature flexibility', 'mirrorcraft')),
-        array('item_text' => __('Branding and packaging support for export', 'mirrorcraft')),
+        array('item_text' => __('Custom size, shape, frame, and feature mix development', 'mirrorcraft')),
+        array('item_text' => __('Sample-first workflow before production approval', 'mirrorcraft')),
+        array('item_text' => __('Branding, packaging, and export support for private label programs', 'mirrorcraft')),
       ),
       'options'        => array(
         array('item_text' => __('Logo, carton, and label customization', 'mirrorcraft')),
@@ -843,7 +935,17 @@ function mirrorcraft_normalize_product_category_slug($slug) {
   $slug = trim((string) $slug, '/');
 
   $aliases = array(
-    'framed-mirrors' => 'decorative-mirrors',
+    'bathroom-mirrors'    => 'led-bathroom-mirrors',
+    'bathroom-mirror'     => 'led-bathroom-mirrors',
+    'medicine-cabinets'   => 'lighted-medicine-cabinets',
+    'medicine-cabinet'    => 'lighted-medicine-cabinets',
+    'decorative-mirrors'  => 'framed-led-mirrors',
+    'framed-mirrors'      => 'framed-led-mirrors',
+    'custom-mirror'       => 'custom-led-mirrors',
+    'custom-mirrors'      => 'custom-led-mirrors',
+    'makeup-mirror'       => 'makeup-mirrors',
+    'makeup-mirrors'      => 'makeup-mirrors',
+    'vanity-mirrors'      => 'makeup-mirrors',
   );
 
   return $aliases[$slug] ?? $slug;
@@ -896,8 +998,8 @@ function mirrorcraft_override_primary_menu_labels($items, $args) {
     $path = $path ? untrailingslashit($path) : '';
 
     if ('/products/framed-mirrors' === $path || '/products/decorative-mirrors' === $path) {
-      $item->title = __('Decorative Mirrors', 'mirrorcraft');
-      $item->post_title = __('Decorative Mirrors', 'mirrorcraft');
+      $item->title = __('Framed LED Mirrors', 'mirrorcraft');
+      $item->post_title = __('Framed LED Mirrors', 'mirrorcraft');
       $item->url = mirrorcraft_get_product_category_page_link('decorative-mirrors');
     }
   }
@@ -914,11 +1016,19 @@ function mirrorcraft_redirect_legacy_product_category_links() {
   $request_path = isset($_SERVER['REQUEST_URI']) ? wp_parse_url(wp_unslash($_SERVER['REQUEST_URI']), PHP_URL_PATH) : '';
   $request_path = $request_path ? untrailingslashit($request_path) : '';
 
-  if ('/products/framed-mirrors' !== $request_path) {
+  $redirect_map = array(
+    '/products/bathroom-mirrors'   => mirrorcraft_get_product_category_page_link('led-bathroom-mirrors'),
+    '/products/medicine-cabinets'  => mirrorcraft_get_product_category_page_link('lighted-medicine-cabinets'),
+    '/products/decorative-mirrors' => mirrorcraft_get_product_category_page_link('framed-led-mirrors'),
+    '/products/framed-mirrors'     => mirrorcraft_get_product_category_page_link('framed-led-mirrors'),
+    '/faqs'                        => mirrorcraft_link_by_slug('faq', '/faq/'),
+  );
+
+  if (empty($redirect_map[$request_path])) {
     return;
   }
 
-  wp_safe_redirect(mirrorcraft_get_product_category_page_link('decorative-mirrors'), 301);
+  wp_safe_redirect($redirect_map[$request_path], 301);
   exit;
 }
 add_action('template_redirect', 'mirrorcraft_redirect_legacy_product_category_links', 1);
@@ -1168,8 +1278,8 @@ function mirrorcraft_get_about_submenu_pages() {
       'template' => 'page-templates/page-download-catalogue.php',
     ),
     'faqs' => array(
-      'title'    => __('FAQs', 'mirrorcraft'),
-      'path'     => 'about/faqs',
+      'title'    => __('FAQ', 'mirrorcraft'),
+      'path'     => 'faq',
       'template' => 'page-templates/page-faqs.php',
     ),
   );
@@ -1247,7 +1357,7 @@ function mirrorcraft_get_about_submenu_items() {
   if (!empty($faq_page)) {
     $items[] = array(
       'key'   => 'faqs',
-      'label' => __('FAQs', 'mirrorcraft'),
+      'label' => __('FAQ', 'mirrorcraft'),
       'url'   => mirrorcraft_link_by_slug($faq_page['path'], '/' . trim($faq_page['path'], '/')),
     );
   }
@@ -1501,10 +1611,10 @@ function mirrorcraft_get_application_submenu_pages() {
       'cta_button'    => __('Request a Quote', 'mirrorcraft'),
     ),
     'residential' => array(
-      'title'         => __('Multifamily', 'mirrorcraft'),
+      'title'         => __('Residential / Multifamily', 'mirrorcraft'),
       'path'          => 'applications/residential',
       'template'      => 'page-templates/page-application-section.php',
-      'eyebrow'       => __('Multifamily', 'mirrorcraft'),
+      'eyebrow'       => __('Residential / Multifamily', 'mirrorcraft'),
       'hero_title'    => __('LED mirror solutions for multifamily bathrooms and repeated unit layouts', 'mirrorcraft'),
       'hero_text'     => __('We support multifamily buyers with LED mirror solutions that balance practical daily use, modern styling, and the feature mix that works for apartment developments and build-to-rent programs.', 'mirrorcraft'),
       'hero_chips'    => array(
@@ -2155,6 +2265,8 @@ function mirrorcraft_get_applications_submenu_items() {
     'commercial',
     'residential',
     'senior-living',
+    'retail-furniture',
+    'salon',
     'healthcare',
   );
 

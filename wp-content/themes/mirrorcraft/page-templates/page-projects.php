@@ -11,12 +11,13 @@ $application_cards = mirrorcraft_get_application_cards();
     <section class="page-hero">
       <div class="shell page-hero-shell">
         <div class="page-hero-copy">
+          <?php mirrorcraft_render_breadcrumbs(); ?>
           <p class="eyebrow"><?php esc_html_e('Projects', 'mirrorcraft'); ?></p>
           <h1><?php the_title(); ?></h1>
-          <p class="hero-lead"><?php echo esc_html(mirrorcraft_get_page_summary(get_the_ID(), __('The rebuilt projects page now frames OJMIRROR around route planning, sample alignment, and repeatable delivery instead of vague capability claims.', 'mirrorcraft'))); ?></p>
+          <p class="hero-lead"><?php echo esc_html(mirrorcraft_get_page_summary(get_the_ID(), __('OJMIRROR supports project supply with clearer product routes, sample review, production follow-through, and export-ready delivery planning.', 'mirrorcraft'))); ?></p>
         </div>
         <aside class="page-hero-aside">
-          <p><?php esc_html_e('Use this page to speak directly to project teams, purchasers, and design partners comparing supply routes.', 'mirrorcraft'); ?></p>
+          <p><?php esc_html_e('Use this page to speak directly to purchasers, project teams, and design partners comparing mirror supply options across different job types.', 'mirrorcraft'); ?></p>
         </aside>
       </div>
     </section>

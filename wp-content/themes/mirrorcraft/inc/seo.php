@@ -7,6 +7,121 @@ function mirrorcraft_has_seo_plugin() {
     || class_exists('AIOSEO\\Plugin\\Common\\Main');
 }
 
+function mirrorcraft_get_seo_blueprints() {
+  return array(
+    '' => array(
+      'title'       => 'LED Bathroom Mirror Manufacturer in China | Custom Lighted Mirrors & Medicine Cabinets | OJMIRROR',
+      'description' => 'OJMIRROR manufactures custom LED bathroom mirrors, lighted medicine cabinets, and OEM/ODM mirror programs for hospitality, multifamily, healthcare, and private label buyers worldwide.',
+    ),
+    'products' => array(
+      'title'       => 'LED Bathroom Mirrors, Lighted Medicine Cabinets & Custom Mirror Programs | OJMIRROR',
+      'description' => 'Explore OJMIRROR product lines including LED bathroom mirrors, lighted medicine cabinets, framed mirrors, and custom OEM/ODM mirror programs for global B2B buyers.',
+    ),
+    'products/led-bathroom-mirrors' => array(
+      'title'       => 'LED Bathroom Mirror Manufacturer in China | Backlit, Front-lit, Framed | OJMIRROR',
+      'description' => 'Source custom LED bathroom mirrors with anti-fog, dimming, CCT control, touch sensors, and project-ready customization from OJMIRROR in China.',
+    ),
+    'products/lighted-medicine-cabinets' => array(
+      'title'       => 'Lighted Medicine Cabinet Manufacturer in China | OJMIRROR',
+      'description' => 'OJMIRROR supplies lighted medicine cabinets for hospitality, multifamily, and residential projects with custom sizing, storage layouts, and mirror lighting options.',
+    ),
+    'products/framed-led-mirrors' => array(
+      'title'       => 'Framed LED Mirror Manufacturer in China | Custom Decorative Mirror Programs | OJMIRROR',
+      'description' => 'Explore framed LED mirror programs for premium bathrooms, hospitality interiors, and branded product lines with custom styling and OEM support.',
+    ),
+    'products/makeup-mirrors' => array(
+      'title'       => 'Makeup Mirror Manufacturer in China | Vanity Mirror OEM ODM | OJMIRROR',
+      'description' => 'Source makeup and vanity mirror programs with task lighting, custom sizing, private label support, and beauty-focused OEM/ODM development from OJMIRROR.',
+    ),
+    'products/custom-led-mirrors' => array(
+      'title'       => 'OEM ODM Custom LED Mirror Manufacturer in China | OJMIRROR',
+      'description' => 'Develop custom LED mirror programs with OEM, ODM, private label, customized sizing, feature mix, branding, and packaging support from OJMIRROR.',
+    ),
+    'applications' => array(
+      'title'       => 'LED Mirror Applications for Hospitality, Commercial, Residential & Healthcare | OJMIRROR',
+      'description' => 'See how OJMIRROR organizes LED mirror and medicine cabinet programs for hotels, commercial spaces, residential projects, senior living, salons, and healthcare environments.',
+    ),
+    'applications/hospitality' => array(
+      'title'       => 'Hotel Bathroom LED Mirrors & Lighted Medicine Cabinets | OJMIRROR',
+      'description' => 'Custom hotel bathroom mirror programs with anti-fog, dimmable lighting, repeatable specification, and project-ready packaging support from OJMIRROR.',
+    ),
+    'applications/commercial' => array(
+      'title'       => 'Commercial LED Mirror Supplier | OJMIRROR',
+      'description' => 'Explore commercial mirror solutions for public bathrooms, reception spaces, amenities, and shared-use interiors with practical lighting and project-ready support.',
+    ),
+    'applications/residential' => array(
+      'title'       => 'Residential and Multifamily Bathroom Mirror Supplier | OJMIRROR',
+      'description' => 'OJMIRROR supports residential and multifamily developments with repeatable LED mirror programs, dependable specifications, and cleaner procurement workflows.',
+    ),
+    'applications/senior-living' => array(
+      'title'       => 'Senior Living Bathroom Mirror Supplier | OJMIRROR',
+      'description' => 'Find LED mirror programs for senior living bathrooms, dressing spaces, and comfort-focused residential care environments.',
+    ),
+    'applications/retail-furniture' => array(
+      'title'       => 'Retail Furniture and Display Mirror Supplier | OJMIRROR',
+      'description' => 'Discover custom mirror programs for furniture stores, showroom displays, and branded retail environments that need stronger presentation and OEM flexibility.',
+    ),
+    'applications/salon' => array(
+      'title'       => 'Salon and Vanity Mirror Manufacturer | OJMIRROR',
+      'description' => 'Source salon and vanity mirror programs with task lighting, custom styling, and beauty-focused OEM/ODM support from OJMIRROR.',
+    ),
+    'applications/healthcare' => array(
+      'title'       => 'Healthcare Bathroom Mirror Manufacturer | OJMIRROR',
+      'description' => 'Explore healthcare-oriented LED mirror programs designed for visibility, maintenance, comfort, and long-term bathroom use.',
+    ),
+    'manufacturing' => array(
+      'title'       => 'LED Mirror Manufacturing, QC & Export Packaging | OJMIRROR',
+      'description' => 'Learn how OJMIRROR approaches mirror development, sample review, quality control, packaging, and export support for global B2B orders.',
+    ),
+    'projects' => array(
+      'title'       => 'LED Mirror Project Cases and Product Routes | OJMIRROR',
+      'description' => 'View project routes and case-style pages for hospitality, multifamily, and private label LED mirror programs.',
+    ),
+    'resources' => array(
+      'title'       => 'Catalog, Buying Guides and FAQ | OJMIRROR',
+      'description' => 'Access OJMIRROR product catalogs, FAQ content, and buying guides for LED bathroom mirrors and lighted medicine cabinets.',
+    ),
+    'faq' => array(
+      'title'       => 'LED Mirror FAQ | OEM, MOQ, Samples, Certification Support | OJMIRROR',
+      'description' => 'Get answers about customization, OEM/ODM, samples, lead time, certification direction, and bathroom-use LED mirror programs.',
+    ),
+    'contact' => array(
+      'title'       => 'Contact OJMIRROR | Request a Quote for LED Mirrors and Mirror Cabinets',
+      'description' => 'Contact OJMIRROR to discuss pricing, product requirements, OEM/ODM mirror programs, and project-based LED bathroom mirror sourcing.',
+    ),
+  );
+}
+
+function mirrorcraft_get_seo_blueprint() {
+  $path = '';
+
+  if (is_front_page()) {
+    $path = '';
+  } elseif (is_page() || is_singular()) {
+    $permalink = get_permalink(get_queried_object_id());
+    $path = trim((string) wp_parse_url((string) $permalink, PHP_URL_PATH), '/');
+  }
+
+  $blueprints = mirrorcraft_get_seo_blueprints();
+
+  return $blueprints[$path] ?? array();
+}
+
+function mirrorcraft_filter_document_title($title) {
+  if (is_admin() || mirrorcraft_has_seo_plugin()) {
+    return $title;
+  }
+
+  $blueprint = mirrorcraft_get_seo_blueprint();
+
+  if (!empty($blueprint['title'])) {
+    return $blueprint['title'];
+  }
+
+  return $title;
+}
+add_filter('pre_get_document_title', 'mirrorcraft_filter_document_title', 20);
+
 function mirrorcraft_get_theme_color() {
   return '#0b6d37';
 }
@@ -42,6 +157,12 @@ function mirrorcraft_get_meta_image_url() {
 }
 
 function mirrorcraft_get_seo_description() {
+  $blueprint = mirrorcraft_get_seo_blueprint();
+
+  if (!empty($blueprint['description'])) {
+    return $blueprint['description'];
+  }
+
   if (is_front_page()) {
     return mirrorcraft_seo_trim_description(
       mirrorcraft_default_text(
@@ -305,7 +426,7 @@ function mirrorcraft_output_schema_graph() {
     $graph[] = $webpage;
   }
 
-  if (is_front_page()) {
+  if (is_front_page() || is_page_template('page-templates/page-faqs.php') || is_page('faq')) {
     $faq_items = mirrorcraft_get_faq_items();
     $faq_entities = array();
 
@@ -337,6 +458,16 @@ function mirrorcraft_output_schema_graph() {
         'isPartOf'   => array('@id' => home_url('/#website')),
       );
     }
+  }
+
+  $breadcrumb_items = mirrorcraft_get_breadcrumb_schema_items();
+
+  if (!empty($breadcrumb_items)) {
+    $graph[] = array(
+      '@type'           => 'BreadcrumbList',
+      '@id'             => trailingslashit(home_url('/')) . '#breadcrumb',
+      'itemListElement' => $breadcrumb_items,
+    );
   }
 
   if (empty($graph)) {

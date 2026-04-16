@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: FAQs Page
+Template Name: FAQ Page
 */
 get_header();
 $faq_items = mirrorcraft_get_faq_items();
@@ -10,9 +10,10 @@ $faq_items = mirrorcraft_get_faq_items();
     <section class="page-hero">
       <div class="shell page-hero-shell page-hero-shell-basic">
         <div class="page-hero-copy">
-          <p class="eyebrow"><?php esc_html_e('FAQs', 'mirrorcraft'); ?></p>
+          <?php mirrorcraft_render_breadcrumbs(); ?>
+          <p class="eyebrow"><?php esc_html_e('FAQ', 'mirrorcraft'); ?></p>
           <h1><?php the_title(); ?></h1>
-          <p class="hero-lead"><?php echo esc_html(mirrorcraft_get_page_summary(get_the_ID(), __('The rebuilt FAQ page is here to answer the questions that previously got buried in too many sections.', 'mirrorcraft'))); ?></p>
+          <p class="hero-lead"><?php echo esc_html(mirrorcraft_get_page_summary(get_the_ID(), __('Find quick answers about customization, OEM and ODM support, samples, compliance expectations, and quote preparation for mirror and cabinet orders.', 'mirrorcraft'))); ?></p>
         </div>
       </div>
     </section>

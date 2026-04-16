@@ -3,9 +3,10 @@
   <section class="page-hero">
     <div class="shell page-hero-shell page-hero-shell-basic">
       <div class="page-hero-copy">
+        <?php mirrorcraft_render_breadcrumbs(); ?>
         <p class="eyebrow"><?php esc_html_e('Search', 'mirrorcraft'); ?></p>
         <h1><?php printf(esc_html__('Results for "%s"', 'mirrorcraft'), esc_html(get_search_query())); ?></h1>
-        <p class="hero-lead"><?php esc_html_e('The rebuilt search experience now uses the same clear layout as the journal and archive pages.', 'mirrorcraft'); ?></p>
+        <p class="hero-lead"><?php esc_html_e('Search product routes, buyer guides, application content, and sourcing articles across the site.', 'mirrorcraft'); ?></p>
       </div>
       <aside class="page-hero-aside">
         <?php get_search_form(); ?>

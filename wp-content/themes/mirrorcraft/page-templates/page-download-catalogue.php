@@ -9,9 +9,10 @@ get_header();
     <section class="page-hero">
       <div class="shell page-hero-shell page-hero-shell-basic">
         <div class="page-hero-copy">
+          <?php mirrorcraft_render_breadcrumbs(); ?>
           <p class="eyebrow"><?php esc_html_e('Catalogue', 'mirrorcraft'); ?></p>
           <h1><?php the_title(); ?></h1>
-          <p class="hero-lead"><?php echo esc_html(mirrorcraft_get_page_summary(get_the_ID(), __('This rebuilt page is meant to support serious buyers asking for the right catalogue or category pack, not a generic download dead end.', 'mirrorcraft'))); ?></p>
+          <p class="hero-lead"><?php echo esc_html(mirrorcraft_get_page_summary(get_the_ID(), __('Use this page to request the right catalogue, product pack, or buyer material for the category and market you are evaluating.', 'mirrorcraft'))); ?></p>
         </div>
       </div>
     </section>

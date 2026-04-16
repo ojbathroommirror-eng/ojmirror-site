@@ -15,7 +15,7 @@ $footer_links = mirrorcraft_get_default_menu_items();
     <div class="footer-grid">
       <div class="footer-brand">
         <p class="footer-kicker"><?php echo esc_html($brand_name); ?></p>
-        <h2><?php esc_html_e('A rebuilt site designed to get buyers to the right mirror route faster.', 'mirrorcraft'); ?></h2>
+        <h2><?php esc_html_e('LED bathroom mirrors, lighted medicine cabinets, and custom programs built for clearer B2B sourcing.', 'mirrorcraft'); ?></h2>
         <p><?php echo esc_html($footer_blurb); ?></p>
       </div>
 

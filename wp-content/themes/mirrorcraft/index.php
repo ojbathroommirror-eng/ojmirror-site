@@ -3,9 +3,10 @@
   <section class="page-hero">
     <div class="shell page-hero-shell page-hero-shell-basic">
       <div class="page-hero-copy">
+        <?php mirrorcraft_render_breadcrumbs(); ?>
         <p class="eyebrow"><?php esc_html_e('Journal', 'mirrorcraft'); ?></p>
         <h1><?php esc_html_e('Insights, comparisons, and sourcing notes for mirror buyers.', 'mirrorcraft'); ?></h1>
-        <p class="hero-lead"><?php esc_html_e('The rebuilt content section is designed for higher-intent posts: product explainers, quote prep guides, and project-fit comparisons.', 'mirrorcraft'); ?></p>
+        <p class="hero-lead"><?php esc_html_e('Use this section for product explainers, quote-prep guides, application comparisons, and practical notes for B2B mirror buyers.', 'mirrorcraft'); ?></p>
       </div>
       <aside class="page-hero-aside">
         <?php get_search_form(); ?>

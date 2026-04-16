@@ -1,102 +1,135 @@
 <?php
 get_header();
 
+$product_routes = mirrorcraft_get_product_family_cards();
+$application_cards = mirrorcraft_get_application_cards();
+$process_steps = mirrorcraft_get_process_steps();
+$hero_image = mirrorcraft_get_active_hero_image_url();
+$hero_image_alt = __('Custom LED mirror product display for hospitality and residential buyers', 'mirrorcraft');
 $contact_url = mirrorcraft_link_by_slug('contact', '/contact/');
 $products_url = mirrorcraft_link_by_slug('products', '/products/');
 $applications_url = mirrorcraft_link_by_slug('applications', '/applications/');
-$projects_url = mirrorcraft_link_by_slug('projects', '/projects/');
-$hero_image = mirrorcraft_theme_image_url('hero-bathroom-led-scene-hero.jpg');
-$product_cards = mirrorcraft_get_product_family_cards();
-$application_cards = mirrorcraft_get_application_cards();
-$process_steps = mirrorcraft_get_process_steps();
-$faq_items = mirrorcraft_get_faq_items();
+$about_url = mirrorcraft_link_by_slug('about', '/about/');
+$manufacturing_url = mirrorcraft_link_by_slug('manufacturing', '/manufacturing/');
+$resources_url = mirrorcraft_link_by_slug('resources', '/resources/');
+$faq_url = mirrorcraft_link_by_slug('faq', '/faq/');
+$latest_posts = get_posts(
+  array(
+    'post_type'           => 'post',
+    'posts_per_page'      => 3,
+    'ignore_sticky_posts' => true,
+  )
+);
+
+$smart_features = array(
+  array(
+    'title' => __('Smart lighting controls', 'mirrorcraft'),
+    'text'  => __('Dimming, CCT control, anti-fog, touch sensors, and other popular feature combinations can be adapted to the target market and product route.', 'mirrorcraft'),
+  ),
+  array(
+    'title' => __('Mirror and cabinet integration', 'mirrorcraft'),
+    'text'  => __('Lighted medicine cabinets, framed mirrors, vanity formats, and custom configurations can be organized into one clearer sourcing path.', 'mirrorcraft'),
+  ),
+  array(
+    'title' => __('OEM / ODM development', 'mirrorcraft'),
+    'text'  => __('Private label packaging, spec-based development, and sample-first approval workflows help buyers move beyond standard catalog items.', 'mirrorcraft'),
+  ),
+);
+
+$about_points = array(
+  __('LED bathroom mirror and lighted medicine cabinet manufacturing support from China', 'mirrorcraft'),
+  __('Product direction organized around category, market, and buyer use case', 'mirrorcraft'),
+  __('OEM / ODM development with sample review before production approval', 'mirrorcraft'),
+  __('Project, distribution, and private label orders handled with export follow-through', 'mirrorcraft'),
+);
+
+$testimonials = array(
+  array(
+    'quote' => __('The quotation discussion was much clearer because the team pushed us to define the right feature mix before sampling, not after.', 'mirrorcraft'),
+    'name'  => __('Procurement Manager', 'mirrorcraft'),
+    'role'  => __('Hospitality Buyer', 'mirrorcraft'),
+  ),
+  array(
+    'quote' => __('We needed both mirror lighting and cabinet storage in one program. The development path stayed practical from sample to shipment.', 'mirrorcraft'),
+    'name'  => __('Category Director', 'mirrorcraft'),
+    'role'  => __('Residential / Multifamily Client', 'mirrorcraft'),
+  ),
+  array(
+    'quote' => __('What worked best was the way custom requirements, packaging, and recurring order expectations were handled as one program.', 'mirrorcraft'),
+    'name'  => __('Brand Owner', 'mirrorcraft'),
+    'role'  => __('Private Label Buyer', 'mirrorcraft'),
+  ),
+);
+
+$resource_links = array(
+  array(
+    'title' => __('Browse all product categories', 'mirrorcraft'),
+    'text'  => __('Review OJMIRROR product routes for LED bathroom mirrors, lighted medicine cabinets, framed LED mirrors, vanity mirrors, and custom development.', 'mirrorcraft'),
+    'url'   => $products_url,
+  ),
+  array(
+    'title' => __('Read buyer FAQ', 'mirrorcraft'),
+    'text'  => __('Use the FAQ page to answer common questions about customization, samples, certification support, and quote preparation.', 'mirrorcraft'),
+    'url'   => $faq_url,
+  ),
+  array(
+    'title' => __('Request catalog support', 'mirrorcraft'),
+    'text'  => __('If you need a targeted product pack or a quicker shortlist, send the application and feature direction through the inquiry form.', 'mirrorcraft'),
+    'url'   => $contact_url,
+  ),
+);
 ?>
-<main id="site-main" class="site-main" tabindex="-1">
-  <section class="hero-section">
-    <div class="shell hero-shell">
-      <div class="hero-copy">
-        <p class="eyebrow"><?php esc_html_e('New OJMIRROR', 'mirrorcraft'); ?></p>
-        <h1><?php esc_html_e('Custom LED mirror programs built for projects, brands, and repeat procurement.', 'mirrorcraft'); ?></h1>
-        <p class="hero-lead"><?php esc_html_e('We rebuilt the site around what buyers actually need: product-family clarity, manufacturing capability, quote-ready conversations, and a faster path from idea to shipment.', 'mirrorcraft'); ?></p>
-
-        <div class="button-row">
-          <a class="button button-primary" href="<?php echo esc_url($contact_url); ?>"><?php esc_html_e('Start a Quote', 'mirrorcraft'); ?></a>
-          <a class="button button-secondary" href="<?php echo esc_url($products_url); ?>"><?php esc_html_e('Browse Product Lines', 'mirrorcraft'); ?></a>
+<main id="site-main" class="site-main home-minimal" tabindex="-1">
+  <section class="oj-hero oj-section">
+    <div class="shell oj-wrap oj-grid oj-grid--hero">
+      <div class="oj-hero__content">
+        <p class="oj-eyebrow"><?php esc_html_e('LED mirror manufacturer in China', 'mirrorcraft'); ?></p>
+        <h1><?php esc_html_e('Custom Lighted Mirrors & Mirror Cabinets for Global B2B Buyers', 'mirrorcraft'); ?></h1>
+        <p class="oj-lead"><?php esc_html_e('OJMIRROR supplies LED bathroom mirrors, lighted medicine cabinets, vanity mirrors, framed mirror programs, and OEM / ODM custom development for hospitality, commercial, residential, beauty, and healthcare projects.', 'mirrorcraft'); ?></p>
+        <div class="oj-actions">
+          <a class="oj-button oj-button--primary" href="<?php echo esc_url($contact_url); ?>"><?php esc_html_e('Request a Quote', 'mirrorcraft'); ?></a>
+          <a class="oj-button oj-button--ghost" href="<?php echo esc_url($products_url); ?>"><?php esc_html_e('Browse Products', 'mirrorcraft'); ?></a>
         </div>
-
-        <div class="metric-grid">
-          <article class="metric-card">
-            <strong><?php esc_html_e('Project Ready', 'mirrorcraft'); ?></strong>
-            <span><?php esc_html_e('Structured for real procurement and specification conversations.', 'mirrorcraft'); ?></span>
-          </article>
-          <article class="metric-card">
-            <strong><?php esc_html_e('OEM / ODM', 'mirrorcraft'); ?></strong>
-            <span><?php esc_html_e('Custom feature mixes, branded programs, and private label development.', 'mirrorcraft'); ?></span>
-          </article>
-          <article class="metric-card">
-            <strong><?php esc_html_e('Mirror + Cabinet', 'mirrorcraft'); ?></strong>
-            <span><?php esc_html_e('Bathroom mirrors, medicine cabinets, vanity, and custom-format routes.', 'mirrorcraft'); ?></span>
-          </article>
-        </div>
+        <ul class="oj-proofline" aria-label="<?php esc_attr_e('Key capabilities', 'mirrorcraft'); ?>">
+          <li><?php esc_html_e('OEM / ODM', 'mirrorcraft'); ?></li>
+          <li><?php esc_html_e('Sample Review', 'mirrorcraft'); ?></li>
+          <li><?php esc_html_e('QC Workflow', 'mirrorcraft'); ?></li>
+          <li><?php esc_html_e('Export Packaging', 'mirrorcraft'); ?></li>
+          <li><?php esc_html_e('Project Support', 'mirrorcraft'); ?></li>
+        </ul>
       </div>
-
-      <div class="hero-visual">
-        <div class="hero-media-card">
-          <img src="<?php echo esc_url($hero_image); ?>" alt="<?php esc_attr_e('Custom LED bathroom mirror installation', 'mirrorcraft'); ?>" width="1400" height="1600" loading="eager" decoding="async">
-        </div>
-        <div class="hero-note hero-note-primary">
-          <span class="hero-note-label"><?php esc_html_e('What changed', 'mirrorcraft'); ?></span>
-          <p><?php esc_html_e('Less brochure language. More product direction, applications, and quote-ready clarity.', 'mirrorcraft'); ?></p>
-        </div>
-        <div class="hero-note hero-note-secondary">
-          <span class="hero-note-label"><?php esc_html_e('Primary route', 'mirrorcraft'); ?></span>
-          <p><?php esc_html_e('Brief -> sample -> confirmation -> production -> export delivery.', 'mirrorcraft'); ?></p>
-        </div>
+      <div class="oj-hero__media">
+        <?php if ($hero_image) : ?>
+          <img src="<?php echo esc_url($hero_image); ?>" alt="<?php echo esc_attr($hero_image_alt); ?>" loading="eager" fetchpriority="high" width="960" height="1080">
+        <?php endif; ?>
       </div>
     </div>
   </section>
 
-  <section class="section statement-section">
-    <div class="shell statement-shell">
-      <div class="section-heading">
-        <p class="eyebrow"><?php esc_html_e('Built For Clarity', 'mirrorcraft'); ?></p>
-        <h2><?php esc_html_e('This rebuilt homepage follows the same order buyers use in real sourcing conversations.', 'mirrorcraft'); ?></h2>
-      </div>
-      <div class="statement-grid">
-        <article class="statement-card statement-card-dark">
-          <h3><?php esc_html_e('Start with the family', 'mirrorcraft'); ?></h3>
-          <p><?php esc_html_e('Mirror buyers typically need to narrow category, feature direction, and application fit before anything else.', 'mirrorcraft'); ?></p>
-        </article>
-        <article class="statement-card">
-          <h3><?php esc_html_e('Move into the use case', 'mirrorcraft'); ?></h3>
-          <p><?php esc_html_e('Hospitality, multifamily, healthcare, and private label programs each need a different product conversation.', 'mirrorcraft'); ?></p>
-        </article>
-        <article class="statement-card">
-          <h3><?php esc_html_e('End with a better brief', 'mirrorcraft'); ?></h3>
-          <p><?php esc_html_e('The new structure helps visitors arrive at a more usable quote request instead of a vague inquiry.', 'mirrorcraft'); ?></p>
-        </article>
-      </div>
+  <section class="oj-section oj-section--tight">
+    <div class="shell oj-wrap oj-intro__inner">
+      <p class="oj-section-label"><?php esc_html_e('Product categories', 'mirrorcraft'); ?></p>
+      <p class="oj-intro__text"><?php esc_html_e('This homepage is structured like a sourcing site first: start from the product type, move into smart feature and customization logic, then narrow the best application route before requesting pricing.', 'mirrorcraft'); ?></p>
     </div>
   </section>
 
-  <section class="section">
-    <div class="shell">
-      <div class="section-heading">
-        <p class="eyebrow"><?php esc_html_e('Product Families', 'mirrorcraft'); ?></p>
-        <h2><?php esc_html_e('High-intent lines buyers ask for first.', 'mirrorcraft'); ?></h2>
-        <p class="section-copy"><?php esc_html_e('The new structure puts the most requested product routes up front so project teams and distributors can orient themselves quickly.', 'mirrorcraft'); ?></p>
+  <section class="oj-section" id="products">
+    <div class="shell oj-wrap">
+      <div class="oj-section-heading">
+        <p class="oj-section-label"><?php esc_html_e('Featured Product Categories', 'mirrorcraft'); ?></p>
+        <h2><?php esc_html_e('Choose the mirror family before you choose the exact spec.', 'mirrorcraft'); ?></h2>
       </div>
       <div class="card-grid card-grid-three">
-        <?php foreach ($product_cards as $card) : ?>
+        <?php foreach ($product_routes as $route) : ?>
           <article class="feature-card product-card">
             <div class="feature-card-media">
-              <img src="<?php echo esc_url($card['image']); ?>" alt="<?php echo esc_attr($card['title']); ?>" width="1200" height="1200" loading="lazy" decoding="async">
+              <img src="<?php echo esc_url($route['image']); ?>" alt="<?php echo esc_attr($route['title']); ?>" width="1200" height="1200" loading="lazy" decoding="async">
             </div>
             <div class="feature-card-body">
-              <p class="feature-tag"><?php echo esc_html($card['tag']); ?></p>
-              <h3><?php echo esc_html($card['title']); ?></h3>
-              <p><?php echo esc_html($card['text']); ?></p>
-              <a class="text-link" href="<?php echo esc_url($card['link']); ?>"><?php esc_html_e('Explore this line', 'mirrorcraft'); ?></a>
+              <p class="feature-tag"><?php echo esc_html($route['tag']); ?></p>
+              <h3><?php echo esc_html($route['title']); ?></h3>
+              <p><?php echo esc_html($route['text']); ?></p>
+              <a class="text-link" href="<?php echo esc_url($route['link']); ?>"><?php esc_html_e('View product route', 'mirrorcraft'); ?></a>
             </div>
           </article>
         <?php endforeach; ?>
@@ -104,97 +137,170 @@ $faq_items = mirrorcraft_get_faq_items();
     </div>
   </section>
 
-  <section class="section section-alt">
-    <div class="shell">
-      <div class="section-heading section-heading-split">
-        <div>
-          <p class="eyebrow"><?php esc_html_e('Applications', 'mirrorcraft'); ?></p>
-          <h2><?php esc_html_e('Built around where the mirrors actually go.', 'mirrorcraft'); ?></h2>
-        </div>
-        <a class="text-link" href="<?php echo esc_url($applications_url); ?>"><?php esc_html_e('See all applications', 'mirrorcraft'); ?></a>
+  <section class="oj-section section-alt" id="smart-mirrors">
+    <div class="shell oj-wrap">
+      <div class="oj-section-heading">
+        <p class="oj-section-label"><?php esc_html_e('Smart Mirrors', 'mirrorcraft'); ?></p>
+        <h2><?php esc_html_e('Popular smart features and development routes buyers ask about first.', 'mirrorcraft'); ?></h2>
       </div>
-
-      <div class="card-grid card-grid-two">
-        <?php foreach ($application_cards as $card) : ?>
-          <article class="feature-card sector-card">
-            <div class="feature-card-media">
-              <img src="<?php echo esc_url($card['image']); ?>" alt="<?php echo esc_attr($card['title']); ?>" width="1400" height="1200" loading="lazy" decoding="async">
-            </div>
-            <div class="feature-card-body">
-              <p class="feature-tag"><?php echo esc_html($card['tag']); ?></p>
-              <h3><?php echo esc_html($card['title']); ?></h3>
-              <p><?php echo esc_html($card['text']); ?></p>
-            </div>
+      <div class="card-grid card-grid-three">
+        <?php foreach ($smart_features as $feature) : ?>
+          <article class="statement-card">
+            <h3><?php echo esc_html($feature['title']); ?></h3>
+            <p><?php echo esc_html($feature['text']); ?></p>
           </article>
         <?php endforeach; ?>
       </div>
     </div>
   </section>
 
-  <section class="section">
-    <div class="shell process-shell">
-      <div class="section-heading">
-        <p class="eyebrow"><?php esc_html_e('How We Work', 'mirrorcraft'); ?></p>
-        <h2><?php esc_html_e('The rebuilt site now mirrors the delivery workflow itself.', 'mirrorcraft'); ?></h2>
+  <section class="oj-section" id="customization">
+    <div class="shell oj-wrap oj-grid oj-grid--split">
+      <div>
+        <p class="oj-section-label"><?php esc_html_e('Customized LED Mirrors & Cabinets', 'mirrorcraft'); ?></p>
+        <h2><?php esc_html_e('Use a cleaner custom-development path for OEM, ODM, and private label orders.', 'mirrorcraft'); ?></h2>
       </div>
-      <div class="process-grid">
+      <div>
+        <ul class="oj-capability-list">
+          <li><?php esc_html_e('Custom size, shape, frame, and mounting direction', 'mirrorcraft'); ?></li>
+          <li><?php esc_html_e('Feature planning for lighting, anti-fog, touch, and smart controls', 'mirrorcraft'); ?></li>
+          <li><?php esc_html_e('Branding, packaging, and retail / project documentation support', 'mirrorcraft'); ?></li>
+          <li><?php esc_html_e('Development workflow organized around sample confirmation before bulk production', 'mirrorcraft'); ?></li>
+        </ul>
+      </div>
+    </div>
+    <div class="shell oj-wrap">
+      <ol class="oj-process-list">
         <?php foreach ($process_steps as $index => $step) : ?>
-          <article class="process-card">
-            <span class="process-step"><?php echo esc_html(sprintf('%02d', $index + 1)); ?></span>
+          <li>
+            <p class="oj-step"><?php echo esc_html(sprintf('%02d', $index + 1)); ?></p>
             <h3><?php echo esc_html($step['title']); ?></h3>
             <p><?php echo esc_html($step['text']); ?></p>
+          </li>
+        <?php endforeach; ?>
+      </ol>
+    </div>
+  </section>
+
+  <section class="oj-section section-alt" id="applications">
+    <div class="shell oj-wrap">
+      <div class="oj-section-heading">
+        <p class="oj-section-label"><?php esc_html_e('Application and Industry', 'mirrorcraft'); ?></p>
+        <h2><?php esc_html_e('Match the right mirror route to the space where it will actually be used.', 'mirrorcraft'); ?></h2>
+      </div>
+      <div class="card-grid card-grid-three">
+        <?php foreach ($application_cards as $application) : ?>
+          <article class="feature-card sector-card">
+            <div class="feature-card-media">
+              <img src="<?php echo esc_url($application['image']); ?>" alt="<?php echo esc_attr($application['tag']); ?>" width="1400" height="1200" loading="lazy" decoding="async">
+            </div>
+            <div class="feature-card-body">
+              <p class="feature-tag"><?php echo esc_html($application['tag']); ?></p>
+              <h3><?php echo esc_html($application['tag']); ?></h3>
+              <p><?php echo esc_html(wp_trim_words($application['text'], 24, '...')); ?></p>
+              <a class="text-link" href="<?php echo esc_url($application['link']); ?>"><?php esc_html_e('View market page', 'mirrorcraft'); ?></a>
+            </div>
+          </article>
+        <?php endforeach; ?>
+      </div>
+      <div class="oj-inline-links">
+        <a href="<?php echo esc_url($applications_url); ?>"><?php esc_html_e('Browse all application pages', 'mirrorcraft'); ?></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="oj-section" id="about">
+    <div class="shell oj-wrap oj-grid oj-grid--split">
+      <div>
+        <p class="oj-section-label"><?php esc_html_e('About OJMIRROR', 'mirrorcraft'); ?></p>
+        <h2><?php esc_html_e('A sourcing site works better when the company story stays practical.', 'mirrorcraft'); ?></h2>
+        <p class="oj-lead"><?php esc_html_e('OJMIRROR focuses on mirror and cabinet categories that B2B buyers actually compare, then supports the route with sampling, manufacturing, packaging, and export follow-through.', 'mirrorcraft'); ?></p>
+        <div class="oj-actions">
+          <a class="oj-button oj-button--primary" href="<?php echo esc_url($about_url); ?>"><?php esc_html_e('About OJMIRROR', 'mirrorcraft'); ?></a>
+          <a class="oj-button oj-button--ghost" href="<?php echo esc_url($manufacturing_url); ?>"><?php esc_html_e('Manufacturing & QC', 'mirrorcraft'); ?></a>
+        </div>
+      </div>
+      <div>
+        <ul class="oj-capability-list">
+          <?php foreach ($about_points as $point) : ?>
+            <li><?php echo esc_html($point); ?></li>
+          <?php endforeach; ?>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="oj-section section-alt" id="testimonials">
+    <div class="shell oj-wrap">
+      <div class="oj-section-heading">
+        <p class="oj-section-label"><?php esc_html_e('Customer Feedback', 'mirrorcraft'); ?></p>
+        <h2><?php esc_html_e('What buyers tend to value most in mirror sourcing conversations.', 'mirrorcraft'); ?></h2>
+      </div>
+      <div class="card-grid card-grid-three">
+        <?php foreach ($testimonials as $item) : ?>
+          <article class="entry-card">
+            <p><?php echo esc_html($item['quote']); ?></p>
+            <p class="feature-tag"><?php echo esc_html($item['name']); ?></p>
+            <p class="form-note"><?php echo esc_html($item['role']); ?></p>
           </article>
         <?php endforeach; ?>
       </div>
     </div>
   </section>
 
-  <section class="section capability-section">
-    <div class="shell capability-shell">
-      <div class="capability-copy">
-        <p class="eyebrow"><?php esc_html_e('Capability Stack', 'mirrorcraft'); ?></p>
-        <h2><?php esc_html_e('What the new site chooses to emphasize.', 'mirrorcraft'); ?></h2>
-        <p class="section-copy"><?php esc_html_e('Instead of repeating generic claims, the rebuilt structure makes room for feature mix, packaging thinking, specification support, and the project rhythm buyers care about most.', 'mirrorcraft'); ?></p>
+  <section class="oj-section" id="resources">
+    <div class="shell oj-wrap">
+      <div class="oj-section-heading">
+        <p class="oj-section-label"><?php esc_html_e('Mirror Knowledge', 'mirrorcraft'); ?></p>
+        <h2><?php esc_html_e('Use resources and articles to move faster toward the right quote brief.', 'mirrorcraft'); ?></h2>
       </div>
-      <div class="capability-columns">
-        <ul class="feature-list">
-          <li><?php esc_html_e('Custom sizing, shapes, frame directions, and lighting behavior', 'mirrorcraft'); ?></li>
-          <li><?php esc_html_e('Medicine cabinet and mirror category planning across multiple price tiers', 'mirrorcraft'); ?></li>
-          <li><?php esc_html_e('Sample review before full production to reduce downstream friction', 'mirrorcraft'); ?></li>
-        </ul>
-        <ul class="feature-list">
-          <li><?php esc_html_e('Packaging conversation early enough to avoid shipment surprises', 'mirrorcraft'); ?></li>
-          <li><?php esc_html_e('Export-focused production follow-through and repeat-order framing', 'mirrorcraft'); ?></li>
-          <li><?php esc_html_e('A cleaner foundation for future case studies, detail pages, and buying guides', 'mirrorcraft'); ?></li>
-        </ul>
+
+      <?php if (!empty($latest_posts)) : ?>
+        <div class="post-grid">
+          <?php foreach ($latest_posts as $post_item) : ?>
+            <?php mirrorcraft_render_post_card($post_item->ID); ?>
+          <?php endforeach; ?>
+        </div>
+      <?php else : ?>
+        <div class="card-grid card-grid-three">
+          <?php foreach ($resource_links as $resource) : ?>
+            <article class="entry-card">
+              <h3><?php echo esc_html($resource['title']); ?></h3>
+              <p><?php echo esc_html($resource['text']); ?></p>
+              <a class="text-link" href="<?php echo esc_url($resource['url']); ?>"><?php esc_html_e('Open resource', 'mirrorcraft'); ?></a>
+            </article>
+          <?php endforeach; ?>
+        </div>
+      <?php endif; ?>
+
+      <div class="oj-inline-links">
+        <a href="<?php echo esc_url($resources_url); ?>"><?php esc_html_e('Visit the resource center', 'mirrorcraft'); ?></a>
+        <a href="<?php echo esc_url($faq_url); ?>"><?php esc_html_e('Read buyer FAQ', 'mirrorcraft'); ?></a>
       </div>
     </div>
   </section>
 
-  <?php mirrorcraft_render_editor_content_section(array('section_class' => 'editor-bridge-section')); ?>
-
-  <section class="section faq-section" id="faq">
-    <div class="shell">
-      <div class="section-heading">
-        <p class="eyebrow"><?php esc_html_e('FAQ', 'mirrorcraft'); ?></p>
-        <h2><?php esc_html_e('Questions the rebuilt site should answer earlier.', 'mirrorcraft'); ?></h2>
+  <section class="oj-cta oj-section" id="contact">
+    <div class="shell oj-wrap oj-grid oj-grid--split">
+      <div>
+        <p class="oj-section-label"><?php esc_html_e('Contact Us', 'mirrorcraft'); ?></p>
+        <h2><?php esc_html_e('Tell us what you want to source and we will help narrow the right mirror route.', 'mirrorcraft'); ?></h2>
       </div>
-      <?php mirrorcraft_render_faq_items($faq_items, 'home-faq'); ?>
-    </div>
-  </section>
-
-  <section class="section section-tight">
-    <div class="shell cta-shell">
-      <div class="cta-card">
-        <div>
-          <p class="eyebrow"><?php esc_html_e('Next Step', 'mirrorcraft'); ?></p>
-          <h2><?php esc_html_e('Use the rebuilt inquiry path when you are ready to talk product direction, pricing, or a custom mirror program.', 'mirrorcraft'); ?></h2>
-          <p><?php esc_html_e('The goal of the rebuild is simple: fewer dead ends, better product context, and a cleaner route into the right conversation.', 'mirrorcraft'); ?></p>
+      <div class="oj-cta__content">
+        <p><?php esc_html_e('Use the inquiry page to share category, application, quantity, destination market, and custom requirements so the next quotation step starts with a workable brief.', 'mirrorcraft'); ?></p>
+        <div class="oj-actions">
+          <a class="oj-button oj-button--primary" href="<?php echo esc_url($contact_url); ?>"><?php esc_html_e('Send Inquiry', 'mirrorcraft'); ?></a>
+          <a class="oj-button oj-button--ghost" href="<?php echo esc_url($products_url); ?>"><?php esc_html_e('Browse Products', 'mirrorcraft'); ?></a>
         </div>
-        <div class="button-row">
-          <a class="button button-primary" href="<?php echo esc_url($contact_url); ?>"><?php esc_html_e('Send Inquiry', 'mirrorcraft'); ?></a>
-          <a class="button button-secondary" href="<?php echo esc_url($projects_url); ?>"><?php esc_html_e('View Project Routes', 'mirrorcraft'); ?></a>
-        </div>
+        <p class="oj-contact-line">
+          <a href="mailto:<?php echo antispambot(esc_attr(mirrorcraft_get_contact_email())); ?>"><?php echo esc_html(mirrorcraft_get_contact_email()); ?></a>
+          <?php if (mirrorcraft_get_contact_phone() !== '') : ?>
+            <span> · </span>
+            <a href="tel:<?php echo esc_attr(mirrorcraft_get_contact_phone_href()); ?>"><?php echo esc_html(mirrorcraft_get_contact_phone()); ?></a>
+          <?php endif; ?>
+          <span> · </span>
+          <a href="<?php echo esc_url($resources_url); ?>"><?php esc_html_e('Resources', 'mirrorcraft'); ?></a>
+        </p>
       </div>
     </div>
   </section>

@@ -11,7 +11,7 @@
 <header class="site-header" data-site-header>
   <div class="announcement-bar">
     <div class="shell announcement-shell">
-      <p><?php esc_html_e('OJMIRROR rebuilt around product clarity, faster quote flow, and better project conversations.', 'mirrorcraft'); ?></p>
+      <p><?php esc_html_e('OEM / ODM LED mirrors, lighted medicine cabinets, and project-ready quote support for global B2B buyers.', 'mirrorcraft'); ?></p>
     </div>
   </div>
   <div class="shell header-shell">
@@ -43,10 +43,10 @@
 
     <div class="header-actions">
       <a class="button button-secondary header-link" href="<?php echo esc_url(mirrorcraft_link_by_slug('products', '/products/')); ?>">
-        <?php esc_html_e('Products', 'mirrorcraft'); ?>
+        <?php esc_html_e('Browse Products', 'mirrorcraft'); ?>
       </a>
       <a class="button button-primary" href="<?php echo esc_url(mirrorcraft_link_by_slug('contact', '/contact/')); ?>">
-        <?php esc_html_e('Start a Quote', 'mirrorcraft'); ?>
+        <?php esc_html_e('Request a Quote', 'mirrorcraft'); ?>
       </a>
     </div>
   </div>

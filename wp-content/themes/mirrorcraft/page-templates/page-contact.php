@@ -10,9 +10,10 @@ $faq_items = mirrorcraft_get_faq_items();
     <section class="page-hero">
       <div class="shell page-hero-shell">
         <div class="page-hero-copy">
+          <?php mirrorcraft_render_breadcrumbs(); ?>
           <p class="eyebrow"><?php esc_html_e('Contact', 'mirrorcraft'); ?></p>
           <h1><?php the_title(); ?></h1>
-          <p class="hero-lead"><?php echo esc_html(mirrorcraft_get_page_summary(get_the_ID(), __('The rebuilt contact page is designed to collect a cleaner quote brief instead of sending buyers into a dead end.', 'mirrorcraft'))); ?></p>
+          <p class="hero-lead"><?php echo esc_html(mirrorcraft_get_page_summary(get_the_ID(), __('Share product family, application, quantity, target market, and custom requirements so the quotation process can start from a workable brief.', 'mirrorcraft'))); ?></p>
         </div>
         <aside class="page-hero-aside">
           <div class="mini-stat-list">

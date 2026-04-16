@@ -52,12 +52,20 @@ function mirrorcraft_get_default_menu_items() {
       'url'   => mirrorcraft_link_by_slug('applications', '/applications/'),
     ),
     array(
+      'label' => __('Manufacturing', 'mirrorcraft'),
+      'url'   => mirrorcraft_link_by_slug('manufacturing', '/manufacturing/'),
+    ),
+    array(
       'label' => __('Projects', 'mirrorcraft'),
       'url'   => mirrorcraft_link_by_slug('projects', '/projects/'),
     ),
     array(
-      'label' => __('FAQs', 'mirrorcraft'),
-      'url'   => mirrorcraft_link_by_slug('faqs', '/faqs/'),
+      'label' => __('Resources', 'mirrorcraft'),
+      'url'   => mirrorcraft_link_by_slug('resources', '/resources/'),
+    ),
+    array(
+      'label' => __('FAQ', 'mirrorcraft'),
+      'url'   => mirrorcraft_link_by_slug('faq', '/faq/'),
     ),
     array(
       'label' => __('Contact', 'mirrorcraft'),
@@ -66,13 +74,228 @@ function mirrorcraft_get_default_menu_items() {
   );
 }
 
+function mirrorcraft_get_core_page_blueprints() {
+  $blueprints = array(
+    array(
+      'path'     => 'about',
+      'title'    => __('About', 'mirrorcraft'),
+      'template' => 'page-templates/page-about.php',
+    ),
+    array(
+      'path'     => 'products',
+      'title'    => __('Products', 'mirrorcraft'),
+      'template' => 'page-templates/page-products.php',
+    ),
+    array(
+      'path'     => 'applications',
+      'title'    => __('Applications', 'mirrorcraft'),
+      'template' => 'page-templates/page-applications.php',
+    ),
+    array(
+      'path'     => 'manufacturing',
+      'title'    => __('Manufacturing', 'mirrorcraft'),
+      'template' => 'page-templates/page-manufacturing.php',
+    ),
+    array(
+      'path'     => 'projects',
+      'title'    => __('Projects', 'mirrorcraft'),
+      'template' => 'page-templates/page-projects.php',
+    ),
+    array(
+      'path'     => 'resources',
+      'title'    => __('Resources', 'mirrorcraft'),
+      'template' => 'page-templates/page-resources.php',
+    ),
+    array(
+      'path'     => 'faq',
+      'title'    => __('FAQ', 'mirrorcraft'),
+      'template' => 'page-templates/page-faqs.php',
+    ),
+    array(
+      'path'     => 'contact',
+      'title'    => __('Contact', 'mirrorcraft'),
+      'template' => 'page-templates/page-contact.php',
+    ),
+  );
+
+  foreach (array('projects', 'technology', 'quality-control', 'download-catalogue') as $slug) {
+    $page = mirrorcraft_get_about_section_page_data($slug);
+
+    if (empty($page['path']) || empty($page['title']) || empty($page['template'])) {
+      continue;
+    }
+
+    $blueprints[] = array(
+      'path'     => $page['path'],
+      'title'    => $page['title'],
+      'template' => $page['template'],
+    );
+  }
+
+  foreach (mirrorcraft_get_product_category_pages() as $category) {
+    $blueprints[] = array(
+      'path'     => $category['path'],
+      'title'    => $category['title'],
+      'template' => 'page-templates/page-product-category.php',
+    );
+  }
+
+  foreach (array('hospitality', 'commercial', 'residential', 'senior-living', 'retail-furniture', 'salon', 'healthcare') as $slug) {
+    $page = mirrorcraft_get_application_section_page_data($slug);
+
+    if (empty($page['path']) || empty($page['title'])) {
+      continue;
+    }
+
+    $blueprints[] = array(
+      'path'     => $page['path'],
+      'title'    => $page['title'],
+      'template' => 'page-templates/page-application-section.php',
+    );
+  }
+
+  return $blueprints;
+}
+
+function mirrorcraft_ensure_page_at_path($path, $title, $template = '') {
+  $path = trim((string) $path, '/');
+  $title = trim((string) $title);
+
+  if ($path === '' || $title === '') {
+    return 0;
+  }
+
+  $existing_page = get_page_by_path($path);
+
+  if ($existing_page instanceof WP_Post) {
+    return (int) $existing_page->ID;
+  }
+
+  $parent_id = 0;
+  $segments = explode('/', $path);
+  $slug = array_pop($segments);
+
+  if (!empty($segments)) {
+    $parent_path = implode('/', $segments);
+    $parent_page = get_page_by_path($parent_path);
+
+    if ($parent_page instanceof WP_Post) {
+      $parent_id = (int) $parent_page->ID;
+    }
+  }
+
+  $page_id = wp_insert_post(
+    array(
+      'post_type'      => 'page',
+      'post_status'    => 'publish',
+      'post_title'     => $title,
+      'post_name'      => $slug,
+      'post_parent'    => $parent_id,
+      'comment_status' => 'closed',
+    ),
+    true
+  );
+
+  if (is_wp_error($page_id) || !$page_id) {
+    return 0;
+  }
+
+  if ($template !== '') {
+    update_post_meta($page_id, '_wp_page_template', $template);
+  }
+
+  return (int) $page_id;
+}
+
+function mirrorcraft_maybe_seed_core_pages() {
+  if (!is_admin() || wp_doing_ajax() || !current_user_can('manage_options')) {
+    return;
+  }
+
+  static $has_run = false;
+
+  if ($has_run) {
+    return;
+  }
+
+  $has_run = true;
+
+  foreach (mirrorcraft_get_core_page_blueprints() as $blueprint) {
+    mirrorcraft_ensure_page_at_path(
+      $blueprint['path'] ?? '',
+      $blueprint['title'] ?? '',
+      $blueprint['template'] ?? ''
+    );
+  }
+}
+add_action('admin_init', 'mirrorcraft_maybe_seed_core_pages');
+
 function mirrorcraft_rebuild_fallback_menu($args = array()) {
-  $items = mirrorcraft_get_default_menu_items();
+  $items = array(
+    array(
+      'label' => __('Home', 'mirrorcraft'),
+      'url'   => home_url('/'),
+    ),
+    array(
+      'label' => __('About', 'mirrorcraft'),
+      'url'   => mirrorcraft_link_by_slug('about', '/about/'),
+    ),
+    array(
+      'label'    => __('Products', 'mirrorcraft'),
+      'url'      => mirrorcraft_link_by_slug('products', '/products/'),
+      'children' => mirrorcraft_get_products_submenu_items(),
+    ),
+    array(
+      'label'    => __('Applications', 'mirrorcraft'),
+      'url'      => mirrorcraft_link_by_slug('applications', '/applications/'),
+      'children' => mirrorcraft_get_applications_submenu_items(),
+    ),
+    array(
+      'label' => __('Manufacturing', 'mirrorcraft'),
+      'url'   => mirrorcraft_link_by_slug('manufacturing', '/manufacturing/'),
+    ),
+    array(
+      'label' => __('Projects', 'mirrorcraft'),
+      'url'   => mirrorcraft_link_by_slug('projects', '/projects/'),
+    ),
+    array(
+      'label' => __('Resources', 'mirrorcraft'),
+      'url'   => mirrorcraft_link_by_slug('resources', '/resources/'),
+    ),
+    array(
+      'label' => __('FAQ', 'mirrorcraft'),
+      'url'   => mirrorcraft_link_by_slug('faq', '/faq/'),
+    ),
+    array(
+      'label' => __('Contact', 'mirrorcraft'),
+      'url'   => mirrorcraft_link_by_slug('contact', '/contact/'),
+    ),
+  );
 
   echo '<ul class="nav-list">';
 
   foreach ($items as $item) {
-    echo '<li><a href="' . esc_url($item['url']) . '">' . esc_html($item['label']) . '</a></li>';
+    $has_children = !empty($item['children']) && is_array($item['children']);
+    $li_class = $has_children ? ' class="menu-item-has-children"' : '';
+
+    echo '<li' . $li_class . '>';
+    echo '<a href="' . esc_url($item['url']) . '">' . esc_html($item['label']) . '</a>';
+
+    if ($has_children) {
+      echo '<ul class="sub-menu">';
+
+      foreach ($item['children'] as $child) {
+        if (empty($child['label']) || empty($child['url'])) {
+          continue;
+        }
+
+        echo '<li><a href="' . esc_url($child['url']) . '">' . esc_html($child['label']) . '</a></li>';
+      }
+
+      echo '</ul>';
+    }
+
+    echo '</li>';
   }
 
   echo '</ul>';
@@ -92,73 +315,85 @@ function mirrorcraft_get_product_family_cards() {
     array(
       'tag'   => __('Backlit / Front-lit / Framed', 'mirrorcraft'),
       'title' => __('LED Bathroom Mirrors', 'mirrorcraft'),
-      'text'  => __('Core mirror programs for hospitality bathrooms, multifamily units, branded interiors, and premium residential projects.', 'mirrorcraft'),
+      'text'  => __('Custom LED bathroom mirrors for hospitality bathrooms, multifamily units, premium residential builds, and branded product lines.', 'mirrorcraft'),
       'image' => mirrorcraft_get_product_category_image_url('bathroom-mirror'),
-      'link'  => mirrorcraft_link_by_slug('products', '/products/'),
+      'link'  => mirrorcraft_link_by_slug('products/led-bathroom-mirrors', '/products/led-bathroom-mirrors/'),
     ),
     array(
       'tag'   => __('Storage + Illumination', 'mirrorcraft'),
       'title' => __('Lighted Medicine Cabinets', 'mirrorcraft'),
-      'text'  => __('Cabinet routes that combine lighting, storage, and cleaner installation logic for projects that need more than a mirror alone.', 'mirrorcraft'),
+      'text'  => __('Mirror cabinet programs that combine illumination, storage, and cleaner installation logic for higher-value bathroom projects.', 'mirrorcraft'),
       'image' => mirrorcraft_get_product_category_image_url('medicine-cabinet'),
-      'link'  => mirrorcraft_link_by_slug('products', '/products/'),
+      'link'  => mirrorcraft_link_by_slug('products/lighted-medicine-cabinets', '/products/lighted-medicine-cabinets/'),
+    ),
+    array(
+      'tag'   => __('Decorative + Premium', 'mirrorcraft'),
+      'title' => __('Framed LED Mirrors', 'mirrorcraft'),
+      'text'  => __('Framed LED mirror programs for hospitality interiors, premium bathrooms, and buyers who need a stronger decorative story.', 'mirrorcraft'),
+      'image' => mirrorcraft_get_product_category_image_url('bathroom-mirror'),
+      'link'  => mirrorcraft_link_by_slug('products/framed-led-mirrors', '/products/framed-led-mirrors/'),
+    ),
+    array(
+      'tag'   => __('Beauty + Vanity', 'mirrorcraft'),
+      'title' => __('Makeup / Vanity Mirrors', 'mirrorcraft'),
+      'text'  => __('Task-lighting mirror programs for salons, vanity areas, beauty retail, and buyers who need closer-range grooming visibility.', 'mirrorcraft'),
+      'image' => mirrorcraft_get_product_category_image_url('makeup-mirror'),
+      'link'  => mirrorcraft_link_by_slug('products/makeup-mirrors', '/products/makeup-mirrors/'),
     ),
     array(
       'tag'   => __('OEM / ODM / Private Label', 'mirrorcraft'),
       'title' => __('Custom Mirror Programs', 'mirrorcraft'),
-      'text'  => __('Custom sizes, shapes, frames, features, and packaging direction for buyers building a differentiated product line.', 'mirrorcraft'),
+      'text'  => __('OEM and ODM mirror development for importers, distributors, designers, and private label buyers who need more than an off-the-shelf model.', 'mirrorcraft'),
       'image' => mirrorcraft_get_customization_reference_image_url(),
-      'link'  => mirrorcraft_link_by_slug('contact', '/contact/'),
+      'link'  => mirrorcraft_link_by_slug('products/custom-led-mirrors', '/products/custom-led-mirrors/'),
     ),
   );
 }
 
 function mirrorcraft_get_application_cards() {
-  return array(
-    array(
-      'tag'   => __('Hospitality', 'mirrorcraft'),
-      'title' => __('Hotel and guestroom programs', 'mirrorcraft'),
-      'text'  => __('Built around repeatable room layouts, anti-fog expectations, and the visual consistency hospitality buyers ask for first.', 'mirrorcraft'),
-      'image' => mirrorcraft_theme_image_url('hero-bathroom-led-scene-alt.jpg'),
-    ),
-    array(
-      'tag'   => __('Multifamily', 'mirrorcraft'),
-      'title' => __('Apartment and residential developments', 'mirrorcraft'),
-      'text'  => __('Mirror solutions framed for unit repetition, dependable specification, and clean installation across multiple layouts.', 'mirrorcraft'),
-      'image' => mirrorcraft_theme_image_url('hero-bathroom-led-scene.jpg'),
-    ),
-    array(
-      'tag'   => __('Healthcare', 'mirrorcraft'),
-      'title' => __('Care-oriented bathroom environments', 'mirrorcraft'),
-      'text'  => __('Product routes organized around visibility, maintenance, comfort, and the practical needs of long-term use spaces.', 'mirrorcraft'),
-      'image' => mirrorcraft_theme_image_url('product-medicine-cabinet.jpg'),
-    ),
-    array(
-      'tag'   => __('Retail / Brand', 'mirrorcraft'),
-      'title' => __('Private label and branded collections', 'mirrorcraft'),
-      'text'  => __('The rebuilt site is ready for differentiated collections, curated feature mixes, and private label quote conversations.', 'mirrorcraft'),
-      'image' => mirrorcraft_theme_image_url('hero-makeup-model.jpg'),
-    ),
-  );
+  $items = array();
+  $slugs = array('hospitality', 'commercial', 'residential', 'senior-living', 'retail-furniture', 'salon', 'healthcare');
+
+  foreach ($slugs as $slug) {
+    $page = mirrorcraft_get_application_section_page_data($slug);
+
+    if (empty($page)) {
+      continue;
+    }
+
+    $items[] = array(
+      'tag'   => $page['title'] ?? ucfirst(str_replace('-', ' ', $slug)),
+      'title' => $page['hero_title'] ?? ($page['title'] ?? ucfirst(str_replace('-', ' ', $slug))),
+      'text'  => $page['hero_text'] ?? '',
+      'image' => $page['image'] ?? mirrorcraft_get_product_category_image_url('bathroom-mirror'),
+      'link'  => mirrorcraft_get_application_section_page_link($slug),
+    );
+  }
+
+  return $items;
 }
 
 function mirrorcraft_get_process_steps() {
   return array(
     array(
       'title' => __('Define the product route', 'mirrorcraft'),
-      'text'  => __('Start with category, application, quantity range, and the feature set that actually matters to the buyer.', 'mirrorcraft'),
+      'text'  => __('Start with category, target market, quantity range, and the feature mix that matters to the project.', 'mirrorcraft'),
     ),
     array(
       'title' => __('Lock the brief', 'mirrorcraft'),
-      'text'  => __('Align size, style, finish, lighting behavior, cabinet structure, packaging, and any custom program requirements.', 'mirrorcraft'),
+      'text'  => __('Confirm size, shape, lighting behavior, finish, cabinet structure, and packaging requirements before quoting deeper.', 'mirrorcraft'),
     ),
     array(
-      'title' => __('Confirm with samples', 'mirrorcraft'),
-      'text'  => __('Move from concept to sample review before full production, especially when the project depends on repeat consistency.', 'mirrorcraft'),
+      'title' => __('Sample and review', 'mirrorcraft'),
+      'text'  => __('Use samples to align visual details, installation logic, and specification expectations before production.', 'mirrorcraft'),
     ),
     array(
-      'title' => __('Produce and deliver', 'mirrorcraft'),
-      'text'  => __('Carry the order through production planning, QC checkpoints, export packing, and shipment coordination.', 'mirrorcraft'),
+      'title' => __('Approve and produce', 'mirrorcraft'),
+      'text'  => __('Move into production planning, quality checkpoints, and packaging preparation once the route is approved.', 'mirrorcraft'),
+    ),
+    array(
+      'title' => __('Export and deliver', 'mirrorcraft'),
+      'text'  => __('Coordinate shipment, export packing, and project handoff with a clearer final brief and fewer surprises downstream.', 'mirrorcraft'),
     ),
   );
 }
