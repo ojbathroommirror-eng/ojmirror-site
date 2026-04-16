@@ -163,27 +163,6 @@ function mirrorcraft_get_process_steps() {
   );
 }
 
-function mirrorcraft_get_faq_items() {
-  return array(
-    array(
-      'question' => __('What changed in the rebuilt OJMIRROR site?', 'mirrorcraft'),
-      'answer'   => __('The structure now prioritizes product families, applications, and quote clarity instead of scattering the story across too many overlapping sections.', 'mirrorcraft'),
-    ),
-    array(
-      'question' => __('Can buyers still ask about custom mirror programs?', 'mirrorcraft'),
-      'answer'   => __('Yes. The new site keeps OEM, ODM, private label, and project-specific inquiry paths visible across the homepage and the contact page.', 'mirrorcraft'),
-    ),
-    array(
-      'question' => __('Does this work for both project supply and distribution?', 'mirrorcraft'),
-      'answer'   => __('That is the point of the rebuild. The new pages are written to support project teams, distributors, and branded buyers with a clearer entry route for each.', 'mirrorcraft'),
-    ),
-    array(
-      'question' => __('Can we add more case studies and product detail later?', 'mirrorcraft'),
-      'answer'   => __('Yes. The rebuilt theme gives you a cleaner scaffold for future category pages, product detail content, and project-specific articles.', 'mirrorcraft'),
-    ),
-  );
-}
-
 function mirrorcraft_render_faq_items($items, $id_prefix = 'faq') {
   if (empty($items) || !is_array($items)) {
     return;
