@@ -1,0 +1,70 @@
+{
+  "poll_interval_seconds": 6,
+  "cooldown_seconds": 180,
+  "only_trading_hours": true,
+  "trading_timezone": "Asia/Shanghai",
+  "request_timeout_seconds": 10,
+  "log_file": "alerts-renmintongtai.log",
+  "desktop_notifications": true,
+  "feishu": {
+    "enabled": false,
+    "webhook_url_env": "FEISHU_BOT_WEBHOOK",
+    "secret_env": "FEISHU_BOT_SECRET",
+    "keyword": "A股提醒",
+    "timeout_seconds": 10
+  },
+  "ollama": {
+    "enabled": true,
+    "url": "http://127.0.0.1:11434/api/generate",
+    "model": "gemma4:e2b",
+    "timeout_seconds": 20
+  },
+  "symbols": [
+    {
+      "id": "600829_halfway_breakout",
+      "code": "600829",
+      "name": "人民同泰",
+      "strategy": "半路拉升",
+      "match": "all",
+      "rules": {
+        "pct_change_gte": 3.5,
+        "amount_gte_yi": 2.0,
+        "from_open_pct_gte": 2.0
+      }
+    },
+    {
+      "id": "600829_pre_limit_up",
+      "code": "600829",
+      "name": "人民同泰",
+      "strategy": "板前加速",
+      "match": "all",
+      "rules": {
+        "pct_change_gte": 7.5,
+        "turnover_rate_gte": 6.0,
+        "amount_gte_yi": 4.0
+      }
+    },
+    {
+      "id": "600829_high_turnover_whipsaw",
+      "code": "600829",
+      "name": "人民同泰",
+      "strategy": "高换手震荡",
+      "match": "all",
+      "rules": {
+        "amplitude_gte": 9.0,
+        "turnover_rate_gte": 8.0
+      }
+    },
+    {
+      "id": "600829_momentum_failure",
+      "code": "600829",
+      "name": "人民同泰",
+      "strategy": "冲高回落预警",
+      "match": "all",
+      "rules": {
+        "pct_change_lte": -2.5,
+        "amount_gte_yi": 3.0
+      }
+    }
+  ]
+}

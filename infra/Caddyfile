@@ -1,0 +1,40 @@
+{
+  email {$LETSENCRYPT_EMAIL}
+}
+
+{$ROOT_DOMAIN} {
+  redir https://{$PRIMARY_DOMAIN}{uri} permanent
+}
+
+{$PRIMARY_DOMAIN} {
+  encode zstd gzip
+
+  @versioned_assets {
+    path_regexp versioned_assets ^/(?:wp-content/themes|wp-content/plugins|wp-includes)/.*\.(?:css|js|mjs|jpg|jpeg|png|webp|gif|svg|ico|woff2?|ttf|otf)$
+  }
+
+  @uploads {
+    path /wp-content/uploads/*
+  }
+
+  header {
+    Strict-Transport-Security "max-age=31536000"
+    X-Content-Type-Options "nosniff"
+    X-Frame-Options "SAMEORIGIN"
+    Referrer-Policy "strict-origin-when-cross-origin"
+  }
+
+  header @versioned_assets {
+    Cache-Control "public, max-age=31536000, immutable"
+  }
+
+  header @uploads {
+    Cache-Control "public, max-age=604800, stale-while-revalidate=86400"
+  }
+
+  reverse_proxy wordpress:80 {
+    header_up Host {host}
+    header_up X-Forwarded-For {remote_host}
+    header_up X-Forwarded-Proto {scheme}
+  }
+}

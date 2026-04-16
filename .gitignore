@@ -1,0 +1,13 @@
+.env
+.DS_Store
+*.log
+*.tmp
+*.swp
+*.swo
+.idea/
+.vscode/
+wp-content/uploads/
+wp-content/cache/
+wp-content/upgrade/
+wp-content/backup*
+a-share-monitor/*.log

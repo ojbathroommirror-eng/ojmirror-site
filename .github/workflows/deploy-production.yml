@@ -1,0 +1,165 @@
+name: Deploy Production
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: Branch to deploy
+        required: false
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    env:
+      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+      DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+      DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+      DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
+      DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+      DEPLOY_HEALTHCHECK_URL: ${{ secrets.DEPLOY_HEALTHCHECK_URL }}
+      DEPLOY_BRANCH_INPUT: ${{ inputs.branch }}
+    steps:
+      - name: Validate deployment configuration
+        shell: bash
+        run: |
+          set -euo pipefail
+          missing=()
+
+          for name in DEPLOY_HOST DEPLOY_USER DEPLOY_PATH DEPLOY_SSH_KEY; do
+            if [ -z "${!name:-}" ]; then
+              missing+=("$name")
+            fi
+          done
+
+          if [ "${#missing[@]}" -gt 0 ]; then
+            echo "Missing required GitHub Secrets: ${missing[*]}" >&2
+            exit 1
+          fi
+
+      - name: Prepare SSH access
+        shell: bash
+        run: |
+          set -euo pipefail
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          touch ~/.ssh/known_hosts
+          ssh-keyscan -p "${DEPLOY_PORT:-22}" -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
+
+      - name: Deploy on production server
+        id: deploy
+        shell: bash
+        run: |
+          set -euo pipefail
+          branch="${DEPLOY_BRANCH_INPUT:-${GITHUB_REF_NAME}}"
+          port="${DEPLOY_PORT:-22}"
+
+          remote_output="$(
+            ssh -p "$port" "$DEPLOY_USER@$DEPLOY_HOST" bash -s -- "$DEPLOY_PATH" "$branch" <<'EOF'
+          set -euo pipefail
+          deploy_path="$1"
+          deploy_branch="$2"
+
+          if [ ! -d "$deploy_path" ]; then
+            echo "Deploy path not found: $deploy_path" >&2
+            exit 1
+          fi
+
+          cd "$deploy_path"
+
+          for command_name in git docker; do
+            if ! command -v "$command_name" >/dev/null 2>&1; then
+              echo "Required command not found on server: $command_name" >&2
+              exit 1
+            fi
+          done
+
+          if ! docker compose version >/dev/null 2>&1; then
+            echo "docker compose is not available on the server." >&2
+            exit 1
+          fi
+
+          if [ ! -f "docker-compose.production.yml" ]; then
+            echo "docker-compose.production.yml not found in $deploy_path" >&2
+            exit 1
+          fi
+
+          if [ ! -f ".env" ]; then
+            echo ".env not found in $deploy_path" >&2
+            exit 1
+          fi
+
+          git fetch --prune origin "$deploy_branch"
+
+          if git show-ref --verify --quiet "refs/heads/$deploy_branch"; then
+            git checkout "$deploy_branch"
+          else
+            git checkout -b "$deploy_branch" "origin/$deploy_branch"
+          fi
+
+          git pull --ff-only origin "$deploy_branch"
+          docker compose -f docker-compose.production.yml --env-file .env pull
+          docker compose -f docker-compose.production.yml --env-file .env up -d --remove-orphans
+          echo "DEPLOY_COMMIT=$(git rev-parse HEAD)"
+          EOF
+          )"
+
+          printf '%s\n' "$remote_output"
+
+          deploy_commit="$(printf '%s\n' "$remote_output" | sed -n 's/^DEPLOY_COMMIT=//p' | tail -n 1)"
+
+          if [ -z "$deploy_commit" ]; then
+            echo "Failed to capture deployed commit SHA." >&2
+            exit 1
+          fi
+
+          echo "deploy_commit=$deploy_commit" >> "$GITHUB_OUTPUT"
+
+      - name: Verify production healthcheck
+        if: env.DEPLOY_HEALTHCHECK_URL != ''
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          for attempt in $(seq 1 10); do
+            status_code="$(curl -L -sS -o /dev/null -w '%{http_code}' "$DEPLOY_HEALTHCHECK_URL" || true)"
+
+            case "$status_code" in
+              200|201|202|204|301|302|307|308)
+                echo "Healthcheck passed with HTTP $status_code on attempt $attempt."
+                exit 0
+                ;;
+            esac
+
+            echo "Healthcheck attempt $attempt returned HTTP ${status_code:-000}. Retrying in 10s..."
+            sleep 10
+          done
+
+          echo "Healthcheck failed for $DEPLOY_HEALTHCHECK_URL" >&2
+          exit 1
+
+      - name: Write deployment summary
+        shell: bash
+        run: |
+          {
+            echo "## Production Deployment"
+            echo
+            echo "- Branch: \`${DEPLOY_BRANCH_INPUT:-${GITHUB_REF_NAME}}\`"
+            echo "- Commit: \`${{ steps.deploy.outputs.deploy_commit }}\`"
+            if [ -n "${DEPLOY_HEALTHCHECK_URL:-}" ]; then
+              echo "- Healthcheck: \`${DEPLOY_HEALTHCHECK_URL}\`"
+            else
+              echo "- Healthcheck: not configured"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

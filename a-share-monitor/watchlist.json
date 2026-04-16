@@ -1,0 +1,296 @@
+{
+  "poll_interval_seconds": 10,
+  "cooldown_seconds": 300,
+  "only_trading_hours": true,
+  "trading_timezone": "Asia/Shanghai",
+  "request_timeout_seconds": 10,
+  "log_file": "alerts.log",
+  "desktop_notifications": true,
+  "feishu": {
+    "enabled": false,
+    "webhook_url_env": "FEISHU_BOT_WEBHOOK",
+    "secret_env": "FEISHU_BOT_SECRET",
+    "keyword": "A股提醒",
+    "timeout_seconds": 10
+  },
+  "ollama": {
+    "enabled": true,
+    "url": "http://127.0.0.1:11434/api/generate",
+    "model": "gemma4:e2b",
+    "timeout_seconds": 20
+  },
+  "symbols": [
+    {
+      "id": "600519_breakout",
+      "code": "600519",
+      "name": "贵州茅台",
+      "strategy": "放量拉升",
+      "match": "all",
+      "rules": {
+        "pct_change_gte": 2.2,
+        "amount_gte_yi": 10.0,
+        "from_open_pct_gte": 1.5
+      }
+    },
+    {
+      "id": "600519_whipsaw",
+      "code": "600519",
+      "name": "贵州茅台",
+      "strategy": "大振幅异动",
+      "match": "all",
+      "rules": {
+        "amplitude_gte": 3.2,
+        "amount_gte_yi": 12.0
+      }
+    },
+    {
+      "id": "600519_flush",
+      "code": "600519",
+      "name": "贵州茅台",
+      "strategy": "放量回落",
+      "match": "all",
+      "rules": {
+        "pct_change_lte": -2.0,
+        "amount_gte_yi": 10.0
+      }
+    },
+    {
+      "id": "300750_breakout",
+      "code": "300750",
+      "name": "宁德时代",
+      "strategy": "放量拉升",
+      "match": "all",
+      "rules": {
+        "pct_change_gte": 2.5,
+        "amount_gte_yi": 20.0,
+        "from_open_pct_gte": 1.8
+      }
+    },
+    {
+      "id": "300750_whipsaw",
+      "code": "300750",
+      "name": "宁德时代",
+      "strategy": "大振幅异动",
+      "match": "all",
+      "rules": {
+        "amplitude_gte": 4.5,
+        "turnover_rate_gte": 1.5
+      }
+    },
+    {
+      "id": "300750_flush",
+      "code": "300750",
+      "name": "宁德时代",
+      "strategy": "放量回落",
+      "match": "all",
+      "rules": {
+        "pct_change_lte": -2.5,
+        "amount_gte_yi": 18.0
+      }
+    },
+    {
+      "id": "002594_breakout",
+      "code": "002594",
+      "name": "比亚迪",
+      "strategy": "放量拉升",
+      "match": "all",
+      "rules": {
+        "pct_change_gte": 2.8,
+        "amount_gte_yi": 15.0,
+        "from_open_pct_gte": 2.0
+      }
+    },
+    {
+      "id": "002594_whipsaw",
+      "code": "002594",
+      "name": "比亚迪",
+      "strategy": "大振幅异动",
+      "match": "all",
+      "rules": {
+        "amplitude_gte": 5.0,
+        "turnover_rate_gte": 1.8
+      }
+    },
+    {
+      "id": "002594_flush",
+      "code": "002594",
+      "name": "比亚迪",
+      "strategy": "放量回落",
+      "match": "all",
+      "rules": {
+        "pct_change_lte": -2.8,
+        "amount_gte_yi": 15.0
+      }
+    },
+    {
+      "id": "688981_breakout",
+      "code": "688981",
+      "name": "中芯国际",
+      "strategy": "放量拉升",
+      "match": "all",
+      "rules": {
+        "pct_change_gte": 3.5,
+        "amount_gte_yi": 12.0,
+        "from_open_pct_gte": 2.2
+      }
+    },
+    {
+      "id": "688981_whipsaw",
+      "code": "688981",
+      "name": "中芯国际",
+      "strategy": "大振幅异动",
+      "match": "all",
+      "rules": {
+        "amplitude_gte": 6.0,
+        "turnover_rate_gte": 2.2
+      }
+    },
+    {
+      "id": "688981_flush",
+      "code": "688981",
+      "name": "中芯国际",
+      "strategy": "放量回落",
+      "match": "all",
+      "rules": {
+        "pct_change_lte": -3.2,
+        "amount_gte_yi": 10.0
+      }
+    },
+    {
+      "id": "601318_breakout",
+      "code": "601318",
+      "name": "中国平安",
+      "strategy": "放量拉升",
+      "match": "all",
+      "rules": {
+        "pct_change_gte": 2.0,
+        "amount_gte_yi": 8.0,
+        "from_open_pct_gte": 1.2
+      }
+    },
+    {
+      "id": "601318_whipsaw",
+      "code": "601318",
+      "name": "中国平安",
+      "strategy": "大振幅异动",
+      "match": "all",
+      "rules": {
+        "amplitude_gte": 3.8,
+        "turnover_rate_gte": 1.2
+      }
+    },
+    {
+      "id": "601318_flush",
+      "code": "601318",
+      "name": "中国平安",
+      "strategy": "放量回落",
+      "match": "all",
+      "rules": {
+        "pct_change_lte": -2.0,
+        "amount_gte_yi": 8.0
+      }
+    },
+    {
+      "id": "600036_breakout",
+      "code": "600036",
+      "name": "招商银行",
+      "strategy": "放量拉升",
+      "match": "all",
+      "rules": {
+        "pct_change_gte": 2.0,
+        "amount_gte_yi": 8.0,
+        "from_open_pct_gte": 1.3
+      }
+    },
+    {
+      "id": "600036_whipsaw",
+      "code": "600036",
+      "name": "招商银行",
+      "strategy": "大振幅异动",
+      "match": "all",
+      "rules": {
+        "amplitude_gte": 3.8,
+        "turnover_rate_gte": 1.0
+      }
+    },
+    {
+      "id": "600036_flush",
+      "code": "600036",
+      "name": "招商银行",
+      "strategy": "放量回落",
+      "match": "all",
+      "rules": {
+        "pct_change_lte": -2.0,
+        "amount_gte_yi": 8.0
+      }
+    },
+    {
+      "id": "002371_breakout",
+      "code": "002371",
+      "name": "北方华创",
+      "strategy": "放量拉升",
+      "match": "all",
+      "rules": {
+        "pct_change_gte": 3.2,
+        "amount_gte_yi": 10.0,
+        "from_open_pct_gte": 2.0
+      }
+    },
+    {
+      "id": "002371_whipsaw",
+      "code": "002371",
+      "name": "北方华创",
+      "strategy": "大振幅异动",
+      "match": "all",
+      "rules": {
+        "amplitude_gte": 5.5,
+        "turnover_rate_gte": 1.8
+      }
+    },
+    {
+      "id": "002371_flush",
+      "code": "002371",
+      "name": "北方华创",
+      "strategy": "放量回落",
+      "match": "all",
+      "rules": {
+        "pct_change_lte": -3.0,
+        "amount_gte_yi": 10.0
+      }
+    },
+    {
+      "id": "600829_breakout",
+      "code": "600829",
+      "name": "人民同泰",
+      "strategy": "放量拉升",
+      "match": "all",
+      "rules": {
+        "pct_change_gte": 4.0,
+        "amount_gte_yi": 2.5,
+        "from_open_pct_gte": 2.5
+      }
+    },
+    {
+      "id": "600829_whipsaw",
+      "code": "600829",
+      "name": "人民同泰",
+      "strategy": "大振幅异动",
+      "match": "all",
+      "rules": {
+        "amplitude_gte": 7.0,
+        "turnover_rate_gte": 4.0
+      }
+    },
+    {
+      "id": "600829_flush",
+      "code": "600829",
+      "name": "人民同泰",
+      "strategy": "放量回落",
+      "match": "all",
+      "rules": {
+        "pct_change_lte": -4.0,
+        "amount_gte_yi": 2.5
+      }
+    }
+  ]
+}
