@@ -168,7 +168,26 @@ function mirrorcraft_ensure_page_at_path($path, $title, $template = '') {
   $existing_page = get_page_by_path($path);
 
   if ($existing_page instanceof WP_Post) {
-    return (int) $existing_page->ID;
+    $page_id = (int) $existing_page->ID;
+
+    if ($template !== '') {
+      $current_template = (string) get_post_meta($page_id, '_wp_page_template', true);
+
+      if ($current_template !== $template) {
+        update_post_meta($page_id, '_wp_page_template', $template);
+      }
+    }
+
+    if ((string) $existing_page->post_title !== $title) {
+      wp_update_post(
+        array(
+          'ID'         => $page_id,
+          'post_title' => $title,
+        )
+      );
+    }
+
+    return $page_id;
   }
 
   $parent_id = 0;
@@ -229,6 +248,74 @@ function mirrorcraft_maybe_seed_core_pages() {
   }
 }
 add_action('admin_init', 'mirrorcraft_maybe_seed_core_pages');
+
+function mirrorcraft_normalize_request_path($path) {
+  $path = trim((string) $path);
+
+  if ($path === '') {
+    return '';
+  }
+
+  $path = wp_parse_url($path, PHP_URL_PATH);
+  $path = is_string($path) ? $path : '';
+
+  if ($path === '') {
+    return '';
+  }
+
+  $home_path = wp_parse_url(home_url('/'), PHP_URL_PATH);
+  $home_path = is_string($home_path) ? trim($home_path, '/') : '';
+  $normalized_path = trim($path, '/');
+
+  if ($home_path !== '' && strpos($normalized_path, $home_path . '/') === 0) {
+    $normalized_path = substr($normalized_path, strlen($home_path) + 1);
+  } elseif ($home_path !== '' && $normalized_path === $home_path) {
+    $normalized_path = '';
+  }
+
+  return trim($normalized_path, '/');
+}
+
+function mirrorcraft_maybe_seed_requested_core_page() {
+  if (is_admin() || wp_doing_ajax() || (defined('REST_REQUEST') && REST_REQUEST)) {
+    return;
+  }
+
+  $request_uri = isset($_SERVER['REQUEST_URI']) ? wp_unslash((string) $_SERVER['REQUEST_URI']) : '';
+  $request_path = mirrorcraft_normalize_request_path($request_uri);
+
+  if ($request_path === '') {
+    return;
+  }
+
+  $requested_blueprint = null;
+
+  foreach (mirrorcraft_get_core_page_blueprints() as $blueprint) {
+    $blueprint_path = trim((string) ($blueprint['path'] ?? ''), '/');
+
+    if ($blueprint_path !== '' && $blueprint_path === $request_path) {
+      $requested_blueprint = $blueprint;
+      break;
+    }
+  }
+
+  if (!$requested_blueprint) {
+    return;
+  }
+
+  if (get_page_by_path($request_path) instanceof WP_Post) {
+    return;
+  }
+
+  foreach (mirrorcraft_get_core_page_blueprints() as $blueprint) {
+    mirrorcraft_ensure_page_at_path(
+      $blueprint['path'] ?? '',
+      $blueprint['title'] ?? '',
+      $blueprint['template'] ?? ''
+    );
+  }
+}
+add_action('init', 'mirrorcraft_maybe_seed_requested_core_page', 20);
 
 function mirrorcraft_rebuild_fallback_menu($args = array()) {
   $items = array(

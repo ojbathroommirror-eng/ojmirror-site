@@ -824,6 +824,200 @@ h3 {
   font-size: 0.9rem;
 }
 
+.about-anchor-nav {
+  position: sticky;
+  top: 92px;
+  z-index: 25;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.about-anchor-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 999px;
+  color: var(--muted);
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.about-anchor-nav a:hover,
+.about-anchor-nav a:focus-visible {
+  background: rgba(15, 93, 88, 0.1);
+  color: var(--brand-deep);
+}
+
+.about-split-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.about-section-heading {
+  margin-bottom: 0;
+}
+
+.about-hero-aside {
+  background:
+    linear-gradient(145deg, rgba(15, 93, 88, 0.08), rgba(255, 255, 255, 0.86)),
+    rgba(255, 255, 255, 0.8);
+}
+
+.about-hero-aside .mini-stat-list {
+  gap: 0;
+}
+
+.about-hero-aside .mini-stat-list div {
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(27, 28, 29, 0.08);
+}
+
+.about-hero-aside .mini-stat-list div:first-child {
+  padding-top: 0;
+}
+
+.about-hero-aside .mini-stat-list div:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.about-story-card {
+  overflow: hidden;
+  padding: 0;
+}
+
+.about-story-media {
+  aspect-ratio: 1 / 0.78;
+  overflow: hidden;
+  background: rgba(15, 93, 88, 0.08);
+}
+
+.about-story-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-story-body {
+  display: grid;
+  gap: 16px;
+  padding: 24px;
+}
+
+.about-market-shell {
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+}
+
+.about-market-card {
+  display: grid;
+  gap: 22px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.88), rgba(247, 244, 238, 0.92)),
+    rgba(255, 255, 255, 0.82);
+}
+
+.about-chip-cloud {
+  display: grid;
+  gap: 12px;
+}
+
+.about-advantage-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.about-advantage-card::after {
+  content: "";
+  position: absolute;
+  inset: auto -40px -42px auto;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(187, 125, 59, 0.14), transparent 68%);
+  pointer-events: none;
+}
+
+.about-workshop-card,
+.about-rnd-panel {
+  display: grid;
+  gap: 14px;
+}
+
+.about-workshop-card {
+  min-height: 100%;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.88), rgba(244, 239, 232, 0.92)),
+    rgba(255, 255, 255, 0.8);
+}
+
+.about-rnd-grid {
+  align-items: stretch;
+}
+
+.about-rnd-panel {
+  align-content: start;
+  background: linear-gradient(160deg, var(--brand-deep), #173d39);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.about-rnd-panel p,
+.about-rnd-panel .feature-tag {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.about-rnd-panel .button-secondary {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.about-process-grid,
+.about-development-grid {
+  margin-top: 24px;
+}
+
+.about-process-card {
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.about-development-card {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(252, 248, 242, 0.92)),
+    rgba(255, 255, 255, 0.84);
+}
+
+.about-inline-actions {
+  margin-top: 24px;
+}
+
+.about-cta-card {
+  align-items: stretch;
+}
+
+.about-cta-panel {
+  min-width: 300px;
+  display: grid;
+  gap: 14px;
+  padding: 22px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.about-cta-panel a {
+  color: var(--brand);
+}
+
 .archive-description p {
   color: var(--muted);
 }
@@ -1411,6 +1605,8 @@ h3 {
   .hero-shell,
   .page-hero-shell,
   .capability-shell,
+  .about-split-grid,
+  .about-market-shell,
   .footer-grid,
   .card-grid-two,
   .card-grid-three,
@@ -1521,7 +1717,9 @@ h3 {
   .entry-card,
   .cta-card,
   .post-card-body,
-  .feature-card-body {
+  .feature-card-body,
+  .about-story-body,
+  .about-cta-panel {
     padding: 22px;
   }
 
@@ -1566,6 +1764,11 @@ h3 {
 
   .footer-subbar-shell {
     align-items: stretch;
+  }
+
+  .about-anchor-nav {
+    position: static;
+    border-radius: 24px;
   }
 }
 
