@@ -111,6 +111,7 @@ jobs:
           git pull --ff-only origin "$deploy_branch"
           docker compose -f docker-compose.production.yml --env-file .env pull
           docker compose -f docker-compose.production.yml --env-file .env up -d --remove-orphans
+          docker compose -f docker-compose.production.yml --env-file .env up -d --no-deps --force-recreate wordpress
           echo "DEPLOY_COMMIT=$(git rev-parse HEAD)"
           EOF
           )"
@@ -157,6 +158,7 @@ jobs:
             echo
             echo "- Branch: \`${DEPLOY_BRANCH_INPUT:-${GITHUB_REF_NAME}}\`"
             echo "- Commit: \`${{ steps.deploy.outputs.deploy_commit }}\`"
+            echo "- WordPress container: force recreated after stack update"
             if [ -n "${DEPLOY_HEALTHCHECK_URL:-}" ]; then
               echo "- Healthcheck: \`${DEPLOY_HEALTHCHECK_URL}\`"
             else
