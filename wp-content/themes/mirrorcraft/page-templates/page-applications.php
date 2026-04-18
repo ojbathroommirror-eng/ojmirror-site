@@ -4,12 +4,20 @@ Template Name: Applications Page
 */
 get_header();
 $application_cards = mirrorcraft_get_application_cards();
+$application_sector_labels = array();
+
+foreach (mirrorcraft_get_application_submenu_pages() as $page) {
+  if (!empty($page['title'])) {
+    $application_sector_labels[] = $page['title'];
+  }
+}
+
 $product_cards = mirrorcraft_get_product_family_cards();
 $application_notes = array(
-  __('The same mirror family can perform differently across hospitality, residential, healthcare, or beauty-led spaces.', 'mirrorcraft'),
+  __('The same mirror family can perform differently across hospitality, residential, healthcare, transportation, education, or beauty-led spaces.', 'mirrorcraft'),
   __('Application pages help buyers align lighting behavior, maintenance expectations, storage needs, and visual direction before asking for pricing.', 'mirrorcraft'),
-  __('Projects, distributors, and private label programs often need different supporting documents and rollout logic even when the product route overlaps.', 'mirrorcraft'),
-  __('The best-fit product family usually becomes clear only after the space type and end-user expectation are defined.', 'mirrorcraft'),
+  __('Projects, distributors, developers, and private label programs often need different supporting documents and rollout logic even when the product route overlaps.', 'mirrorcraft'),
+  __('The best-fit product family usually becomes clear only after the space type, traffic level, and end-user expectation are defined.', 'mirrorcraft'),
 );
 ?>
 <main id="site-main" class="site-main page-shell" tabindex="-1">
@@ -25,13 +33,9 @@ $application_notes = array(
         <aside class="page-hero-aside">
           <span class="feature-tag"><?php esc_html_e('Common sectors', 'mirrorcraft'); ?></span>
           <ul class="feature-list">
-            <li><?php esc_html_e('Hospitality', 'mirrorcraft'); ?></li>
-            <li><?php esc_html_e('Commercial', 'mirrorcraft'); ?></li>
-            <li><?php esc_html_e('Residential / Multifamily', 'mirrorcraft'); ?></li>
-            <li><?php esc_html_e('Senior Living', 'mirrorcraft'); ?></li>
-            <li><?php esc_html_e('Retail / Furniture', 'mirrorcraft'); ?></li>
-            <li><?php esc_html_e('Salon / Beauty', 'mirrorcraft'); ?></li>
-            <li><?php esc_html_e('Healthcare', 'mirrorcraft'); ?></li>
+            <?php foreach ($application_sector_labels as $label) : ?>
+              <li><?php echo esc_html($label); ?></li>
+            <?php endforeach; ?>
           </ul>
         </aside>
       </div>
@@ -67,7 +71,7 @@ $application_notes = array(
         <div class="section-heading">
           <p class="eyebrow"><?php esc_html_e('How Application Changes The Spec', 'mirrorcraft'); ?></p>
           <h2><?php esc_html_e('The product route is only half of the story. The environment changes the rest.', 'mirrorcraft'); ?></h2>
-          <p class="section-copy"><?php esc_html_e('Hospitality, commercial, residential, senior living, salon, and healthcare buyers often start from different installation realities, maintenance concerns, and user expectations.', 'mirrorcraft'); ?></p>
+          <p class="section-copy"><?php esc_html_e('Hospitality, commercial, residential, healthcare, retail, transportation, and education buyers often start from different installation realities, maintenance concerns, and user expectations.', 'mirrorcraft'); ?></p>
         </div>
         <article class="entry-card">
           <ul class="feature-list">

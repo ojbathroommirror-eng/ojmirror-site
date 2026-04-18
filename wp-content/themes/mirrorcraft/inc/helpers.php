@@ -1021,6 +1021,8 @@ function mirrorcraft_redirect_legacy_product_category_links() {
     '/products/medicine-cabinets'  => mirrorcraft_get_product_category_page_link('lighted-medicine-cabinets'),
     '/products/decorative-mirrors' => mirrorcraft_get_product_category_page_link('framed-led-mirrors'),
     '/products/framed-mirrors'     => mirrorcraft_get_product_category_page_link('framed-led-mirrors'),
+    '/applications/retail-furniture' => mirrorcraft_get_application_section_page_link('retail-chain-stores'),
+    '/applications/salon'            => mirrorcraft_get_application_section_page_link('beauty-wellness'),
     '/faqs'                        => mirrorcraft_link_by_slug('faq', '/faq/'),
   );
 
@@ -1033,7 +1035,526 @@ function mirrorcraft_redirect_legacy_product_category_links() {
 }
 add_action('template_redirect', 'mirrorcraft_redirect_legacy_product_category_links', 1);
 
+function mirrorcraft_get_about_submenu_page_definitions() {
+  return array(
+    'projects' => array(
+      'title'       => __('Projects', 'mirrorcraft'),
+      'path'        => 'about/projects',
+      'template'    => 'page-templates/page-about-section.php',
+      'eyebrow'     => __('Projects', 'mirrorcraft'),
+      'hero_text'   => __('We support hospitality, residential, commercial, healthcare, and custom-led projects with a sourcing workflow that keeps specification, sampling, production, and delivery aligned.', 'mirrorcraft'),
+      'hero_chips'  => array(
+        __('Hospitality', 'mirrorcraft'),
+        __('Residential', 'mirrorcraft'),
+        __('Commercial', 'mirrorcraft'),
+        __('Custom Programs', 'mirrorcraft'),
+      ),
+      'hero_stats'  => array(
+        array('value' => __('OEM / ODM', 'mirrorcraft'), 'label' => __('Project model', 'mirrorcraft')),
+        array('value' => __('Bulk Ready', 'mirrorcraft'), 'label' => __('Order support', 'mirrorcraft')),
+        array('value' => __('Export Focus', 'mirrorcraft'), 'label' => __('Delivery route', 'mirrorcraft')),
+      ),
+      'focus_title' => __('Project work starts with the real installation environment.', 'mirrorcraft'),
+      'focus_text'  => __('Different sectors ask for different mirror sizes, functions, packaging logic, and lead-time planning. We keep those decisions visible before volume production starts.', 'mirrorcraft'),
+      'focus_items' => array(
+        __('Match mirror families to the space type and daily-use expectation.', 'mirrorcraft'),
+        __('Confirm lighting, anti-fog, storage, and finish options before quoting deeper.', 'mirrorcraft'),
+        __('Support sample review, packing logic, and shipment planning for bulk programs.', 'mirrorcraft'),
+      ),
+      'aside_kicker' => __('Project Support', 'mirrorcraft'),
+      'aside_title'  => __('How we keep custom and project orders easier to manage.', 'mirrorcraft'),
+      'aside_items'  => array(
+        __('Recommend the right product route based on layout, function, and buyer model.', 'mirrorcraft'),
+        __('Translate drawings, target pricing, and finish direction into a workable supply brief.', 'mirrorcraft'),
+        __('Keep production, inspection, and export preparation tied to the approved sample direction.', 'mirrorcraft'),
+      ),
+      'cards_title' => __('Where these project programs are commonly used', 'mirrorcraft'),
+      'cards_text'  => __('The sectors vary, but the core need stays the same: the product has to fit the space, stay consistent in bulk, and arrive ready for rollout.', 'mirrorcraft'),
+      'cards'       => array(
+        array(
+          'title' => __('Hospitality Projects', 'mirrorcraft'),
+          'text'  => __('Guest room, suite, and amenity mirror packages that need brand consistency and renovation-friendly planning.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Residential Developments', 'mirrorcraft'),
+          'text'  => __('Developer and multifamily mirror ranges that balance finish level, cost, and repeated unit layouts.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Commercial Facilities', 'mirrorcraft'),
+          'text'  => __('Washroom and shared-space mirror solutions that prioritize durability, easy maintenance, and a clean finished look.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Custom Programs', 'mirrorcraft'),
+          'text'  => __('OEM and ODM programs for buyers who need tailored sizes, functions, packaging, or branding.', 'mirrorcraft'),
+        ),
+      ),
+      'steps_title' => __('A practical workflow for project sourcing', 'mirrorcraft'),
+      'steps_text'  => __('We keep project conversations simple by aligning the application, the product route, and the delivery plan from the start.', 'mirrorcraft'),
+      'steps'       => array(
+        array(
+          'title' => __('Define the application', 'mirrorcraft'),
+          'text'  => __('Confirm the sector, installation scene, quantity range, and feature priorities first.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Match the specification', 'mirrorcraft'),
+          'text'  => __('Select the right mirror family, dimensions, lighting direction, and packaging requirements.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Review sample and quotation', 'mirrorcraft'),
+          'text'  => __('Use sampling and commercial review to lock the brief before production.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Launch production and delivery', 'mirrorcraft'),
+          'text'  => __('Move into manufacturing, inspection, packing, and shipment against the approved route.', 'mirrorcraft'),
+        ),
+      ),
+      'cta_title'   => __('Discuss the mirror route that fits your project', 'mirrorcraft'),
+      'cta_text'    => __('Share the sector, quantity plan, drawings, and feature needs, and we will recommend a suitable mirror or cabinet solution.', 'mirrorcraft'),
+      'cta_button'  => __('Request a Quote', 'mirrorcraft'),
+    ),
+    'our-partners' => array(
+      'title'       => __('Our Partners', 'mirrorcraft'),
+      'path'        => 'about/our-partners',
+      'template'    => 'page-templates/page-about-section.php',
+      'eyebrow'     => __('Our Partners', 'mirrorcraft'),
+      'hero_text'   => __('We work with brand owners, importers, distributors, and project teams that need a dependable LED mirror manufacturing partner with clear communication and repeat-order support.', 'mirrorcraft'),
+      'hero_chips'  => array(
+        __('Brand Owners', 'mirrorcraft'),
+        __('Importers', 'mirrorcraft'),
+        __('Distributors', 'mirrorcraft'),
+        __('Project Teams', 'mirrorcraft'),
+      ),
+      'hero_stats'  => array(
+        array('value' => __('OEM / ODM', 'mirrorcraft'), 'label' => __('Partnership model', 'mirrorcraft')),
+        array('value' => __('Custom Ready', 'mirrorcraft'), 'label' => __('Development support', 'mirrorcraft')),
+        array('value' => __('Repeat Orders', 'mirrorcraft'), 'label' => __('Supply focus', 'mirrorcraft')),
+      ),
+      'focus_title' => __('Different partners need different kinds of support.', 'mirrorcraft'),
+      'focus_text'  => __('The best manufacturing relationships are built around clear responsibilities, realistic commercial planning, and a product route that fits the partner business model.', 'mirrorcraft'),
+      'focus_items' => array(
+        __('Brand owners usually need custom development, packaging, and product positioning support.', 'mirrorcraft'),
+        __('Importers and distributors often focus on lead time, repeat quality, and assortment planning.', 'mirrorcraft'),
+        __('Project teams need cleaner specification alignment, sampling, and shipment coordination.', 'mirrorcraft'),
+      ),
+      'aside_kicker' => __('Partnership Fit', 'mirrorcraft'),
+      'aside_title'  => __('What our partners usually value most', 'mirrorcraft'),
+      'aside_items'  => array(
+        __('One supplier across multiple LED mirror and cabinet categories.', 'mirrorcraft'),
+        __('Responsive engineering support before bulk production begins.', 'mirrorcraft'),
+        __('Export-minded follow-through on inspection, packing, and delivery readiness.', 'mirrorcraft'),
+      ),
+      'cards_title' => __('Partner types we support', 'mirrorcraft'),
+      'cards_text'  => __('Each route is different, but the goal stays the same: reduce sourcing friction and make scale-up easier.', 'mirrorcraft'),
+      'cards'       => array(
+        array(
+          'title' => __('Private Label Brands', 'mirrorcraft'),
+          'text'  => __('Custom mirror development for brands that need design, function, and packaging decisions handled as one program.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Importers & Distributors', 'mirrorcraft'),
+          'text'  => __('Repeat-order supply support for buyers who need category clarity, stable quality, and cleaner export coordination.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Project Buyers', 'mirrorcraft'),
+          'text'  => __('Project-facing support for sampling, specification review, and shipment planning across larger rollouts.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Retail Programs', 'mirrorcraft'),
+          'text'  => __('Product families built for assortment planning, repeated launch schedules, and market-specific positioning.', 'mirrorcraft'),
+        ),
+      ),
+      'steps_title' => __('A simple way we onboard new partners', 'mirrorcraft'),
+      'steps_text'  => __('We usually start by understanding the business model, then shape the right product and delivery workflow around it.', 'mirrorcraft'),
+      'steps'       => array(
+        array(
+          'title' => __('Understand the route', 'mirrorcraft'),
+          'text'  => __('Review the sales channel, target market, and quantity range first.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Build the product plan', 'mirrorcraft'),
+          'text'  => __('Match the right mirror families, feature mix, and packaging approach to the partner need.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Confirm sample and pricing', 'mirrorcraft'),
+          'text'  => __('Use samples and quotations to align the commercial direction before launch.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Scale supply with control', 'mirrorcraft'),
+          'text'  => __('Move into production, inspection, and delivery planning once the brief is approved.', 'mirrorcraft'),
+        ),
+      ),
+      'cta_title'   => __('Looking for a long-term mirror manufacturing partner?', 'mirrorcraft'),
+      'cta_text'    => __('Tell us your product category, market, and business model, and we will recommend the best way to work together.', 'mirrorcraft'),
+      'cta_button'  => __('Request a Quote', 'mirrorcraft'),
+    ),
+    'technology' => array(
+      'title'       => __('Technology', 'mirrorcraft'),
+      'path'        => 'about/technology',
+      'template'    => 'page-templates/page-about-section.php',
+      'eyebrow'     => __('Technology', 'mirrorcraft'),
+      'hero_text'   => __('We focus on practical LED mirror technology that improves daily use, strengthens product positioning, and helps B2B buyers create more competitive collections.', 'mirrorcraft'),
+      'hero_chips'  => array(
+        __('Touch Control', 'mirrorcraft'),
+        __('Anti-fog', 'mirrorcraft'),
+        __('Dimmable Light', 'mirrorcraft'),
+        __('Cabinet Functions', 'mirrorcraft'),
+      ),
+      'hero_stats'  => array(
+        array('value' => __('Lighting', 'mirrorcraft'), 'label' => __('Core performance area', 'mirrorcraft')),
+        array('value' => __('Smart Options', 'mirrorcraft'), 'label' => __('Value-add route', 'mirrorcraft')),
+        array('value' => __('Customizable', 'mirrorcraft'), 'label' => __('Market adaptation', 'mirrorcraft')),
+      ),
+      'focus_title' => __('The functions buyers usually compare first', 'mirrorcraft'),
+      'focus_text'  => __('Technology should support the market plan, not complicate it. We help buyers choose the right function mix based on customer expectations, price level, and application.', 'mirrorcraft'),
+      'focus_items' => array(
+        __('Touch switch, sensor, and dimming combinations.', 'mirrorcraft'),
+        __('Anti-fog, defogging, and bathroom-use practicality.', 'mirrorcraft'),
+        __('Color temperature control, Bluetooth, clock, and cabinet integration where needed.', 'mirrorcraft'),
+      ),
+      'aside_kicker' => __('Function Planning', 'mirrorcraft'),
+      'aside_title'  => __('Technology should stay aligned with the customer type you are targeting.', 'mirrorcraft'),
+      'aside_items'  => array(
+        __('Retail collections often need stronger visible feature value.', 'mirrorcraft'),
+        __('Hospitality projects usually prioritize ease of use and reliability.', 'mirrorcraft'),
+        __('Residential programs need a practical cost-function balance.', 'mirrorcraft'),
+      ),
+      'cards_title' => __('Technology modules we commonly support', 'mirrorcraft'),
+      'cards_text'  => __('Different buyers need different combinations of lighting, control, and integrated functionality. The right answer depends on the market route, not just the product spec.', 'mirrorcraft'),
+      'cards'       => array(
+        array(
+          'title' => __('Lighting Control', 'mirrorcraft'),
+          'text'  => __('Dimming, front-lit and backlit combinations, and color temperature adjustments for different bathroom and vanity experiences.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Anti-Fog & Bathroom Use', 'mirrorcraft'),
+          'text'  => __('Practical heating and defogging options that support mirror clarity in humid-use environments.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Smart Add-ons', 'mirrorcraft'),
+          'text'  => __('Bluetooth, clock, sensor, and other smart functions for buyers who want stronger feature differentiation.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Cabinet Integration', 'mirrorcraft'),
+          'text'  => __('Lighting and storage combinations for medicine cabinets and other multi-function bathroom products.', 'mirrorcraft'),
+        ),
+      ),
+      'steps_title' => __('A practical way to decide the right function set', 'mirrorcraft'),
+      'steps_text'  => __('We usually help buyers narrow the function mix by working back from customer type, project environment, installation realities, and price positioning.', 'mirrorcraft'),
+      'steps'       => array(
+        array(
+          'title' => __('Buyer Goal', 'mirrorcraft'),
+          'text'  => __('Confirm whether the focus is retail appeal, project reliability, or private label differentiation.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Feature Selection', 'mirrorcraft'),
+          'text'  => __('Select lighting, anti-fog, control, and cabinet functions based on actual market fit.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Prototype Review', 'mirrorcraft'),
+          'text'  => __('Use sample evaluation to confirm usability, visual impact, and price-function balance.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Production Route', 'mirrorcraft'),
+          'text'  => __('Translate the approved function package into a stable production and packing route.', 'mirrorcraft'),
+        ),
+      ),
+      'cta_title'   => __('Need help choosing the right mirror functions for your market?', 'mirrorcraft'),
+      'cta_text'    => __('Tell us the product type, target customer, and feature direction you are considering, and we will help refine the function mix.', 'mirrorcraft'),
+      'cta_button'  => __('Request a Quote', 'mirrorcraft'),
+    ),
+    'production-workshop' => array(
+      'title'       => __('Production Workshop', 'mirrorcraft'),
+      'path'        => 'about/production-workshop',
+      'template'    => 'page-templates/page-about-section.php',
+      'eyebrow'     => __('Production Workshop', 'mirrorcraft'),
+      'hero_text'   => __('Our workshop structure is designed to keep glass processing, component preparation, assembly, inspection, and packaging closer together so buyers get more consistent results and clearer lead-time planning.', 'mirrorcraft'),
+      'hero_chips'  => array(
+        __('Injection Workshop', 'mirrorcraft'),
+        __('Glass Processing', 'mirrorcraft'),
+        __('Assembly Lines', 'mirrorcraft'),
+        __('Packing Area', 'mirrorcraft'),
+      ),
+      'hero_stats'  => array(
+        array('value' => __('100+ Sets', 'mirrorcraft'), 'label' => __('Production equipment', 'mirrorcraft')),
+        array('value' => __('10 Lines', 'mirrorcraft'), 'label' => __('Automated production', 'mirrorcraft')),
+        array('value' => __('600,000+', 'mirrorcraft'), 'label' => __('Annual mirror output', 'mirrorcraft')),
+      ),
+      'focus_title' => __('Bringing critical production steps together improves control.', 'mirrorcraft'),
+      'focus_text'  => __('The workshop layout is not just about capacity. It helps us shorten coordination loops, improve process consistency, and respond faster when custom or bulk orders move into production.', 'mirrorcraft'),
+      'focus_items' => array(
+        __('Keep component preparation and assembly aligned with the approved specification.', 'mirrorcraft'),
+        __('Reduce handoff gaps between production, inspection, and export packing.', 'mirrorcraft'),
+        __('Support higher-volume orders with a more organized manufacturing rhythm.', 'mirrorcraft'),
+      ),
+      'aside_kicker' => __('Factory Depth', 'mirrorcraft'),
+      'aside_title'  => __('What buyers usually notice from a stronger workshop system', 'mirrorcraft'),
+      'aside_items'  => array(
+        __('Cleaner visibility into production readiness and repeat-order planning.', 'mirrorcraft'),
+        __('Faster response when custom development needs engineering adjustments.', 'mirrorcraft'),
+        __('Better consistency across mirror glass, frames, electronics, and final packing.', 'mirrorcraft'),
+      ),
+      'cards_title' => __('Key workshop capabilities', 'mirrorcraft'),
+      'cards_text'  => __('Our production environment combines capacity with process visibility, which is especially important for OEM, ODM, and export-oriented orders.', 'mirrorcraft'),
+      'cards'       => array(
+        array(
+          'title' => __('Injection Workshop', 'mirrorcraft'),
+          'text'  => __('Component supply can stay more stable because key molded parts are managed through dedicated in-house equipment.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Glass Processing', 'mirrorcraft'),
+          'text'  => __('Key glass operations are handled with closer coordination to mirror sizing, edge treatment, and finishing requirements.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Assembly Lines', 'mirrorcraft'),
+          'text'  => __('Lighting, electronics, structure, and appearance checks stay closer to the build process instead of being treated as separate steps.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Packing & Dispatch', 'mirrorcraft'),
+          'text'  => __('Export packing and shipment preparation are organized around the approved project or assortment brief.', 'mirrorcraft'),
+        ),
+      ),
+      'steps_title' => __('How a mirror order moves through the workshop', 'mirrorcraft'),
+      'steps_text'  => __('The goal is to keep every stage connected to the same approved product brief.', 'mirrorcraft'),
+      'steps'       => array(
+        array(
+          'title' => __('Prepare materials', 'mirrorcraft'),
+          'text'  => __('Confirm glass, frame, electronics, and accessory readiness before build-up starts.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Run production', 'mirrorcraft'),
+          'text'  => __('Process mirror components through the right workshop sequence for the approved specification.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Inspect and test', 'mirrorcraft'),
+          'text'  => __('Check appearance, lighting, controls, and structural fit before packing approval.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Pack and dispatch', 'mirrorcraft'),
+          'text'  => __('Prepare finished goods for bulk shipment, export protection, and project labeling needs.', 'mirrorcraft'),
+        ),
+      ),
+      'cta_title'   => __('Need a factory with stronger workshop coordination?', 'mirrorcraft'),
+      'cta_text'    => __('Tell us your product type, annual demand, and customization needs, and we will recommend the right supply route.', 'mirrorcraft'),
+      'cta_button'  => __('Request a Quote', 'mirrorcraft'),
+    ),
+    'quality-control' => array(
+      'title'       => __('Quality Control', 'mirrorcraft'),
+      'path'        => 'about/quality-control',
+      'template'    => 'page-templates/page-about-section.php',
+      'eyebrow'     => __('Quality Control', 'mirrorcraft'),
+      'hero_text'   => __('B2B buyers need more than attractive photos. They need confidence that materials, functions, assembly, and packing have been checked with repeat orders in mind.', 'mirrorcraft'),
+      'hero_chips'  => array(
+        __('Material Check', 'mirrorcraft'),
+        __('Functional Test', 'mirrorcraft'),
+        __('Final Inspection', 'mirrorcraft'),
+        __('Export Packing', 'mirrorcraft'),
+      ),
+      'hero_stats'  => array(
+        array('value' => __('Incoming QC', 'mirrorcraft'), 'label' => __('Raw material review', 'mirrorcraft')),
+        array('value' => __('Assembly QC', 'mirrorcraft'), 'label' => __('In-process checking', 'mirrorcraft')),
+        array('value' => __('Packing Review', 'mirrorcraft'), 'label' => __('Shipment preparation', 'mirrorcraft')),
+      ),
+      'focus_title' => __('What quality control should mean for B2B buyers', 'mirrorcraft'),
+      'focus_text'  => __('Quality control is not only about catching defects. It is about keeping specifications, appearance, functionality, and packing aligned so customers receive a more dependable batch.', 'mirrorcraft'),
+      'focus_items' => array(
+        __('Raw material and accessory verification before assembly.', 'mirrorcraft'),
+        __('Lighting, switch, and anti-fog checks during production flow.', 'mirrorcraft'),
+        __('Appearance review covering finish, edges, and mirror presentation.', 'mirrorcraft'),
+        __('Protective packaging checks before outbound shipment.', 'mirrorcraft'),
+      ),
+      'aside_kicker' => __('Buyer Confidence', 'mirrorcraft'),
+      'aside_title'  => __('The goal is consistency customers can reorder with more confidence.', 'mirrorcraft'),
+      'aside_items'  => array(
+        __('Fewer surprises between sample approval and bulk production.', 'mirrorcraft'),
+        __('Clearer follow-through on features, structure, and packaging.', 'mirrorcraft'),
+        __('Better shipment readiness for export-oriented orders.', 'mirrorcraft'),
+      ),
+      'cards_title' => __('Core quality checkpoints in our workflow', 'mirrorcraft'),
+      'cards_text'  => __('Different products need different attention points, but the control approach stays focused on materials, function, visual consistency, and packing reliability.', 'mirrorcraft'),
+      'cards'       => array(
+        array(
+          'title' => __('Incoming Material Review', 'mirrorcraft'),
+          'text'  => __('Mirror glass, frame parts, cabinet accessories, and electrical components are reviewed before entering assembly flow.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('In-Process Inspection', 'mirrorcraft'),
+          'text'  => __('Assembly, alignment, finish details, and structural fit are checked during production rather than left only to the end.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Functional Testing', 'mirrorcraft'),
+          'text'  => __('Lighting output, controls, anti-fog response, and other selected functions are reviewed before packing.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Final Packing Review', 'mirrorcraft'),
+          'text'  => __('The final stage focuses on surface protection, carton suitability, and shipment readiness for export delivery.', 'mirrorcraft'),
+        ),
+      ),
+      'steps_title' => __('A simpler quality flow buyers can understand', 'mirrorcraft'),
+      'steps_text'  => __('This gives customers a clearer view of how product control stays connected to the actual delivery outcome.', 'mirrorcraft'),
+      'steps'       => array(
+        array(
+          'title' => __('Material Confirmation', 'mirrorcraft'),
+          'text'  => __('Check core parts before they enter the production flow.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Assembly Monitoring', 'mirrorcraft'),
+          'text'  => __('Review structure, fit, and appearance during build-up, not only at the end.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Function Check', 'mirrorcraft'),
+          'text'  => __('Test electrical and lighting functions before approval for packing.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Packing & Dispatch', 'mirrorcraft'),
+          'text'  => __('Prepare finished products with protective packing suitable for project and export orders.', 'mirrorcraft'),
+        ),
+      ),
+      'cta_title'   => __('Need a supplier that keeps product control and export readiness in view?', 'mirrorcraft'),
+      'cta_text'    => __('Contact us with your product type, quality expectations, and packaging needs, and we will discuss the right supply route.', 'mirrorcraft'),
+      'cta_button'  => __('Request a Quote', 'mirrorcraft'),
+    ),
+    'video-blog' => array(
+      'title'       => __('Video Blog', 'mirrorcraft'),
+      'path'        => 'about/video-blog',
+      'template'    => 'page-templates/page-about-section.php',
+      'eyebrow'     => __('Video Blog', 'mirrorcraft'),
+      'hero_text'   => __('Our video content gives buyers a clearer view of mirror production, factory capability, packaging details, and the product features that matter in real projects and retail programs.', 'mirrorcraft'),
+      'hero_chips'  => array(
+        __('Factory Walkthroughs', 'mirrorcraft'),
+        __('Product Demos', 'mirrorcraft'),
+        __('Packaging Insights', 'mirrorcraft'),
+        __('Project Inspiration', 'mirrorcraft'),
+      ),
+      'hero_stats'  => array(
+        array('value' => __('Product Video', 'mirrorcraft'), 'label' => __('Buyer education', 'mirrorcraft')),
+        array('value' => __('Factory View', 'mirrorcraft'), 'label' => __('Production visibility', 'mirrorcraft')),
+        array('value' => __('Use Cases', 'mirrorcraft'), 'label' => __('Application stories', 'mirrorcraft')),
+      ),
+      'focus_title' => __('Video helps buyers see what photos and PDFs cannot.', 'mirrorcraft'),
+      'focus_text'  => __('For many buyers, video content makes it easier to understand the real factory environment, product functions, size proportions, and packaging details before they move deeper into sourcing.', 'mirrorcraft'),
+      'focus_items' => array(
+        __('Show how lighting, anti-fog, and smart features behave in real use.', 'mirrorcraft'),
+        __('Help buyers understand factory scale, assembly flow, and inspection practices.', 'mirrorcraft'),
+        __('Support project and retail teams with clearer visual references during approval.', 'mirrorcraft'),
+      ),
+      'aside_kicker' => __('Content Use', 'mirrorcraft'),
+      'aside_title'  => __('How buyers usually use our video content', 'mirrorcraft'),
+      'aside_items'  => array(
+        __('Share product demos internally before sample approval.', 'mirrorcraft'),
+        __('Review packaging and feature details with distributors or project stakeholders.', 'mirrorcraft'),
+        __('Use factory videos to build confidence in manufacturing capability and follow-through.', 'mirrorcraft'),
+      ),
+      'cards_title' => __('Video topics buyers ask for most', 'mirrorcraft'),
+      'cards_text'  => __('The strongest content usually answers practical sourcing questions, not just marketing ones.', 'mirrorcraft'),
+      'cards'       => array(
+        array(
+          'title' => __('Factory Walkthroughs', 'mirrorcraft'),
+          'text'  => __('A closer look at workshops, assembly flow, quality checkpoints, and shipment preparation.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Product Feature Demos', 'mirrorcraft'),
+          'text'  => __('Short videos that show lighting control, anti-fog, cabinet functions, and other user-facing details.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Packaging & Delivery', 'mirrorcraft'),
+          'text'  => __('Content that explains how mirrors are protected, labeled, and prepared for export or project delivery.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Application Stories', 'mirrorcraft'),
+          'text'  => __('Examples that connect the right mirror family to hospitality, residential, healthcare, and other sectors.', 'mirrorcraft'),
+        ),
+      ),
+      'steps_title' => __('How we build useful buyer-facing video content', 'mirrorcraft'),
+      'steps_text'  => __('The best videos stay practical and answer the questions buyers usually ask before ordering.', 'mirrorcraft'),
+      'steps'       => array(
+        array(
+          'title' => __('Choose the topic', 'mirrorcraft'),
+          'text'  => __('Start with the product feature, process, or application story buyers need clarified most.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Show the real detail', 'mirrorcraft'),
+          'text'  => __('Capture the product, workshop, or packaging scene in a way that supports sourcing decisions.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Share with context', 'mirrorcraft'),
+          'text'  => __('Pair the video with specification points, application notes, or project guidance.', 'mirrorcraft'),
+        ),
+        array(
+          'title' => __('Use it in the sales process', 'mirrorcraft'),
+          'text'  => __('Bring the content into sample review, quotation, or project planning conversations.', 'mirrorcraft'),
+        ),
+      ),
+      'cta_title'   => __('Want product or factory videos for your buying team?', 'mirrorcraft'),
+      'cta_text'    => __('Tell us what product family or production topic you want to review, and we will guide you to the right video content.', 'mirrorcraft'),
+      'cta_button'  => __('Request a Quote', 'mirrorcraft'),
+    ),
+    'download-catalogue' => array(
+      'title'    => __('Download Catalogue', 'mirrorcraft'),
+      'path'     => 'about/download-catalogue',
+      'template' => 'page-templates/page-download-catalogue.php',
+    ),
+    'faqs' => array(
+      'title'    => __('FAQs', 'mirrorcraft'),
+      'path'     => 'faq',
+      'template' => 'page-templates/page-faqs.php',
+    ),
+  );
+}
+
+function mirrorcraft_get_about_submenu_item_definitions() {
+  $items = array(
+    array(
+      'key'   => 'about',
+      'label' => __('About Us', 'mirrorcraft'),
+      'url'   => mirrorcraft_link_by_slug('about', '/about'),
+    ),
+  );
+
+  foreach (array('projects', 'our-partners', 'technology', 'production-workshop', 'quality-control') as $slug) {
+    $page = mirrorcraft_get_about_section_page_data($slug);
+
+    if (empty($page)) {
+      continue;
+    }
+
+    $items[] = array(
+      'key'   => $slug,
+      'label' => $page['title'],
+      'url'   => mirrorcraft_get_about_section_page_link($slug),
+    );
+  }
+
+  $items[] = array(
+    'key'   => 'blog',
+    'label' => __('Blog', 'mirrorcraft'),
+    'url'   => mirrorcraft_link_by_slug('blog', '/blog'),
+  );
+
+  $video_blog_page = mirrorcraft_get_about_section_page_data('video-blog');
+
+  if (!empty($video_blog_page)) {
+    $items[] = array(
+      'key'   => 'video-blog',
+      'label' => $video_blog_page['title'],
+      'url'   => mirrorcraft_get_about_section_page_link('video-blog'),
+    );
+  }
+
+  $faq_page = mirrorcraft_get_about_section_page_data('faqs');
+
+  if (!empty($faq_page)) {
+    $items[] = array(
+      'key'   => 'faqs',
+      'label' => __('FAQs', 'mirrorcraft'),
+      'url'   => mirrorcraft_link_by_slug($faq_page['path'], '/' . trim($faq_page['path'], '/')),
+    );
+  }
+
+  return $items;
+}
+
 function mirrorcraft_get_about_submenu_pages() {
+  return mirrorcraft_get_about_submenu_page_definitions();
   return array(
     'projects' => array(
       'title'         => __('Projects', 'mirrorcraft'),
@@ -1324,6 +1845,7 @@ function mirrorcraft_get_about_section_page_link($slug) {
 }
 
 function mirrorcraft_get_about_submenu_items() {
+  return mirrorcraft_get_about_submenu_item_definitions();
   $items = array(
     array(
       'key'   => 'about',
@@ -1365,7 +1887,641 @@ function mirrorcraft_get_about_submenu_items() {
   return $items;
 }
 
+function mirrorcraft_get_application_sector_product_catalog() {
+  return array(
+    'led-bathroom-mirrors' => array(
+      'title' => __('LED Bathroom Mirrors', 'mirrorcraft'),
+      'image' => mirrorcraft_get_product_category_image_url('bathroom-mirror'),
+      'link'  => mirrorcraft_get_product_category_page_link('led-bathroom-mirrors'),
+    ),
+    'lighted-medicine-cabinets' => array(
+      'title' => __('Lighted Medicine Cabinets', 'mirrorcraft'),
+      'image' => mirrorcraft_get_product_category_image_url('medicine-cabinet'),
+      'link'  => mirrorcraft_get_product_category_page_link('lighted-medicine-cabinets'),
+    ),
+    'framed-led-mirrors' => array(
+      'title' => __('Framed LED Mirrors', 'mirrorcraft'),
+      'image' => mirrorcraft_get_product_category_image_url('bathroom-mirror'),
+      'link'  => mirrorcraft_get_product_category_page_link('framed-led-mirrors'),
+    ),
+    'makeup-mirrors' => array(
+      'title' => __('Makeup Mirrors', 'mirrorcraft'),
+      'image' => mirrorcraft_get_product_category_image_url('makeup-mirror'),
+      'link'  => mirrorcraft_get_product_category_page_link('makeup-mirrors'),
+    ),
+    'custom-led-mirrors' => array(
+      'title' => __('Custom LED Mirrors', 'mirrorcraft'),
+      'image' => mirrorcraft_get_product_category_image_url('custom-mirror'),
+      'link'  => mirrorcraft_get_product_category_page_link('custom-led-mirrors'),
+    ),
+  );
+}
+
+function mirrorcraft_get_application_sector_image($key) {
+  $image_keys = array(
+    'led-bathroom-mirrors'      => 'bathroom-mirror',
+    'lighted-medicine-cabinets' => 'medicine-cabinet',
+    'framed-led-mirrors'        => 'bathroom-mirror',
+    'makeup-mirrors'            => 'makeup-mirror',
+    'custom-led-mirrors'        => 'custom-mirror',
+  );
+
+  $lookup = $image_keys[$key] ?? 'bathroom-mirror';
+  $image = mirrorcraft_get_product_category_image_url($lookup);
+
+  if ($image) {
+    return $image;
+  }
+
+  return mirrorcraft_get_active_hero_image_url();
+}
+
+function mirrorcraft_build_application_sector_products($items) {
+  $catalog = mirrorcraft_get_application_sector_product_catalog();
+  $products = array();
+
+  foreach ($items as $item) {
+    $key = $item['key'] ?? '';
+
+    if ($key === '' || empty($catalog[$key])) {
+      continue;
+    }
+
+    $products[] = array(
+      'title' => $catalog[$key]['title'],
+      'text'  => $item['text'] ?? '',
+      'image' => $catalog[$key]['image'],
+      'link'  => $catalog[$key]['link'],
+    );
+  }
+
+  return $products;
+}
+
+function mirrorcraft_build_application_sector_areas($areas) {
+  $items = array();
+
+  foreach ($areas as $area) {
+    $items[] = array(
+      'title' => $area['title'] ?? '',
+      'text'  => $area['text'] ?? '',
+      'image' => mirrorcraft_get_application_sector_image($area['image'] ?? 'led-bathroom-mirrors'),
+    );
+  }
+
+  return $items;
+}
+
+function mirrorcraft_get_application_sector_steps() {
+  return array(
+    array(
+      'title' => __('Define the environment', 'mirrorcraft'),
+      'text'  => __('Confirm the space type, traffic level, layout limits, and daily-use expectations before choosing a product family.', 'mirrorcraft'),
+    ),
+    array(
+      'title' => __('Match the product family', 'mirrorcraft'),
+      'text'  => __('Select the right mirror, cabinet, or custom route based on function, finish, and installation needs.', 'mirrorcraft'),
+    ),
+    array(
+      'title' => __('Review sample and quotation', 'mirrorcraft'),
+      'text'  => __('Use samples and commercial review to align the specification before bulk production.', 'mirrorcraft'),
+    ),
+    array(
+      'title' => __('Launch production and delivery', 'mirrorcraft'),
+      'text'  => __('Move into manufacturing, inspection, export packing, and shipment planning against the approved brief.', 'mirrorcraft'),
+    ),
+  );
+}
+
+function mirrorcraft_build_application_sector_page($slug, $definition) {
+  $label = $definition['label'];
+  $cards = array();
+
+  foreach ($definition['product_focus'] ?? array() as $focus_card) {
+    $cards[] = array(
+      'title' => $focus_card['title'],
+      'text'  => $focus_card['text'],
+    );
+  }
+
+  return array(
+    'title'         => $label,
+    'path'          => 'applications/' . $slug,
+    'template'      => 'page-templates/page-application-section.php',
+    'eyebrow'       => $label,
+    'hero_title'    => $definition['hero_title'],
+    'hero_text'     => $definition['intro'],
+    'hero_chips'    => $definition['hero_chips'] ?? array(),
+    'hero_stats'    => $definition['hero_stats'] ?? array(),
+    'image'         => mirrorcraft_get_application_sector_image($definition['image_key'] ?? 'led-bathroom-mirrors'),
+    'focus_title'   => sprintf(__('What matters most in %s environments', 'mirrorcraft'), $label),
+    'focus_text'    => $definition['focus_text'] ?? $definition['intro'],
+    'focus_items'   => $definition['summary'] ?? array(),
+    'aside_kicker'  => __('Sector Priorities', 'mirrorcraft'),
+    'aside_title'   => sprintf(__('Key planning points for %s programs', 'mirrorcraft'), $label),
+    'aside_items'   => $definition['priorities'] ?? array(),
+    'scenario_intro_title' => $label,
+    'scenario_intro_text'  => $definition['scenario_intro_text'] ?? $definition['intro'],
+    'scenario_areas_title' => __('Areas that require mirrors', 'mirrorcraft'),
+    'scenario_areas'       => mirrorcraft_build_application_sector_areas($definition['areas'] ?? array()),
+    'cards_title'          => sprintf(__('Recommended mirror directions for %s', 'mirrorcraft'), $label),
+    'cards_text'           => __('Start with the product directions that best match the environment, then refine the spec around lighting, maintenance, and installation reality.', 'mirrorcraft'),
+    'cards'                => $cards,
+    'recommended_products_title' => __('Recommended products', 'mirrorcraft'),
+    'recommended_products_text'  => __('These product families are usually the strongest starting point when buyers compare mirror options for this sector.', 'mirrorcraft'),
+    'recommended_products'       => mirrorcraft_build_application_sector_products($definition['recommended_products'] ?? array()),
+    'steps_title'          => __('Typical workflow', 'mirrorcraft'),
+    'steps_text'           => __('We keep application-driven sourcing practical by aligning environment, product route, sample review, and delivery planning from the start.', 'mirrorcraft'),
+    'steps'                => mirrorcraft_get_application_sector_steps(),
+    'cta_title'            => sprintf(__('Need the right mirror route for %s?', 'mirrorcraft'), $label),
+    'cta_text'             => $definition['cta_text'],
+    'cta_button'           => __('Request a Quote', 'mirrorcraft'),
+  );
+}
+
+function mirrorcraft_get_application_sector_page_definitions() {
+  $definitions = array(
+    'hospitality' => array(
+      'label'      => __('Hospitality', 'mirrorcraft'),
+      'hero_title' => __('LED mirror programs for hospitality guest rooms, suites, and amenity spaces.', 'mirrorcraft'),
+      'image_key'  => 'framed-led-mirrors',
+      'intro'      => __('Hospitality projects often need a strong decorative impression without losing sight of maintenance, replacement planning, and repeatability across multiple properties.', 'mirrorcraft'),
+      'hero_chips' => array(__('Guest Rooms', 'mirrorcraft'), __('Suites', 'mirrorcraft'), __('Public Washrooms', 'mirrorcraft'), __('Spa Zones', 'mirrorcraft')),
+      'hero_stats' => array(
+        array('value' => __('Brand Ready', 'mirrorcraft'), 'label' => __('Rollout consistency', 'mirrorcraft')),
+        array('value' => __('Anti-Fog', 'mirrorcraft'), 'label' => __('Guest bathroom fit', 'mirrorcraft')),
+        array('value' => __('Bulk Ready', 'mirrorcraft'), 'label' => __('Project support', 'mirrorcraft')),
+      ),
+      'focus_text' => __('Hospitality mirror programs need to balance a polished guest-facing look with long-term maintainability and a product route that can repeat across many rooms and properties.', 'mirrorcraft'),
+      'summary'    => array(
+        __('Coordinate mirror families across guest rooms, lobbies, washrooms, and spa zones.', 'mirrorcraft'),
+        __('Support repeat procurement for hotel groups, serviced apartments, and renovation cycles.', 'mirrorcraft'),
+        __('Plan lighting, anti-fog, and packaging around hospitality operations and installation schedules.', 'mirrorcraft'),
+      ),
+      'areas' => array(
+        array('title' => __('Guest rooms and suites', 'mirrorcraft'), 'text' => __('Backlit and framed bathroom mirrors can be aligned to brand packages, room tiers, and renovation standards.', 'mirrorcraft'), 'image' => 'led-bathroom-mirrors'),
+        array('title' => __('Lobby and public washrooms', 'mirrorcraft'), 'text' => __('Commercial-use mirror formats need a polished appearance with stronger durability and simple upkeep.', 'mirrorcraft'), 'image' => 'custom-led-mirrors'),
+        array('title' => __('Spa and amenity areas', 'mirrorcraft'), 'text' => __('Dimmable lighting and vanity-oriented mirror formats help support premium guest experiences in wellness zones.', 'mirrorcraft'), 'image' => 'makeup-mirrors'),
+      ),
+      'product_focus' => array(
+        array('title' => __('Illuminated bathroom mirrors', 'mirrorcraft'), 'text' => __('A clean hospitality staple for guestrooms that need dependable lighting and a modern visual signature.', 'mirrorcraft')),
+        array('title' => __('Decorative framed vanity mirrors', 'mirrorcraft'), 'text' => __('Useful where the design brief calls for a warmer, more residential feel in suites or premium programs.', 'mirrorcraft')),
+        array('title' => __('Coordinated mirror packages', 'mirrorcraft'), 'text' => __('Matching collections across guestrooms and shared spaces help create visual consistency during rollout.', 'mirrorcraft')),
+      ),
+      'priorities' => array(
+        __('Keep mounting positions, dimensions, and replacement planning consistent across room types.', 'mirrorcraft'),
+        __('Select finishes and electronics that hold up to frequent guest turnover and cleaning cycles.', 'mirrorcraft'),
+        __('Coordinate protective packaging for renovation logistics and multi-property shipment planning.', 'mirrorcraft'),
+      ),
+      'recommended_products' => array(
+        array('key' => 'led-bathroom-mirrors', 'text' => __('A dependable hospitality staple for guest bathrooms that need modern lighting and easy daily use.', 'mirrorcraft')),
+        array('key' => 'framed-led-mirrors', 'text' => __('Useful for premium suites and amenity spaces that need a warmer decorative story.', 'mirrorcraft')),
+        array('key' => 'lighted-medicine-cabinets', 'text' => __('A practical route when storage and integrated lighting need to work together in bathroom layouts.', 'mirrorcraft')),
+      ),
+      'cta_text' => __('Share the property type, room mix, and feature needs, and we will recommend the right hospitality mirror route.', 'mirrorcraft'),
+    ),
+    'residential' => array(
+      'label'      => __('Residential', 'mirrorcraft'),
+      'hero_title' => __('Mirror solutions for homes, apartments, condos, and branded residential programs.', 'mirrorcraft'),
+      'image_key'  => 'lighted-medicine-cabinets',
+      'intro'      => __('Residential applications usually need the right balance between visual appeal, value engineering, and simple installation across multiple layouts or unit tiers.', 'mirrorcraft'),
+      'hero_chips' => array(__('Primary Bathrooms', 'mirrorcraft'), __('Powder Rooms', 'mirrorcraft'), __('Bedrooms', 'mirrorcraft'), __('Wardrobes', 'mirrorcraft')),
+      'hero_stats' => array(
+        array('value' => __('Value Ready', 'mirrorcraft'), 'label' => __('Tiered programs', 'mirrorcraft')),
+        array('value' => __('Easy Install', 'mirrorcraft'), 'label' => __('Layout fit', 'mirrorcraft')),
+        array('value' => __('Custom Mix', 'mirrorcraft'), 'label' => __('SKU flexibility', 'mirrorcraft')),
+      ),
+      'focus_text' => __('Residential programs succeed when cost, finish level, and installation simplicity all stay aligned across bathrooms, dressing zones, and repeated unit layouts.', 'mirrorcraft'),
+      'summary'    => array(
+        __('Support developer packages, private-label collections, and multi-unit housing programs.', 'mirrorcraft'),
+        __('Align mirror dimensions with bathrooms, dressing areas, wardrobes, and entry spaces.', 'mirrorcraft'),
+        __('Keep finish, controls, and feature sets consistent across different apartment or villa types.', 'mirrorcraft'),
+      ),
+      'areas' => array(
+        array('title' => __('Primary bathrooms', 'mirrorcraft'), 'text' => __('Illuminated mirrors and cabinets can add storage, task lighting, and a stronger finished look.', 'mirrorcraft'), 'image' => 'lighted-medicine-cabinets'),
+        array('title' => __('Powder rooms and secondary baths', 'mirrorcraft'), 'text' => __('Compact formats help maintain design continuity while staying practical for tighter spaces.', 'mirrorcraft'), 'image' => 'led-bathroom-mirrors'),
+        array('title' => __('Bedrooms and dressing zones', 'mirrorcraft'), 'text' => __('Full-length and vanity mirrors support everyday use while extending the broader interior language.', 'mirrorcraft'), 'image' => 'makeup-mirrors'),
+      ),
+      'product_focus' => array(
+        array('title' => __('Bathroom LED mirrors', 'mirrorcraft'), 'text' => __('A flexible option for developers and home brands looking for modern styling with integrated lighting.', 'mirrorcraft')),
+        array('title' => __('Mirror cabinets', 'mirrorcraft'), 'text' => __('Useful where storage efficiency and clean-lined bathroom layouts matter just as much as appearance.', 'mirrorcraft')),
+        array('title' => __('Full-length mirrors', 'mirrorcraft'), 'text' => __('Suitable for dressing areas, bedrooms, and branded furniture or decor collections.', 'mirrorcraft')),
+      ),
+      'priorities' => array(
+        __('Balance cost targets with the finish and feature level expected by each housing tier.', 'mirrorcraft'),
+        __('Standardize installation details so contractors can work efficiently across repeated unit layouts.', 'mirrorcraft'),
+        __('Protect visual surfaces during last-mile delivery, staging, and residential handover.', 'mirrorcraft'),
+      ),
+      'recommended_products' => array(
+        array('key' => 'led-bathroom-mirrors', 'text' => __('A strong base option for modern residential bathrooms that need clean lighting and an easy-to-spec mirror route.', 'mirrorcraft')),
+        array('key' => 'lighted-medicine-cabinets', 'text' => __('Useful for bathrooms where organized storage and integrated lighting should work together.', 'mirrorcraft')),
+        array('key' => 'makeup-mirrors', 'text' => __('Helpful for vanity and dressing spaces where personal-use visibility matters more.', 'mirrorcraft')),
+      ),
+      'cta_text' => __('Tell us the housing type, target finish level, and quantity plan, and we will recommend a suitable residential mirror program.', 'mirrorcraft'),
+    ),
+    'commercial' => array(
+      'label'      => __('Commercial', 'mirrorcraft'),
+      'hero_title' => __('Commercial mirror programs for offices, mixed-use buildings, and public-facing amenities.', 'mirrorcraft'),
+      'image_key'  => 'custom-led-mirrors',
+      'intro'      => __('Commercial projects often combine high traffic, repeated cleaning, and tight installation windows, so specs need to stay practical as well as design-forward.', 'mirrorcraft'),
+      'hero_chips' => array(__('Office Washrooms', 'mirrorcraft'), __('Reception', 'mirrorcraft'), __('Amenities', 'mirrorcraft'), __('Staff Zones', 'mirrorcraft')),
+      'hero_stats' => array(
+        array('value' => __('High Traffic', 'mirrorcraft'), 'label' => __('Daily use fit', 'mirrorcraft')),
+        array('value' => __('Clean Finish', 'mirrorcraft'), 'label' => __('Professional look', 'mirrorcraft')),
+        array('value' => __('Easy Service', 'mirrorcraft'), 'label' => __('Maintenance route', 'mirrorcraft')),
+      ),
+      'focus_text' => __('Commercial environments need mirrors that look clean, install reliably, and remain easy to maintain across public and staff-facing spaces.', 'mirrorcraft'),
+      'summary'    => array(
+        __('Support office, mixed-use, and shared amenity environments with repeatable specifications.', 'mirrorcraft'),
+        __('Plan for high-traffic use, quick cleaning cycles, and straightforward maintenance access.', 'mirrorcraft'),
+        __('Create mirror packages that work across public washrooms, lounges, and staff-facing areas.', 'mirrorcraft'),
+      ),
+      'areas' => array(
+        array('title' => __('Office washrooms', 'mirrorcraft'), 'text' => __('Durable mirror systems help maintain a clean and professional standard in daily-use facilities.', 'mirrorcraft'), 'image' => 'led-bathroom-mirrors'),
+        array('title' => __('Shared amenities', 'mirrorcraft'), 'text' => __('Lounge, reception, and tenant spaces often need mirrors that feel elevated without becoming hard to service.', 'mirrorcraft'), 'image' => 'custom-led-mirrors'),
+        array('title' => __('Employee wellness zones', 'mirrorcraft'), 'text' => __('Locker rooms and support spaces benefit from clear lighting, durable construction, and simple operation.', 'mirrorcraft'), 'image' => 'lighted-medicine-cabinets'),
+      ),
+      'product_focus' => array(
+        array('title' => __('Durable illuminated mirrors', 'mirrorcraft'), 'text' => __('A dependable option for commercial washrooms that need good visibility and a modern finish.', 'mirrorcraft')),
+        array('title' => __('Slim framed wall mirrors', 'mirrorcraft'), 'text' => __('Useful where the design goal is understated but still polished across shared-use interiors.', 'mirrorcraft')),
+        array('title' => __('Practical cabinet mirrors', 'mirrorcraft'), 'text' => __('A fit for smaller support spaces where storage and tidy organization matter.', 'mirrorcraft')),
+      ),
+      'priorities' => array(
+        __('Choose constructions that handle frequent use and routine maintenance without becoming fussy.', 'mirrorcraft'),
+        __('Align mounting, wiring, and replacement access with the building coordination plan.', 'mirrorcraft'),
+        __('Match rollout quantities and packaging to phased installation schedules.', 'mirrorcraft'),
+      ),
+      'recommended_products' => array(
+        array('key' => 'led-bathroom-mirrors', 'text' => __('A dependable starting point for public washrooms and shared commercial facilities.', 'mirrorcraft')),
+        array('key' => 'framed-led-mirrors', 'text' => __('Useful where the design brief needs a more polished or premium-facing finish.', 'mirrorcraft')),
+        array('key' => 'custom-led-mirrors', 'text' => __('Helpful for reception zones and layouts that need tailored sizing or branding alignment.', 'mirrorcraft')),
+      ),
+      'cta_text' => __('Tell us the commercial space type, quantity, and feature needs, and we will recommend a suitable mirror solution.', 'mirrorcraft'),
+    ),
+    'healthcare' => array(
+      'label'      => __('Healthcare', 'mirrorcraft'),
+      'hero_title' => __('Mirror programs for healthcare spaces that need calm visuals and practical maintenance.', 'mirrorcraft'),
+      'image_key'  => 'lighted-medicine-cabinets',
+      'intro'      => __('Healthcare environments call for mirrors that feel reassuring, clean easily, and install securely without introducing unnecessary visual or operational complexity.', 'mirrorcraft'),
+      'hero_chips' => array(__('Patient Rooms', 'mirrorcraft'), __('Clinical Washrooms', 'mirrorcraft'), __('Staff Zones', 'mirrorcraft'), __('Visitor Areas', 'mirrorcraft')),
+      'hero_stats' => array(
+        array('value' => __('Easy Clean', 'mirrorcraft'), 'label' => __('Maintenance fit', 'mirrorcraft')),
+        array('value' => __('Soft Light', 'mirrorcraft'), 'label' => __('Daily comfort', 'mirrorcraft')),
+        array('value' => __('Secure Mounting', 'mirrorcraft'), 'label' => __('Long-term use', 'mirrorcraft')),
+      ),
+      'focus_text' => __('Healthcare projects need mirrors that stay calm in appearance, easy to clean, and dependable in long-term daily use for patients, staff, and visitors.', 'mirrorcraft'),
+      'summary'    => array(
+        __('Support patient, staff, and visitor spaces with easy-clean mirror specifications.', 'mirrorcraft'),
+        __('Reduce visual harshness with thoughtful lighting and clearer day-to-day usability.', 'mirrorcraft'),
+        __('Plan mounting and maintenance details carefully for secure, dependable long-term use.', 'mirrorcraft'),
+      ),
+      'areas' => array(
+        array('title' => __('Patient rooms and ensuite baths', 'mirrorcraft'), 'text' => __('Mirror selections should feel calm, simple to use, and appropriate for a wide range of users.', 'mirrorcraft'), 'image' => 'led-bathroom-mirrors'),
+        array('title' => __('Clinical and public washrooms', 'mirrorcraft'), 'text' => __('High-frequency cleaning and daily traffic make secure construction and practical finishes especially important.', 'mirrorcraft'), 'image' => 'framed-led-mirrors'),
+        array('title' => __('Staff support areas', 'mirrorcraft'), 'text' => __('Break rooms, changing spaces, and support washrooms benefit from durable and low-fuss specifications.', 'mirrorcraft'), 'image' => 'lighted-medicine-cabinets'),
+      ),
+      'product_focus' => array(
+        array('title' => __('Soft-light LED mirrors', 'mirrorcraft'), 'text' => __('Helpful where glare management and comfortable daily visibility are more important than decorative effects.', 'mirrorcraft')),
+        array('title' => __('Simple-control wall mirrors', 'mirrorcraft'), 'text' => __('Straightforward operation can reduce confusion in patient and visitor-facing environments.', 'mirrorcraft')),
+        array('title' => __('Support-area cabinet mirrors', 'mirrorcraft'), 'text' => __('Useful for staff zones where storage, tidiness, and efficient use of space all matter.', 'mirrorcraft')),
+      ),
+      'priorities' => array(
+        __('Favor surfaces and details that are easy to clean and maintain on a regular schedule.', 'mirrorcraft'),
+        __('Keep lighting comfortable and clear rather than overly dramatic or visually harsh.', 'mirrorcraft'),
+        __('Coordinate specification decisions early so procurement stays aligned across departments and phases.', 'mirrorcraft'),
+      ),
+      'recommended_products' => array(
+        array('key' => 'led-bathroom-mirrors', 'text' => __('A practical route for care environments that need clear lighting and a clean modern mirror format.', 'mirrorcraft')),
+        array('key' => 'lighted-medicine-cabinets', 'text' => __('Useful where organized storage and integrated mirror lighting need to work together.', 'mirrorcraft')),
+        array('key' => 'framed-led-mirrors', 'text' => __('Helpful in visitor-facing areas that still need a soft, calm, professional finish.', 'mirrorcraft')),
+      ),
+      'cta_text' => __('Share the healthcare setting, room type, and quantity target, and we will recommend a suitable mirror solution.', 'mirrorcraft'),
+    ),
+    'beauty-wellness' => array(
+      'label'      => __('Beauty & Wellness', 'mirrorcraft'),
+      'hero_title' => __('Beauty and wellness mirror programs built around flattering light and stronger brand atmosphere.', 'mirrorcraft'),
+      'image_key'  => 'makeup-mirrors',
+      'intro'      => __('Beauty-led spaces depend on mirrors that support facial visibility, grooming tasks, and a more intentional customer experience from arrival through treatment.', 'mirrorcraft'),
+      'hero_chips' => array(__('Salon Stations', 'mirrorcraft'), __('Treatment Rooms', 'mirrorcraft'), __('Reception', 'mirrorcraft'), __('Retail Corners', 'mirrorcraft')),
+      'hero_stats' => array(
+        array('value' => __('Facial Light', 'mirrorcraft'), 'label' => __('Visibility quality', 'mirrorcraft')),
+        array('value' => __('Brand Atmosphere', 'mirrorcraft'), 'label' => __('Interior fit', 'mirrorcraft')),
+        array('value' => __('Humidity Aware', 'mirrorcraft'), 'label' => __('Spa-ready route', 'mirrorcraft')),
+      ),
+      'focus_text' => __('Beauty and wellness projects need mirrors that look premium, support detailed grooming tasks, and stay aligned with the broader brand experience.', 'mirrorcraft'),
+      'summary'    => array(
+        __('Support salons, spas, treatment rooms, and wellness suites with a more refined mirror language.', 'mirrorcraft'),
+        __('Balance flattering illumination, brand identity, and humidity-aware product selection.', 'mirrorcraft'),
+        __('Create mirror packages that move consistently across styling, wash, and treatment zones.', 'mirrorcraft'),
+      ),
+      'areas' => array(
+        array('title' => __('Salon styling stations', 'mirrorcraft'), 'text' => __('Clear visibility, clean edge detailing, and a branded look help each station feel more premium.', 'mirrorcraft'), 'image' => 'makeup-mirrors'),
+        array('title' => __('Spa and treatment rooms', 'mirrorcraft'), 'text' => __('Mirrors often need a softer visual presence that complements a calming lighting environment.', 'mirrorcraft'), 'image' => 'custom-led-mirrors'),
+        array('title' => __('Reception and retail corners', 'mirrorcraft'), 'text' => __('Statement mirrors can reinforce the brand identity while improving the perceived finish of the space.', 'mirrorcraft'), 'image' => 'framed-led-mirrors'),
+      ),
+      'product_focus' => array(
+        array('title' => __('Front-lit vanity mirrors', 'mirrorcraft'), 'text' => __('Useful for makeup, skin consultation, and grooming scenarios that need stronger facial visibility.', 'mirrorcraft')),
+        array('title' => __('Dimmable ambient mirrors', 'mirrorcraft'), 'text' => __('A better fit where atmosphere and flexible light levels support the wellness concept.', 'mirrorcraft')),
+        array('title' => __('Full-length styling mirrors', 'mirrorcraft'), 'text' => __('Helpful for salons, dressing zones, and consultation areas that need whole-look visibility.', 'mirrorcraft')),
+      ),
+      'priorities' => array(
+        __('Tune lighting quality and brightness around grooming and treatment expectations.', 'mirrorcraft'),
+        __('Coordinate mirror style with the broader materials, finishes, and customer experience.', 'mirrorcraft'),
+        __('Keep custom sizing and layout planning aligned with repeated station or room formats.', 'mirrorcraft'),
+      ),
+      'recommended_products' => array(
+        array('key' => 'makeup-mirrors', 'text' => __('A strong route for beauty-led spaces that need flattering illumination and a dedicated vanity feel.', 'mirrorcraft')),
+        array('key' => 'custom-led-mirrors', 'text' => __('Useful for salons and premium wellness interiors that need tailored sizes or shapes.', 'mirrorcraft')),
+        array('key' => 'framed-led-mirrors', 'text' => __('Helpful where the decorative story is part of the customer experience.', 'mirrorcraft')),
+      ),
+      'cta_text' => __('Tell us the service environment, styling direction, and feature needs, and we will recommend the right beauty and wellness mirror route.', 'mirrorcraft'),
+    ),
+    'real-estate-development' => array(
+      'label'      => __('Real Estate Development', 'mirrorcraft'),
+      'hero_title' => __('Developer-focused mirror programs for new-build, fit-out, and phased real estate delivery.', 'mirrorcraft'),
+      'image_key'  => 'led-bathroom-mirrors',
+      'intro'      => __('Real estate development projects usually need clear specification packages, phased delivery, and a product mix that can scale from show units to full handover.', 'mirrorcraft'),
+      'hero_chips' => array(__('Model Units', 'mirrorcraft'), __('Sales Suites', 'mirrorcraft'), __('Handover Packages', 'mirrorcraft'), __('Amenity Areas', 'mirrorcraft')),
+      'hero_stats' => array(
+        array('value' => __('Spec Ready', 'mirrorcraft'), 'label' => __('Developer route', 'mirrorcraft')),
+        array('value' => __('Phased Delivery', 'mirrorcraft'), 'label' => __('Site planning', 'mirrorcraft')),
+        array('value' => __('Tiered Options', 'mirrorcraft'), 'label' => __('Unit classes', 'mirrorcraft')),
+      ),
+      'focus_text' => __('Developers need mirror programs that stay consistent from show units to final handover, while still allowing for different building phases or unit tiers.', 'mirrorcraft'),
+      'summary'    => array(
+        __('Support developers with mirror families that stay consistent from sample units to bulk rollout.', 'mirrorcraft'),
+        __('Build specification packages that account for tiered units, amenity areas, and project phases.', 'mirrorcraft'),
+        __('Coordinate procurement and packaging to suit site schedules and staged installation.', 'mirrorcraft'),
+      ),
+      'areas' => array(
+        array('title' => __('Model units and sales suites', 'mirrorcraft'), 'text' => __('Display-ready mirrors help establish the visual standard that later phases need to match.', 'mirrorcraft'), 'image' => 'framed-led-mirrors'),
+        array('title' => __('Residential or mixed-use handover packages', 'mirrorcraft'), 'text' => __('Repeatable product selections keep installation simpler across large volumes of units.', 'mirrorcraft'), 'image' => 'led-bathroom-mirrors'),
+        array('title' => __('Shared amenity and service areas', 'mirrorcraft'), 'text' => __('Developments often need related mirror styles that can scale from private units to common zones.', 'mirrorcraft'), 'image' => 'custom-led-mirrors'),
+      ),
+      'product_focus' => array(
+        array('title' => __('Standardized LED mirror families', 'mirrorcraft'), 'text' => __('A strong fit for multi-unit projects that need one coherent specification system.', 'mirrorcraft')),
+        array('title' => __('Value-engineered alternates', 'mirrorcraft'), 'text' => __('Useful when different building phases or unit classes need controlled cost variation.', 'mirrorcraft')),
+        array('title' => __('Custom sizing for project coordination', 'mirrorcraft'), 'text' => __('Helpful when final millwork, plumbing, or lighting layouts require tighter dimensional alignment.', 'mirrorcraft')),
+      ),
+      'priorities' => array(
+        __('Keep sample approvals, bill-of-material decisions, and phase-by-phase procurement tightly connected.', 'mirrorcraft'),
+        __('Use repeatable installation details to support site teams working under schedule pressure.', 'mirrorcraft'),
+        __('Plan packaging and labeling clearly for site delivery, staging, and room-by-room handover.', 'mirrorcraft'),
+      ),
+      'recommended_products' => array(
+        array('key' => 'led-bathroom-mirrors', 'text' => __('A dependable base family for repeated residential bathroom layouts and phased developer rollouts.', 'mirrorcraft')),
+        array('key' => 'lighted-medicine-cabinets', 'text' => __('Helpful in premium units where storage and integrated lighting raise the finish level.', 'mirrorcraft')),
+        array('key' => 'custom-led-mirrors', 'text' => __('Useful when final layouts need tighter dimensional or aesthetic coordination.', 'mirrorcraft')),
+      ),
+      'cta_text' => __('Share the project phase, unit mix, and handover goals, and we will recommend the best mirror program for your development.', 'mirrorcraft'),
+    ),
+    'retail-chain-stores' => array(
+      'label'      => __('Retail & Chain Stores', 'mirrorcraft'),
+      'hero_title' => __('Retail mirror programs for chain stores, branded concepts, and repeated location rollouts.', 'mirrorcraft'),
+      'image_key'  => 'makeup-mirrors',
+      'intro'      => __('Retail environments often rely on mirrors as both functional fixtures and brand touchpoints, especially when one concept needs to repeat cleanly across many locations.', 'mirrorcraft'),
+      'hero_chips' => array(__('Fitting Rooms', 'mirrorcraft'), __('Public Washrooms', 'mirrorcraft'), __('Service Counters', 'mirrorcraft'), __('Store Rollouts', 'mirrorcraft')),
+      'hero_stats' => array(
+        array('value' => __('Repeat Stores', 'mirrorcraft'), 'label' => __('Rollout fit', 'mirrorcraft')),
+        array('value' => __('Brand Visuals', 'mirrorcraft'), 'label' => __('Concept alignment', 'mirrorcraft')),
+        array('value' => __('High Traffic', 'mirrorcraft'), 'label' => __('Daily durability', 'mirrorcraft')),
+      ),
+      'focus_text' => __('Retail programs need mirrors that strengthen the brand concept, stay practical under customer traffic, and repeat cleanly from store to store.', 'mirrorcraft'),
+      'summary'    => array(
+        __('Support fitting rooms, washrooms, service counters, and branded feature walls.', 'mirrorcraft'),
+        __('Keep mirror packages repeatable for new store openings, refreshes, and multi-city rollouts.', 'mirrorcraft'),
+        __('Balance visual impact, install speed, and durability in customer-facing spaces.', 'mirrorcraft'),
+      ),
+      'areas' => array(
+        array('title' => __('Fitting rooms', 'mirrorcraft'), 'text' => __('Full-length mirrors need dependable clarity, careful proportions, and easy repeatability from store to store.', 'mirrorcraft'), 'image' => 'makeup-mirrors'),
+        array('title' => __('Public washrooms', 'mirrorcraft'), 'text' => __('Retail washrooms benefit from mirror solutions that look polished but stay practical to maintain.', 'mirrorcraft'), 'image' => 'framed-led-mirrors'),
+        array('title' => __('Beauty or service counters', 'mirrorcraft'), 'text' => __('Illuminated and branded mirror formats can improve both customer experience and store identity.', 'mirrorcraft'), 'image' => 'custom-led-mirrors'),
+      ),
+      'product_focus' => array(
+        array('title' => __('Full-length fitting mirrors', 'mirrorcraft'), 'text' => __('A core retail requirement for apparel, lifestyle, and department-style store concepts.', 'mirrorcraft')),
+        array('title' => __('Lit service mirrors', 'mirrorcraft'), 'text' => __('Useful for beauty retail, consultation spaces, and premium branded service touchpoints.', 'mirrorcraft')),
+        array('title' => __('Durable framed washroom mirrors', 'mirrorcraft'), 'text' => __('A practical fit for high-traffic public areas that still need to reflect the store brand.', 'mirrorcraft')),
+      ),
+      'priorities' => array(
+        __('Standardize dimensions, finishes, and mounting so each new location opens with consistent fixtures.', 'mirrorcraft'),
+        __('Choose constructions that handle daily customer traffic and fast store cleaning routines.', 'mirrorcraft'),
+        __('Coordinate packaging and labeling for store-by-store distribution instead of bulk site dumping.', 'mirrorcraft'),
+      ),
+      'recommended_products' => array(
+        array('key' => 'makeup-mirrors', 'text' => __('Useful for fitting rooms and dressing-oriented retail spaces that need clear whole-look visibility.', 'mirrorcraft')),
+        array('key' => 'framed-led-mirrors', 'text' => __('A strong fit for customer-facing washrooms and polished branded concepts.', 'mirrorcraft')),
+        array('key' => 'custom-led-mirrors', 'text' => __('Helpful where special sizes or brand-signature designs matter.', 'mirrorcraft')),
+      ),
+      'cta_text' => __('Tell us the store concept, rollout plan, and fixture requirements, and we will recommend a suitable retail mirror route.', 'mirrorcraft'),
+    ),
+    'fitness-sports' => array(
+      'label'      => __('Fitness & Sports', 'mirrorcraft'),
+      'hero_title' => __('Fitness and sports mirror programs for locker rooms, studios, and performance-focused spaces.', 'mirrorcraft'),
+      'image_key'  => 'custom-led-mirrors',
+      'intro'      => __('Fitness and sports environments need mirrors that stay clear under heavy use, work well in humid areas, and support active routines without becoming fragile or hard to maintain.', 'mirrorcraft'),
+      'hero_chips' => array(__('Locker Rooms', 'mirrorcraft'), __('Studios', 'mirrorcraft'), __('Recovery Zones', 'mirrorcraft'), __('Training Rooms', 'mirrorcraft')),
+      'hero_stats' => array(
+        array('value' => __('Moisture Ready', 'mirrorcraft'), 'label' => __('Locker room fit', 'mirrorcraft')),
+        array('value' => __('Clear Visibility', 'mirrorcraft'), 'label' => __('Active use', 'mirrorcraft')),
+        array('value' => __('Easy Clean', 'mirrorcraft'), 'label' => __('Facility upkeep', 'mirrorcraft')),
+      ),
+      'focus_text' => __('Fitness and sports spaces need mirrors that can handle humidity, repeated cleaning, and heavy use while still supporting visibility and a polished facility feel.', 'mirrorcraft'),
+      'summary'    => array(
+        __('Support studios, locker rooms, wash areas, and recovery spaces with practical mirror specifications.', 'mirrorcraft'),
+        __('Balance lighting, durability, and easy cleaning in high-use wellness environments.', 'mirrorcraft'),
+        __('Plan formats that work for both grooming needs and broader spatial visibility.', 'mirrorcraft'),
+      ),
+      'areas' => array(
+        array('title' => __('Locker rooms and wash areas', 'mirrorcraft'), 'text' => __('Mirrors need to stand up to humidity, repeated use, and regular maintenance without losing appearance.', 'mirrorcraft'), 'image' => 'led-bathroom-mirrors'),
+        array('title' => __('Studios and active training rooms', 'mirrorcraft'), 'text' => __('Larger mirror formats can support coaching, movement visibility, and a more open-feeling space.', 'mirrorcraft'), 'image' => 'custom-led-mirrors'),
+        array('title' => __('Recovery and wellness zones', 'mirrorcraft'), 'text' => __('Calmer mirror formats work well in spa, sauna-adjacent, or post-workout amenity spaces.', 'mirrorcraft'), 'image' => 'framed-led-mirrors'),
+      ),
+      'product_focus' => array(
+        array('title' => __('Anti-fog bathroom mirrors', 'mirrorcraft'), 'text' => __('A good fit for locker rooms and changing facilities where steam and humidity are routine.', 'mirrorcraft')),
+        array('title' => __('Full-length training mirrors', 'mirrorcraft'), 'text' => __('Useful for studios and wellness rooms that benefit from broader body-view visibility.', 'mirrorcraft')),
+        array('title' => __('Compact cabinet mirrors', 'mirrorcraft'), 'text' => __('Helpful in support spaces where grooming use and tidy storage need to happen together.', 'mirrorcraft')),
+      ),
+      'priorities' => array(
+        __('Select finishes and structures suited to moisture, high traffic, and repeated cleaning.', 'mirrorcraft'),
+        __('Keep larger mirror installations coordinated carefully with wall build-up and fixing conditions.', 'mirrorcraft'),
+        __('Plan replacement and upkeep around facility operations that may run long hours every day.', 'mirrorcraft'),
+      ),
+      'recommended_products' => array(
+        array('key' => 'led-bathroom-mirrors', 'text' => __('A practical route for changing facilities and wash areas that need anti-fog support and clear lighting.', 'mirrorcraft')),
+        array('key' => 'custom-led-mirrors', 'text' => __('Useful for studios where larger-format mirrored walls or tailored layouts matter.', 'mirrorcraft')),
+        array('key' => 'lighted-medicine-cabinets', 'text' => __('Helpful in support spaces where tidy storage and mirror function need to work together.', 'mirrorcraft')),
+      ),
+      'cta_text' => __('Tell us the facility type, humidity conditions, and installation needs, and we will recommend the right fitness and sports mirror route.', 'mirrorcraft'),
+    ),
+    'transportation' => array(
+      'label'      => __('Transportation', 'mirrorcraft'),
+      'hero_title' => __('Transportation mirror solutions for terminals, lounges, stations, and passenger-facing facilities.', 'mirrorcraft'),
+      'image_key'  => 'framed-led-mirrors',
+      'intro'      => __('Transportation projects usually involve high daily traffic, security-sensitive installation conditions, and a strong need for low-maintenance, easy-to-service specifications.', 'mirrorcraft'),
+      'hero_chips' => array(__('Terminals', 'mirrorcraft'), __('Lounges', 'mirrorcraft'), __('Stations', 'mirrorcraft'), __('Support Areas', 'mirrorcraft')),
+      'hero_stats' => array(
+        array('value' => __('Heavy Traffic', 'mirrorcraft'), 'label' => __('Public facility fit', 'mirrorcraft')),
+        array('value' => __('Easy Service', 'mirrorcraft'), 'label' => __('Maintenance route', 'mirrorcraft')),
+        array('value' => __('Phased Install', 'mirrorcraft'), 'label' => __('Site coordination', 'mirrorcraft')),
+      ),
+      'focus_text' => __('Transportation facilities need mirror packages that can tolerate constant use, stay easy to service, and support clear differentiation between public, premium, and staff-only spaces.', 'mirrorcraft'),
+      'summary'    => array(
+        __('Support airports, stations, passenger lounges, and service facilities with dependable mirror packages.', 'mirrorcraft'),
+        __('Plan for heavy use, straightforward maintenance, and efficient replacement where needed.', 'mirrorcraft'),
+        __('Keep fixtures coordinated across repeated washroom, lounge, and support-area layouts.', 'mirrorcraft'),
+      ),
+      'areas' => array(
+        array('title' => __('Terminal washrooms', 'mirrorcraft'), 'text' => __('Public-facing facilities need mirror specifications that can stay presentable under constant traffic.', 'mirrorcraft'), 'image' => 'led-bathroom-mirrors'),
+        array('title' => __('Premium lounges', 'mirrorcraft'), 'text' => __('Passenger amenity areas often call for a step-up in finish and lighting without losing practicality.', 'mirrorcraft'), 'image' => 'framed-led-mirrors'),
+        array('title' => __('Staff and operations areas', 'mirrorcraft'), 'text' => __('Support spaces benefit from mirror solutions that prioritize resilience and easy upkeep.', 'mirrorcraft'), 'image' => 'lighted-medicine-cabinets'),
+      ),
+      'product_focus' => array(
+        array('title' => __('Durable public-area mirrors', 'mirrorcraft'), 'text' => __('Well suited for washrooms and service environments where performance under heavy use is the baseline.', 'mirrorcraft')),
+        array('title' => __('Premium vanity mirrors', 'mirrorcraft'), 'text' => __('A fit for lounge or upgraded passenger areas where the brief asks for a more refined experience.', 'mirrorcraft')),
+        array('title' => __('Integrated cabinet solutions', 'mirrorcraft'), 'text' => __('Helpful in operational spaces where storage and organized layouts matter alongside mirror function.', 'mirrorcraft')),
+      ),
+      'priorities' => array(
+        __('Use robust mounting and construction details appropriate for high-traffic public environments.', 'mirrorcraft'),
+        __('Coordinate mirror rollouts with tight site logistics and phased transport-facility schedules.', 'mirrorcraft'),
+        __('Keep maintenance and replacement simple for teams managing round-the-clock operations.', 'mirrorcraft'),
+      ),
+      'recommended_products' => array(
+        array('key' => 'led-bathroom-mirrors', 'text' => __('A dependable base for public washrooms and other high-traffic passenger facilities.', 'mirrorcraft')),
+        array('key' => 'framed-led-mirrors', 'text' => __('Useful where lounge and premium areas need a more refined finish.', 'mirrorcraft')),
+        array('key' => 'lighted-medicine-cabinets', 'text' => __('Helpful for support spaces that need mirror use and organized storage together.', 'mirrorcraft')),
+      ),
+      'cta_text' => __('Share the facility type, traffic level, and maintenance needs, and we will recommend a suitable transportation mirror program.', 'mirrorcraft'),
+    ),
+    'cruise-marine' => array(
+      'label'      => __('Cruise & Marine', 'mirrorcraft'),
+      'hero_title' => __('Cruise and marine mirror programs for cabins, public decks, and crew-support interiors.', 'mirrorcraft'),
+      'image_key'  => 'framed-led-mirrors',
+      'intro'      => __('Marine environments typically need more attention to compact layouts, humidity, finish resilience, and secure installation details across both guest and operational spaces.', 'mirrorcraft'),
+      'hero_chips' => array(__('Cabins', 'mirrorcraft'), __('Suites', 'mirrorcraft'), __('Public Decks', 'mirrorcraft'), __('Crew Areas', 'mirrorcraft')),
+      'hero_stats' => array(
+        array('value' => __('Compact Fit', 'mirrorcraft'), 'label' => __('Cabin layouts', 'mirrorcraft')),
+        array('value' => __('Humidity Ready', 'mirrorcraft'), 'label' => __('Marine conditions', 'mirrorcraft')),
+        array('value' => __('Secure Mounting', 'mirrorcraft'), 'label' => __('Installation route', 'mirrorcraft')),
+      ),
+      'focus_text' => __('Cruise and marine projects need mirror packages that can handle moisture, tighter dimensions, and the secure installation logic required for moving environments.', 'mirrorcraft'),
+      'summary'    => array(
+        __('Support cabin, suite, public amenity, and crew-use mirror requirements within tighter footprints.', 'mirrorcraft'),
+        __('Plan for humidity, cleaning demands, and secure installation across marine interiors.', 'mirrorcraft'),
+        __('Coordinate design consistency from guest cabins to public-facing wellness and washroom zones.', 'mirrorcraft'),
+      ),
+      'areas' => array(
+        array('title' => __('Cabins and suites', 'mirrorcraft'), 'text' => __('Guest accommodations often need compact but premium-feeling mirror solutions that maximize perceived space.', 'mirrorcraft'), 'image' => 'framed-led-mirrors'),
+        array('title' => __('Public washrooms and amenity decks', 'mirrorcraft'), 'text' => __('Shared marine interiors call for mirrors that look polished while staying practical to maintain.', 'mirrorcraft'), 'image' => 'led-bathroom-mirrors'),
+        array('title' => __('Crew support areas', 'mirrorcraft'), 'text' => __('Back-of-house spaces benefit from durable, space-efficient mirror formats that are easy to service.', 'mirrorcraft'), 'image' => 'lighted-medicine-cabinets'),
+      ),
+      'product_focus' => array(
+        array('title' => __('Moisture-aware illuminated mirrors', 'mirrorcraft'), 'text' => __('A good fit for guest cabins and wash areas where lighting quality and environmental exposure both matter.', 'mirrorcraft')),
+        array('title' => __('Compact cabinet mirrors', 'mirrorcraft'), 'text' => __('Useful in smaller bathrooms where efficient storage and multifunctionality are important.', 'mirrorcraft')),
+        array('title' => __('Vanity mirrors for premium suites', 'mirrorcraft'), 'text' => __('Helpful for elevated guest programs that need a more residential and luxurious bathroom feel.', 'mirrorcraft')),
+      ),
+      'priorities' => array(
+        __('Choose finishes and structures with marine humidity and maintenance realities in mind.', 'mirrorcraft'),
+        __('Coordinate secure mounting and packaging for tight delivery, handling, and installation conditions.', 'mirrorcraft'),
+        __('Keep dimensional planning accurate so products fit compact cabin and washroom layouts cleanly.', 'mirrorcraft'),
+      ),
+      'recommended_products' => array(
+        array('key' => 'led-bathroom-mirrors', 'text' => __('A dependable route for marine washrooms that need clear lighting and a moisture-aware format.', 'mirrorcraft')),
+        array('key' => 'lighted-medicine-cabinets', 'text' => __('Helpful where compact storage and mirror function need to work together in tight cabins.', 'mirrorcraft')),
+        array('key' => 'framed-led-mirrors', 'text' => __('Useful in premium suites or guest zones that need a warmer decorative finish.', 'mirrorcraft')),
+      ),
+      'cta_text' => __('Tell us the marine setting, cabin constraints, and feature needs, and we will recommend a suitable cruise and marine mirror route.', 'mirrorcraft'),
+    ),
+    'senior-living' => array(
+      'label'      => __('Senior Living', 'mirrorcraft'),
+      'hero_title' => __('Senior living mirror programs built around comfort, clarity, and everyday practicality.', 'mirrorcraft'),
+      'image_key'  => 'led-bathroom-mirrors',
+      'intro'      => __('Senior living environments need mirrors that feel approachable, support everyday routines, and stay easy for operators to maintain across large resident communities.', 'mirrorcraft'),
+      'hero_chips' => array(__('Resident Bathrooms', 'mirrorcraft'), __('Amenity Spaces', 'mirrorcraft'), __('Support Areas', 'mirrorcraft'), __('Care Communities', 'mirrorcraft')),
+      'hero_stats' => array(
+        array('value' => __('Clear Visibility', 'mirrorcraft'), 'label' => __('Daily comfort', 'mirrorcraft')),
+        array('value' => __('Simple Use', 'mirrorcraft'), 'label' => __('Resident-friendly', 'mirrorcraft')),
+        array('value' => __('Easy Upkeep', 'mirrorcraft'), 'label' => __('Operator fit', 'mirrorcraft')),
+      ),
+      'focus_text' => __('Senior living spaces need mirrors that support comfort and visibility without adding unnecessary complexity to resident use or facility maintenance.', 'mirrorcraft'),
+      'summary'    => array(
+        __('Support independent living, assisted living, and shared amenity spaces with practical mirror specs.', 'mirrorcraft'),
+        __('Favor clear visibility, comfortable lighting, and straightforward operation for daily use.', 'mirrorcraft'),
+        __('Keep replacement and upkeep manageable for operators running multi-unit communities.', 'mirrorcraft'),
+      ),
+      'areas' => array(
+        array('title' => __('Resident bathrooms', 'mirrorcraft'), 'text' => __('Mirror solutions should feel intuitive and comfortable while supporting a clean, residential appearance.', 'mirrorcraft'), 'image' => 'led-bathroom-mirrors'),
+        array('title' => __('Shared amenity spaces', 'mirrorcraft'), 'text' => __('Community salons, wellness rooms, and wash areas benefit from calm but dependable mirror packages.', 'mirrorcraft'), 'image' => 'framed-led-mirrors'),
+        array('title' => __('Support and staff zones', 'mirrorcraft'), 'text' => __('Behind-the-scenes spaces still need durable mirror specifications that align with broader facility standards.', 'mirrorcraft'), 'image' => 'lighted-medicine-cabinets'),
+      ),
+      'product_focus' => array(
+        array('title' => __('Soft-light LED mirrors', 'mirrorcraft'), 'text' => __('A good fit where visibility and comfort need to work together in everyday routines.', 'mirrorcraft')),
+        array('title' => __('Accessible cabinet mirrors', 'mirrorcraft'), 'text' => __('Useful in resident bathrooms where storage and organization help support independence.', 'mirrorcraft')),
+        array('title' => __('Low-fuss bathroom mirrors', 'mirrorcraft'), 'text' => __('Straightforward, durable formats help operators maintain consistency across many rooms or suites.', 'mirrorcraft')),
+      ),
+      'priorities' => array(
+        __('Keep controls, light levels, and daily usability intuitive for a wide range of residents.', 'mirrorcraft'),
+        __('Choose constructions that stand up to regular facility cleaning and maintenance workflows.', 'mirrorcraft'),
+        __('Coordinate mirror sizing and mounting with accessible bathroom planning early in the process.', 'mirrorcraft'),
+      ),
+      'recommended_products' => array(
+        array('key' => 'led-bathroom-mirrors', 'text' => __('A dependable route for resident bathrooms that need clear lighting and comfortable visibility.', 'mirrorcraft')),
+        array('key' => 'lighted-medicine-cabinets', 'text' => __('Useful where storage and organization help support a cleaner resident routine.', 'mirrorcraft')),
+        array('key' => 'framed-led-mirrors', 'text' => __('Helpful in amenity spaces that need warmth without operational complexity.', 'mirrorcraft')),
+      ),
+      'cta_text' => __('Tell us the room type, accessibility needs, and quantity plan, and we will recommend a suitable senior living mirror route.', 'mirrorcraft'),
+    ),
+    'education' => array(
+      'label'      => __('Education', 'mirrorcraft'),
+      'hero_title' => __('Education mirror solutions for campuses, residence halls, sports facilities, and shared-use washrooms.', 'mirrorcraft'),
+      'image_key'  => 'led-bathroom-mirrors',
+      'intro'      => __('Education projects often need durable, cost-aware mirror specifications that can repeat across many rooms and shared facilities while staying easy to maintain.', 'mirrorcraft'),
+      'hero_chips' => array(__('Residence Halls', 'mirrorcraft'), __('Campus Washrooms', 'mirrorcraft'), __('Sports Facilities', 'mirrorcraft'), __('Student Amenities', 'mirrorcraft')),
+      'hero_stats' => array(
+        array('value' => __('Repeatable Specs', 'mirrorcraft'), 'label' => __('Campus scale', 'mirrorcraft')),
+        array('value' => __('Durable Build', 'mirrorcraft'), 'label' => __('Heavy student use', 'mirrorcraft')),
+        array('value' => __('Cost Aware', 'mirrorcraft'), 'label' => __('Value planning', 'mirrorcraft')),
+      ),
+      'focus_text' => __('Education facilities need mirror packages that stay durable, repeatable, and simple for campus teams to maintain across broad footprints.', 'mirrorcraft'),
+      'summary'    => array(
+        __('Support dormitories, campus washrooms, fitness facilities, and student-facing amenities.', 'mirrorcraft'),
+        __('Keep mirror packages durable, repeatable, and straightforward for maintenance teams.', 'mirrorcraft'),
+        __('Balance cost targets with everyday usability across broad campus footprints.', 'mirrorcraft'),
+      ),
+      'areas' => array(
+        array('title' => __('Residence halls', 'mirrorcraft'), 'text' => __('Student housing programs often need practical bathroom and dressing mirrors that can repeat at scale.', 'mirrorcraft'), 'image' => 'led-bathroom-mirrors'),
+        array('title' => __('Shared academic facilities', 'mirrorcraft'), 'text' => __('Classroom buildings and public washrooms benefit from straightforward, hard-wearing mirror selections.', 'mirrorcraft'), 'image' => 'framed-led-mirrors'),
+        array('title' => __('Campus sports and wellness areas', 'mirrorcraft'), 'text' => __('Locker rooms and activity centers need mirror solutions that can handle heavy student use.', 'mirrorcraft'), 'image' => 'custom-led-mirrors'),
+      ),
+      'product_focus' => array(
+        array('title' => __('Durable vanity mirrors', 'mirrorcraft'), 'text' => __('A dependable option for repeated student washroom layouts and campus public facilities.', 'mirrorcraft')),
+        array('title' => __('Full-length dorm mirrors', 'mirrorcraft'), 'text' => __('Useful in student accommodation and dressing-oriented spaces where personal-use visibility matters.', 'mirrorcraft')),
+        array('title' => __('Practical cabinet mirrors', 'mirrorcraft'), 'text' => __('Helpful where smaller bathrooms need better organization without losing clean visual order.', 'mirrorcraft')),
+      ),
+      'priorities' => array(
+        __('Choose constructions that can tolerate heavy student traffic and routine campus maintenance.', 'mirrorcraft'),
+        __('Keep unit dimensions and mounting details repeatable across large numbers of rooms or buildings.', 'mirrorcraft'),
+        __('Plan logistics clearly for phased campus projects, dorm turnovers, and summer installation windows.', 'mirrorcraft'),
+      ),
+      'recommended_products' => array(
+        array('key' => 'led-bathroom-mirrors', 'text' => __('A dependable route for repeated student washroom layouts and shared campus facilities.', 'mirrorcraft')),
+        array('key' => 'makeup-mirrors', 'text' => __('Useful in dorm and dressing-oriented spaces where full-look visibility matters.', 'mirrorcraft')),
+        array('key' => 'lighted-medicine-cabinets', 'text' => __('Helpful in smaller bathrooms that need organized storage without losing a clean appearance.', 'mirrorcraft')),
+      ),
+      'cta_text' => __('Tell us the campus setting, maintenance priorities, and quantity plan, and we will recommend a suitable education mirror program.', 'mirrorcraft'),
+    ),
+  );
+
+  $pages = array();
+
+  foreach ($definitions as $slug => $definition) {
+    $pages[$slug] = mirrorcraft_build_application_sector_page($slug, $definition);
+  }
+
+  return $pages;
+}
+
 function mirrorcraft_get_application_submenu_pages() {
+  return mirrorcraft_get_application_sector_page_definitions();
   return array(
     'hospitality' => array(
       'title'         => __('Hospitality', 'mirrorcraft'),
@@ -2260,21 +3416,8 @@ function mirrorcraft_get_application_section_page_link($slug) {
 
 function mirrorcraft_get_applications_submenu_items() {
   $items = array();
-  $visible_slugs = array(
-    'hospitality',
-    'commercial',
-    'residential',
-    'senior-living',
-    'retail-furniture',
-    'salon',
-    'healthcare',
-  );
 
   foreach (mirrorcraft_get_application_submenu_pages() as $slug => $page) {
-    if (!in_array($slug, $visible_slugs, true)) {
-      continue;
-    }
-
     $items[] = array(
       'key'   => $slug,
       'label' => $page['title'],

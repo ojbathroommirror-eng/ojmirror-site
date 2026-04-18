@@ -52,22 +52,6 @@ function mirrorcraft_get_default_menu_items() {
       'url'   => mirrorcraft_link_by_slug('applications', '/applications/'),
     ),
     array(
-      'label' => __('Manufacturing', 'mirrorcraft'),
-      'url'   => mirrorcraft_link_by_slug('manufacturing', '/manufacturing/'),
-    ),
-    array(
-      'label' => __('Projects', 'mirrorcraft'),
-      'url'   => mirrorcraft_link_by_slug('projects', '/projects/'),
-    ),
-    array(
-      'label' => __('Resources', 'mirrorcraft'),
-      'url'   => mirrorcraft_link_by_slug('resources', '/resources/'),
-    ),
-    array(
-      'label' => __('FAQ', 'mirrorcraft'),
-      'url'   => mirrorcraft_link_by_slug('faq', '/faq/'),
-    ),
-    array(
       'label' => __('Contact', 'mirrorcraft'),
       'url'   => mirrorcraft_link_by_slug('contact', '/contact/'),
     ),
@@ -108,7 +92,7 @@ function mirrorcraft_get_core_page_blueprints() {
     ),
     array(
       'path'     => 'faq',
-      'title'    => __('FAQ', 'mirrorcraft'),
+      'title'    => __('FAQs', 'mirrorcraft'),
       'template' => 'page-templates/page-faqs.php',
     ),
     array(
@@ -118,7 +102,7 @@ function mirrorcraft_get_core_page_blueprints() {
     ),
   );
 
-  foreach (array('projects', 'technology', 'quality-control', 'download-catalogue') as $slug) {
+  foreach (array('projects', 'our-partners', 'technology', 'production-workshop', 'quality-control', 'video-blog', 'download-catalogue') as $slug) {
     $page = mirrorcraft_get_about_section_page_data($slug);
 
     if (empty($page['path']) || empty($page['title']) || empty($page['template'])) {
@@ -140,7 +124,7 @@ function mirrorcraft_get_core_page_blueprints() {
     );
   }
 
-  foreach (array('hospitality', 'commercial', 'residential', 'senior-living', 'retail-furniture', 'salon', 'healthcare') as $slug) {
+  foreach (array_keys(mirrorcraft_get_application_submenu_pages()) as $slug) {
     $page = mirrorcraft_get_application_section_page_data($slug);
 
     if (empty($page['path']) || empty($page['title'])) {
@@ -324,8 +308,9 @@ function mirrorcraft_rebuild_fallback_menu($args = array()) {
       'url'   => home_url('/'),
     ),
     array(
-      'label' => __('About', 'mirrorcraft'),
-      'url'   => mirrorcraft_link_by_slug('about', '/about/'),
+      'label'    => __('About', 'mirrorcraft'),
+      'url'      => mirrorcraft_link_by_slug('about', '/about/'),
+      'children' => mirrorcraft_get_about_submenu_items(),
     ),
     array(
       'label'    => __('Products', 'mirrorcraft'),
@@ -336,22 +321,6 @@ function mirrorcraft_rebuild_fallback_menu($args = array()) {
       'label'    => __('Applications', 'mirrorcraft'),
       'url'      => mirrorcraft_link_by_slug('applications', '/applications/'),
       'children' => mirrorcraft_get_applications_submenu_items(),
-    ),
-    array(
-      'label' => __('Manufacturing', 'mirrorcraft'),
-      'url'   => mirrorcraft_link_by_slug('manufacturing', '/manufacturing/'),
-    ),
-    array(
-      'label' => __('Projects', 'mirrorcraft'),
-      'url'   => mirrorcraft_link_by_slug('projects', '/projects/'),
-    ),
-    array(
-      'label' => __('Resources', 'mirrorcraft'),
-      'url'   => mirrorcraft_link_by_slug('resources', '/resources/'),
-    ),
-    array(
-      'label' => __('FAQ', 'mirrorcraft'),
-      'url'   => mirrorcraft_link_by_slug('faq', '/faq/'),
     ),
     array(
       'label' => __('Contact', 'mirrorcraft'),
@@ -439,7 +408,7 @@ function mirrorcraft_get_product_family_cards() {
 
 function mirrorcraft_get_application_cards() {
   $items = array();
-  $slugs = array('hospitality', 'commercial', 'residential', 'senior-living', 'retail-furniture', 'salon', 'healthcare');
+  $slugs = array_keys(mirrorcraft_get_application_submenu_pages());
 
   foreach ($slugs as $slug) {
     $page = mirrorcraft_get_application_section_page_data($slug);

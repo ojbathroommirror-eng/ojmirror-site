@@ -29,22 +29,10 @@
     </button>
 
     <nav id="site-navigation" class="site-nav" aria-label="<?php esc_attr_e('Primary Menu', 'mirrorcraft'); ?>" data-nav>
-      <?php
-      wp_nav_menu(
-        array(
-          'theme_location' => 'primary',
-          'container'      => false,
-          'fallback_cb'    => 'mirrorcraft_rebuild_fallback_menu',
-          'menu_class'     => 'nav-list',
-        )
-      );
-      ?>
+      <?php mirrorcraft_rebuild_fallback_menu(); ?>
     </nav>
 
     <div class="header-actions">
-      <a class="button button-secondary header-link" href="<?php echo esc_url(mirrorcraft_link_by_slug('products', '/products/')); ?>">
-        <?php esc_html_e('Browse Products', 'mirrorcraft'); ?>
-      </a>
       <a class="button button-primary" href="<?php echo esc_url(mirrorcraft_link_by_slug('contact', '/contact/')); ?>">
         <?php esc_html_e('Request a Quote', 'mirrorcraft'); ?>
       </a>
