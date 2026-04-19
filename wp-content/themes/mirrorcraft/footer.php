@@ -124,7 +124,6 @@ $footer_social_icons = array(
   <div class="shell footer-shell">
     <div class="footer-grid">
       <div class="footer-brand-panel">
-        <p class="footer-kicker"><?php esc_html_e('OEM / ODM Mirror Manufacturing', 'mirrorcraft'); ?></p>
         <a class="footer-wordmark" href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html($brand_name); ?></a>
         <div class="footer-copy-stack">
           <p class="footer-copy footer-copy-lead"><?php echo esc_html($footer_blurb); ?></p>
