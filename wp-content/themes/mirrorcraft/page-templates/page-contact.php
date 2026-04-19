@@ -3,12 +3,29 @@
 Template Name: Contact Page
 */
 get_header();
-$faq_items = mirrorcraft_get_faq_items();
 $contact_email = mirrorcraft_get_contact_email();
 $contact_phone = mirrorcraft_get_contact_phone();
 $contact_phone_href = mirrorcraft_get_contact_phone_href();
-$contact_address = mirrorcraft_get_contact_address();
-$contact_map_link = mirrorcraft_get_contact_map_link();
+$contact_address = '中山市火炬开发区中山港街道展兴路5号';
+$contact_map_link = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode($contact_address);
+$contact_map_embed_url = 'https://www.google.com/maps?output=embed&q=' . rawurlencode($contact_address);
+$factory_gallery = array(
+  array(
+    'image' => mirrorcraft_get_active_hero_image_url(),
+    'title' => __('Factory Overview', 'mirrorcraft'),
+    'text'  => __('Production-ready LED mirror programs with export, sampling, and project support.', 'mirrorcraft'),
+  ),
+  array(
+    'image' => mirrorcraft_get_customization_reference_image_url(),
+    'title' => __('Workshop Details', 'mirrorcraft'),
+    'text'  => __('Customization review, engineering coordination, and finish direction for OEM and ODM orders.', 'mirrorcraft'),
+  ),
+  array(
+    'image' => mirrorcraft_get_product_category_image_url('medicine-cabinet'),
+    'title' => __('Assembly & Packing', 'mirrorcraft'),
+    'text'  => __('Assembly follow-up, inspection rhythm, and packing preparation for bulk production.', 'mirrorcraft'),
+  ),
+);
 $contact_social_icons = array(
   array('label' => __('Facebook', 'mirrorcraft'), 'symbol' => 'f'),
   array('label' => __('YouTube', 'mirrorcraft'), 'symbol' => '▶'),
@@ -23,7 +40,8 @@ $contact_social_icons = array(
       <div class="shell contact-page-shell">
         <article class="contact-page-intro">
           <?php mirrorcraft_render_breadcrumbs(); ?>
-          <h1 class="contact-page-title"><?php esc_html_e('Need assistance, have a suggestion, or would like to learn more about our service? We would like to hear from you.', 'mirrorcraft'); ?></h1>
+          <h1 class="contact-page-title"><?php esc_html_e("Let's Discuss Your LED Mirrors Project", 'mirrorcraft'); ?></h1>
+          <p class="contact-page-lead"><?php esc_html_e('We are here to support your wholesale, OEM, and project sourcing needs for LED bathroom mirrors, medicine cabinets, and custom mirror programs.', 'mirrorcraft'); ?></p>
 
           <div class="contact-page-details">
             <?php if ($contact_phone !== '') : ?>
@@ -76,15 +94,46 @@ $contact_social_icons = array(
       </div>
     </section>
 
-    <?php mirrorcraft_render_editor_content_section(array('section_class' => 'editor-bridge-section')); ?>
+    <section class="section contact-location-section">
+      <div class="shell contact-location-shell">
+        <div class="contact-location-media">
+          <div class="section-heading contact-location-heading">
+            <p class="eyebrow"><?php esc_html_e('Factory & Location', 'mirrorcraft'); ?></p>
+            <h2><?php esc_html_e('See our production direction and find the factory on Google Maps.', 'mirrorcraft'); ?></h2>
+            <p class="section-intro"><?php esc_html_e('Use the map for route guidance and review the factory-related visuals alongside the contact point for sampling, production follow-up, and OEM / ODM communication.', 'mirrorcraft'); ?></p>
+          </div>
 
-    <section class="section faq-section">
-      <div class="shell">
-        <div class="section-heading">
-          <p class="eyebrow"><?php esc_html_e('FAQ', 'mirrorcraft'); ?></p>
-          <h2><?php esc_html_e('Questions that often come up before a quote.', 'mirrorcraft'); ?></h2>
+          <div class="contact-factory-grid">
+            <?php foreach ($factory_gallery as $index => $item) : ?>
+              <?php if (empty($item['image'])) { continue; } ?>
+              <article class="contact-factory-card<?php echo 0 === $index ? ' is-featured' : ''; ?>">
+                <figure class="contact-factory-figure">
+                  <img src="<?php echo esc_url($item['image']); ?>" alt="<?php echo esc_attr($item['title']); ?>" loading="lazy" decoding="async">
+                </figure>
+                <div class="contact-factory-copy">
+                  <h3><?php echo esc_html($item['title']); ?></h3>
+                  <p><?php echo esc_html($item['text']); ?></p>
+                </div>
+              </article>
+            <?php endforeach; ?>
+          </div>
         </div>
-        <?php mirrorcraft_render_faq_items($faq_items, 'contact-faq'); ?>
+
+        <aside class="contact-map-panel">
+          <p class="eyebrow"><?php esc_html_e('Google Map', 'mirrorcraft'); ?></p>
+          <h3><?php esc_html_e('Factory Address', 'mirrorcraft'); ?></h3>
+          <p class="contact-map-address"><?php echo esc_html($contact_address); ?></p>
+          <div class="contact-map-frame">
+            <iframe
+              src="<?php echo esc_url($contact_map_embed_url); ?>"
+              title="<?php esc_attr_e('Factory location map', 'mirrorcraft'); ?>"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <a class="button button-secondary" href="<?php echo esc_url($contact_map_link); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Open in Google Maps', 'mirrorcraft'); ?></a>
+        </aside>
       </div>
     </section>
   <?php endwhile; ?>
