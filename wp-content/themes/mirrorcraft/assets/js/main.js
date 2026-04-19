@@ -3,6 +3,7 @@ document.documentElement.classList.add('mirrorcraft-ready');
 const siteHeader = document.querySelector('[data-site-header]');
 const navToggle = document.querySelector('[data-nav-toggle]');
 const siteNav = document.querySelector('[data-nav]');
+const scrollTopButton = document.querySelector('[data-scroll-top]');
 const faqTriggers = Array.from(document.querySelectorAll('[data-faq-trigger]'));
 
 if (siteHeader) {
@@ -50,3 +51,15 @@ faqTriggers.forEach((trigger) => {
     }
   });
 });
+
+if (scrollTopButton) {
+  const syncScrollTopButton = () => {
+    scrollTopButton.classList.toggle('is-visible', window.scrollY > 320);
+  };
+
+  syncScrollTopButton();
+  window.addEventListener('scroll', syncScrollTopButton, { passive: true });
+  scrollTopButton.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
