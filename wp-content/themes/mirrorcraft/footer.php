@@ -10,62 +10,8 @@ $footer_phone_href = mirrorcraft_get_contact_phone_href();
 $whatsapp_link = mirrorcraft_get_whatsapp_link();
 $has_whatsapp_number = mirrorcraft_has_whatsapp_number();
 $footer_focus = __('We focus on lighted mirrors and LED mirror cabinets.', 'mirrorcraft');
-$footer_products = array(
-  array(
-    'label' => __('Bathroom Mirrors', 'mirrorcraft'),
-    'url'   => mirrorcraft_get_product_category_page_link('bathroom-mirrors'),
-  ),
-  array(
-    'label' => __('Medicine Cabinets', 'mirrorcraft'),
-    'url'   => mirrorcraft_get_product_category_page_link('medicine-cabinets'),
-  ),
-  array(
-    'label' => __('Decorative Mirrors', 'mirrorcraft'),
-    'url'   => mirrorcraft_get_product_category_page_link('decorative-mirror'),
-  ),
-  array(
-    'label' => __('Makeup Mirrors', 'mirrorcraft'),
-    'url'   => mirrorcraft_get_product_category_page_link('makeup-mirrors'),
-  ),
-  array(
-    'label' => __('Full Length Mirrors', 'mirrorcraft'),
-    'url'   => mirrorcraft_get_product_category_page_link('full-length-mirrors'),
-  ),
-  array(
-    'label' => __('Custom LED Mirrors', 'mirrorcraft'),
-    'url'   => mirrorcraft_get_product_category_page_link('custom-mirrors'),
-  ),
-);
-$footer_markets = array(
-  array(
-    'label' => __('Hospitality', 'mirrorcraft'),
-    'url'   => mirrorcraft_get_application_section_page_link('hospitality'),
-  ),
-  array(
-    'label' => __('Commercial', 'mirrorcraft'),
-    'url'   => mirrorcraft_get_application_section_page_link('commercial'),
-  ),
-  array(
-    'label' => __('Residential', 'mirrorcraft'),
-    'url'   => mirrorcraft_get_application_section_page_link('residential'),
-  ),
-  array(
-    'label' => __('Senior Living', 'mirrorcraft'),
-    'url'   => mirrorcraft_get_application_section_page_link('senior-living'),
-  ),
-  array(
-    'label' => __('Retail Furniture', 'mirrorcraft'),
-    'url'   => mirrorcraft_get_application_section_page_link('retail-chain-stores'),
-  ),
-  array(
-    'label' => __('Salon', 'mirrorcraft'),
-    'url'   => mirrorcraft_get_application_section_page_link('beauty-wellness'),
-  ),
-  array(
-    'label' => __('Healthcare', 'mirrorcraft'),
-    'url'   => mirrorcraft_get_application_section_page_link('healthcare'),
-  ),
-);
+$footer_products = mirrorcraft_get_products_submenu_items();
+$footer_markets = mirrorcraft_get_applications_submenu_items();
 $footer_company_links = array(
   array(
     'label' => __('About OJMIRROR', 'mirrorcraft'),

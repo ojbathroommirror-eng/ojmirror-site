@@ -1133,8 +1133,8 @@ h3 {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.18fr) repeat(4, minmax(0, 0.78fr));
-  gap: clamp(24px, 2.8vw, 38px);
+  grid-template-columns: minmax(300px, 1.04fr) minmax(26px, 0.12fr) repeat(4, minmax(150px, 0.9fr));
+  gap: clamp(24px, 2.2vw, 32px);
   align-items: start;
 }
 
@@ -1147,7 +1147,24 @@ h3 {
 .footer-brand-panel {
   position: relative;
   gap: 18px;
-  padding-right: clamp(18px, 3vw, 34px);
+  grid-column: 1;
+  padding-right: clamp(24px, 3vw, 40px);
+}
+
+.footer-column-product {
+  grid-column: 3;
+}
+
+.footer-column-markets {
+  grid-column: 4;
+}
+
+.footer-column-company {
+  grid-column: 5;
+}
+
+.footer-column-support {
+  grid-column: 6;
 }
 
 .footer-brand-panel::after {
@@ -1177,10 +1194,11 @@ h3 {
 
 .footer-copy {
   margin: 0;
-  max-width: 24ch;
-  font-size: 1rem;
+  max-width: 29ch;
+  font-size: 0.98rem;
   font-weight: 550;
-  line-height: 1.62;
+  line-height: 1.68;
+  text-wrap: pretty;
   color: rgba(255, 255, 255, 0.86);
 }
 
@@ -1189,7 +1207,7 @@ h3 {
 }
 
 .footer-copy-secondary {
-  max-width: 20ch;
+  max-width: 24ch;
   color: rgba(255, 255, 255, 0.76);
 }
 
@@ -1370,6 +1388,13 @@ h3 {
   .footer-social-wrap {
     grid-column: 2;
   }
+
+  .footer-column-product,
+  .footer-column-markets,
+  .footer-column-company,
+  .footer-column-support {
+    grid-column: auto;
+  }
 }
 
 .floating-actions {
@@ -1378,16 +1403,17 @@ h3 {
   bottom: clamp(14px, 2.5vw, 24px);
   z-index: 40;
   display: grid;
-  gap: 12px;
+  justify-items: end;
+  gap: 10px;
 }
 
 .floating-action {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  min-height: 52px;
-  padding: 0 15px;
+  gap: 7px;
+  min-height: 48px;
+  padding: 0 11px;
   border: 0;
   border-radius: 999px;
   box-shadow: 0 16px 32px rgba(16, 43, 41, 0.18);
@@ -1411,7 +1437,7 @@ h3 {
 
 .floating-action-whatsapp {
   background: linear-gradient(135deg, #1fbf63, #0f8f66);
-  max-width: 220px;
+  max-width: 178px;
 }
 
 .floating-action-top {
@@ -1431,9 +1457,9 @@ h3 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 22px;
-  height: 22px;
-  flex: 0 0 22px;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
 }
 
 .floating-action-icon svg {
@@ -1443,15 +1469,15 @@ h3 {
 }
 
 .floating-action-label {
-  font-size: 0.88rem;
+  font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.01em;
 }
 
 .floating-action-label-multiline {
   display: grid;
-  gap: 1px;
-  line-height: 1.04;
+  gap: 0;
+  line-height: 1.02;
   text-align: left;
 }
 
