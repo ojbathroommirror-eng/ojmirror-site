@@ -509,6 +509,7 @@ function mirrorcraft_render_contact_form($context = 'page') {
   $current_request_url = esc_url_raw(remove_query_arg(array('inquiry_token'), home_url($current_request_uri)));
   $product_interest_options = mirrorcraft_get_inquiry_product_interest_options();
   $project_type_options = mirrorcraft_get_inquiry_project_type_options();
+  $is_contact_page = ('contact-page' === $context);
   ?>
   <div class="contact-form-shell" id="contact-form">
     <?php if (!empty($state['message'])) : ?>
@@ -517,7 +518,7 @@ function mirrorcraft_render_contact_form($context = 'page') {
       </div>
     <?php endif; ?>
 
-    <form class="contact-form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" enctype="multipart/form-data">
+    <form class="contact-form<?php echo $is_contact_page ? ' contact-form-contact-page' : ''; ?>" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" enctype="multipart/form-data">
       <input type="hidden" name="action" value="mirrorcraft_submit_inquiry">
       <input type="hidden" name="redirect_to" value="<?php echo esc_url($current_request_url); ?>">
       <input type="hidden" name="response_anchor" value="contact-form">
@@ -525,78 +526,116 @@ function mirrorcraft_render_contact_form($context = 'page') {
       <input type="hidden" name="website" value="">
       <?php wp_nonce_field('mirrorcraft_submit_inquiry', 'mirrorcraft_inquiry_nonce'); ?>
 
-      <div class="form-grid">
-        <label class="form-field">
-          <span><?php esc_html_e('Name', 'mirrorcraft'); ?></span>
-          <input type="text" name="contact_name" value="<?php echo esc_attr(mirrorcraft_contact_form_value($state, 'name')); ?>">
-          <?php if (mirrorcraft_contact_form_error($state, 'name')) : ?>
-            <small class="form-error"><?php echo esc_html(mirrorcraft_contact_form_error($state, 'name')); ?></small>
+      <?php if ($is_contact_page) : ?>
+        <div class="contact-page-form-grid">
+          <label class="form-field">
+            <span class="form-label"><?php esc_html_e('Name', 'mirrorcraft'); ?> <span class="form-required">*</span></span>
+            <input type="text" name="contact_name" value="<?php echo esc_attr(mirrorcraft_contact_form_value($state, 'name')); ?>" required>
+            <?php if (mirrorcraft_contact_form_error($state, 'name')) : ?>
+              <small class="form-error"><?php echo esc_html(mirrorcraft_contact_form_error($state, 'name')); ?></small>
+            <?php endif; ?>
+          </label>
+
+          <label class="form-field">
+            <span class="form-label"><?php esc_html_e('Email', 'mirrorcraft'); ?> <span class="form-required">*</span></span>
+            <input type="email" name="contact_email" value="<?php echo esc_attr(mirrorcraft_contact_form_value($state, 'email')); ?>" required>
+            <?php if (mirrorcraft_contact_form_error($state, 'email')) : ?>
+              <small class="form-error"><?php echo esc_html(mirrorcraft_contact_form_error($state, 'email')); ?></small>
+            <?php endif; ?>
+          </label>
+
+          <label class="form-field">
+            <span class="form-label"><?php esc_html_e('Phone', 'mirrorcraft'); ?></span>
+            <input type="text" name="contact_phone" value="<?php echo esc_attr(mirrorcraft_contact_form_value($state, 'phone')); ?>">
+          </label>
+
+          <label class="form-field">
+            <span class="form-label"><?php esc_html_e('Company', 'mirrorcraft'); ?></span>
+            <input type="text" name="contact_company" value="<?php echo esc_attr(mirrorcraft_contact_form_value($state, 'company')); ?>">
+          </label>
+
+          <label class="form-field form-field-full">
+            <span class="form-label"><?php esc_html_e('Content', 'mirrorcraft'); ?> <span class="form-required">*</span></span>
+            <textarea name="contact_message" rows="8" required><?php echo esc_textarea(mirrorcraft_contact_form_value($state, 'message')); ?></textarea>
+            <?php if (mirrorcraft_contact_form_error($state, 'message')) : ?>
+              <small class="form-error"><?php echo esc_html(mirrorcraft_contact_form_error($state, 'message')); ?></small>
+            <?php endif; ?>
+          </label>
+        </div>
+      <?php else : ?>
+        <div class="form-grid">
+          <label class="form-field">
+            <span><?php esc_html_e('Name', 'mirrorcraft'); ?></span>
+            <input type="text" name="contact_name" value="<?php echo esc_attr(mirrorcraft_contact_form_value($state, 'name')); ?>">
+            <?php if (mirrorcraft_contact_form_error($state, 'name')) : ?>
+              <small class="form-error"><?php echo esc_html(mirrorcraft_contact_form_error($state, 'name')); ?></small>
+            <?php endif; ?>
+          </label>
+
+          <label class="form-field">
+            <span><?php esc_html_e('Email', 'mirrorcraft'); ?></span>
+            <input type="email" name="contact_email" value="<?php echo esc_attr(mirrorcraft_contact_form_value($state, 'email')); ?>">
+            <?php if (mirrorcraft_contact_form_error($state, 'email')) : ?>
+              <small class="form-error"><?php echo esc_html(mirrorcraft_contact_form_error($state, 'email')); ?></small>
+            <?php endif; ?>
+          </label>
+
+          <label class="form-field">
+            <span><?php esc_html_e('Company', 'mirrorcraft'); ?></span>
+            <input type="text" name="contact_company" value="<?php echo esc_attr(mirrorcraft_contact_form_value($state, 'company')); ?>">
+          </label>
+
+          <label class="form-field">
+            <span><?php esc_html_e('Phone', 'mirrorcraft'); ?></span>
+            <input type="text" name="contact_phone" value="<?php echo esc_attr(mirrorcraft_contact_form_value($state, 'phone')); ?>">
+          </label>
+
+          <label class="form-field">
+            <span><?php esc_html_e('Country', 'mirrorcraft'); ?></span>
+            <input type="text" name="contact_country" value="<?php echo esc_attr(mirrorcraft_contact_form_value($state, 'country')); ?>">
+          </label>
+
+          <label class="form-field">
+            <span><?php esc_html_e('Product interest', 'mirrorcraft'); ?></span>
+            <select name="contact_product_interest">
+              <option value=""><?php esc_html_e('Select one', 'mirrorcraft'); ?></option>
+              <?php foreach ($product_interest_options as $option) : ?>
+                <option value="<?php echo esc_attr($option); ?>" <?php selected(mirrorcraft_contact_form_value($state, 'product_interest'), $option); ?>><?php echo esc_html($option); ?></option>
+              <?php endforeach; ?>
+            </select>
+          </label>
+
+          <label class="form-field">
+            <span><?php esc_html_e('Project type', 'mirrorcraft'); ?></span>
+            <select name="contact_project_type">
+              <option value=""><?php esc_html_e('Select one', 'mirrorcraft'); ?></option>
+              <?php foreach ($project_type_options as $option) : ?>
+                <option value="<?php echo esc_attr($option); ?>" <?php selected(mirrorcraft_contact_form_value($state, 'project_type'), $option); ?>><?php echo esc_html($option); ?></option>
+              <?php endforeach; ?>
+            </select>
+          </label>
+        </div>
+
+        <label class="form-field form-field-full">
+          <span><?php esc_html_e('Message', 'mirrorcraft'); ?></span>
+          <textarea name="contact_message" rows="7"><?php echo esc_textarea(mirrorcraft_contact_form_value($state, 'message')); ?></textarea>
+          <?php if (mirrorcraft_contact_form_error($state, 'message')) : ?>
+            <small class="form-error"><?php echo esc_html(mirrorcraft_contact_form_error($state, 'message')); ?></small>
           <?php endif; ?>
         </label>
 
-        <label class="form-field">
-          <span><?php esc_html_e('Email', 'mirrorcraft'); ?></span>
-          <input type="email" name="contact_email" value="<?php echo esc_attr(mirrorcraft_contact_form_value($state, 'email')); ?>">
-          <?php if (mirrorcraft_contact_form_error($state, 'email')) : ?>
-            <small class="form-error"><?php echo esc_html(mirrorcraft_contact_form_error($state, 'email')); ?></small>
+        <label class="form-field form-field-full">
+          <span><?php esc_html_e('Attachment (optional)', 'mirrorcraft'); ?></span>
+          <input type="file" name="contact_attachment" accept=".jpg,.jpeg,.png,.webp,.pdf,.doc,.docx,.xls,.xlsx">
+          <small class="form-note"><?php esc_html_e('Accepted file types include images, PDF, Word, and Excel files up to 8MB.', 'mirrorcraft'); ?></small>
+          <?php if (mirrorcraft_contact_form_error($state, 'attachment')) : ?>
+            <small class="form-error"><?php echo esc_html(mirrorcraft_contact_form_error($state, 'attachment')); ?></small>
           <?php endif; ?>
         </label>
-
-        <label class="form-field">
-          <span><?php esc_html_e('Company', 'mirrorcraft'); ?></span>
-          <input type="text" name="contact_company" value="<?php echo esc_attr(mirrorcraft_contact_form_value($state, 'company')); ?>">
-        </label>
-
-        <label class="form-field">
-          <span><?php esc_html_e('Phone', 'mirrorcraft'); ?></span>
-          <input type="text" name="contact_phone" value="<?php echo esc_attr(mirrorcraft_contact_form_value($state, 'phone')); ?>">
-        </label>
-
-        <label class="form-field">
-          <span><?php esc_html_e('Country', 'mirrorcraft'); ?></span>
-          <input type="text" name="contact_country" value="<?php echo esc_attr(mirrorcraft_contact_form_value($state, 'country')); ?>">
-        </label>
-
-        <label class="form-field">
-          <span><?php esc_html_e('Product interest', 'mirrorcraft'); ?></span>
-          <select name="contact_product_interest">
-            <option value=""><?php esc_html_e('Select one', 'mirrorcraft'); ?></option>
-            <?php foreach ($product_interest_options as $option) : ?>
-              <option value="<?php echo esc_attr($option); ?>" <?php selected(mirrorcraft_contact_form_value($state, 'product_interest'), $option); ?>><?php echo esc_html($option); ?></option>
-            <?php endforeach; ?>
-          </select>
-        </label>
-
-        <label class="form-field">
-          <span><?php esc_html_e('Project type', 'mirrorcraft'); ?></span>
-          <select name="contact_project_type">
-            <option value=""><?php esc_html_e('Select one', 'mirrorcraft'); ?></option>
-            <?php foreach ($project_type_options as $option) : ?>
-              <option value="<?php echo esc_attr($option); ?>" <?php selected(mirrorcraft_contact_form_value($state, 'project_type'), $option); ?>><?php echo esc_html($option); ?></option>
-            <?php endforeach; ?>
-          </select>
-        </label>
-      </div>
-
-      <label class="form-field form-field-full">
-        <span><?php esc_html_e('Message', 'mirrorcraft'); ?></span>
-        <textarea name="contact_message" rows="7"><?php echo esc_textarea(mirrorcraft_contact_form_value($state, 'message')); ?></textarea>
-        <?php if (mirrorcraft_contact_form_error($state, 'message')) : ?>
-          <small class="form-error"><?php echo esc_html(mirrorcraft_contact_form_error($state, 'message')); ?></small>
-        <?php endif; ?>
-      </label>
-
-      <label class="form-field form-field-full">
-        <span><?php esc_html_e('Attachment (optional)', 'mirrorcraft'); ?></span>
-        <input type="file" name="contact_attachment" accept=".jpg,.jpeg,.png,.webp,.pdf,.doc,.docx,.xls,.xlsx">
-        <small class="form-note"><?php esc_html_e('Accepted file types include images, PDF, Word, and Excel files up to 8MB.', 'mirrorcraft'); ?></small>
-        <?php if (mirrorcraft_contact_form_error($state, 'attachment')) : ?>
-          <small class="form-error"><?php echo esc_html(mirrorcraft_contact_form_error($state, 'attachment')); ?></small>
-        <?php endif; ?>
-      </label>
+      <?php endif; ?>
 
       <div class="form-actions">
-        <button type="submit" class="button button-primary"><?php esc_html_e('Send Inquiry', 'mirrorcraft'); ?></button>
+        <button type="submit" class="button button-primary"><?php echo esc_html($is_contact_page ? __('Send Message', 'mirrorcraft') : __('Send Inquiry', 'mirrorcraft')); ?></button>
       </div>
     </form>
   </div>
