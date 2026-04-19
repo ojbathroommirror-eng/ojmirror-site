@@ -124,39 +124,48 @@ $footer_social_icons = array(
   <div class="shell footer-shell">
     <div class="footer-grid">
       <div class="footer-brand-panel">
+        <p class="footer-kicker"><?php esc_html_e('OEM / ODM Mirror Manufacturing', 'mirrorcraft'); ?></p>
         <a class="footer-wordmark" href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html($brand_name); ?></a>
-        <p class="footer-copy"><?php echo esc_html($footer_blurb); ?></p>
-        <p class="footer-copy footer-copy-secondary"><?php echo esc_html($footer_focus); ?></p>
+        <div class="footer-copy-stack">
+          <p class="footer-copy footer-copy-lead"><?php echo esc_html($footer_blurb); ?></p>
+          <p class="footer-copy footer-copy-secondary"><?php echo esc_html($footer_focus); ?></p>
+        </div>
 
-        <div class="footer-contact-listing">
-          <div class="footer-contact-row">
-            <span class="footer-contact-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" role="presentation" focusable="false">
-                <path fill="currentColor" d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm17 2.24-7.44 6.05a1 1 0 0 1-1.12.07L4 7.3V17h16V7.24Zm-1.8-.24H5.83L12 12.02 18.2 7Z"/>
-              </svg>
-            </span>
-            <a href="mailto:<?php echo antispambot(esc_attr($footer_email)); ?>"><?php echo esc_html($footer_email); ?></a>
-          </div>
-
-          <?php if ($footer_phone !== '') : ?>
+        <div class="footer-contact-card">
+          <p class="footer-meta-title"><?php esc_html_e('Contact', 'mirrorcraft'); ?></p>
+          <div class="footer-contact-listing">
             <div class="footer-contact-row">
               <span class="footer-contact-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" role="presentation" focusable="false">
-                  <path fill="currentColor" d="M12 2a10 10 0 0 0-8.71 14.92L2 22l5.2-1.36A10 10 0 1 0 12 2Zm0 18a7.92 7.92 0 0 1-4.05-1.1l-.29-.17-2.24.59.6-2.18-.18-.3A8 8 0 1 1 12 20Zm4.41-5.24c-.22-.11-1.29-.63-1.49-.7-.2-.07-.34-.11-.49.11-.14.22-.56.7-.68.85-.12.14-.25.16-.46.05-.22-.11-.92-.34-1.75-1.1a6.5 6.5 0 0 1-1.21-1.5c-.13-.21-.01-.33.09-.44.1-.1.22-.24.32-.36.11-.12.14-.21.22-.35.07-.14.03-.27-.02-.38-.06-.11-.49-1.17-.67-1.61-.17-.42-.35-.36-.49-.37l-.42-.01c-.14 0-.37.05-.56.27-.19.21-.74.72-.74 1.76 0 1.03.76 2.03.86 2.17.11.14 1.49 2.27 3.6 3.18.5.22.9.35 1.21.45.51.16.97.14 1.33.09.41-.06 1.29-.52 1.47-1.03.19-.5.19-.93.13-1.02-.05-.09-.19-.14-.41-.25Z"/>
+                  <path fill="currentColor" d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm17 2.24-7.44 6.05a1 1 0 0 1-1.12.07L4 7.3V17h16V7.24Zm-1.8-.24H5.83L12 12.02 18.2 7Z"/>
                 </svg>
               </span>
-              <a href="tel:<?php echo esc_attr($footer_phone_href); ?>"><?php echo esc_html($footer_phone); ?></a>
-              <span class="footer-contact-note"><?php esc_html_e('(WhatsApp / WeChat)', 'mirrorcraft'); ?></span>
+              <a href="mailto:<?php echo antispambot(esc_attr($footer_email)); ?>"><?php echo esc_html($footer_email); ?></a>
             </div>
-          <?php endif; ?>
+
+            <?php if ($footer_phone !== '') : ?>
+              <div class="footer-contact-row">
+                <span class="footer-contact-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+                    <path fill="currentColor" d="M12 2a10 10 0 0 0-8.71 14.92L2 22l5.2-1.36A10 10 0 1 0 12 2Zm0 18a7.92 7.92 0 0 1-4.05-1.1l-.29-.17-2.24.59.6-2.18-.18-.3A8 8 0 1 1 12 20Zm4.41-5.24c-.22-.11-1.29-.63-1.49-.7-.2-.07-.34-.11-.49.11-.14.22-.56.7-.68.85-.12.14-.25.16-.46.05-.22-.11-.92-.34-1.75-1.1a6.5 6.5 0 0 1-1.21-1.5c-.13-.21-.01-.33.09-.44.1-.1.22-.24.32-.36.11-.12.14-.21.22-.35.07-.14.03-.27-.02-.38-.06-.11-.49-1.17-.67-1.61-.17-.42-.35-.36-.49-.37l-.42-.01c-.14 0-.37.05-.56.27-.19.21-.74.72-.74 1.76 0 1.03.76 2.03.86 2.17.11.14 1.49 2.27 3.6 3.18.5.22.9.35 1.21.45.51.16.97.14 1.33.09.41-.06 1.29-.52 1.47-1.03.19-.5.19-.93.13-1.02-.05-.09-.19-.14-.41-.25Z"/>
+                  </svg>
+                </span>
+                <a href="tel:<?php echo esc_attr($footer_phone_href); ?>"><?php echo esc_html($footer_phone); ?></a>
+                <span class="footer-contact-note"><?php esc_html_e('(WhatsApp / WeChat)', 'mirrorcraft'); ?></span>
+              </div>
+            <?php endif; ?>
+          </div>
         </div>
 
-        <div class="footer-social-list" aria-label="<?php esc_attr_e('Social channels', 'mirrorcraft'); ?>">
-          <?php foreach ($footer_social_icons as $social) : ?>
-            <span class="footer-social" aria-label="<?php echo esc_attr($social['label']); ?>">
-              <span class="footer-social-symbol" aria-hidden="true"><?php echo esc_html($social['symbol']); ?></span>
-            </span>
-          <?php endforeach; ?>
+        <div class="footer-social-wrap">
+          <p class="footer-meta-title"><?php esc_html_e('Social', 'mirrorcraft'); ?></p>
+          <div class="footer-social-list" aria-label="<?php esc_attr_e('Social channels', 'mirrorcraft'); ?>">
+            <?php foreach ($footer_social_icons as $social) : ?>
+              <span class="footer-social" aria-label="<?php echo esc_attr($social['label']); ?>">
+                <span class="footer-social-symbol" aria-hidden="true"><?php echo esc_html($social['symbol']); ?></span>
+              </span>
+            <?php endforeach; ?>
+          </div>
         </div>
       </div>
 
