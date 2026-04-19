@@ -9,11 +9,6 @@
 <?php wp_body_open(); ?>
 <a class="skip-link screen-reader-text" href="#site-main"><?php esc_html_e('Skip to content', 'mirrorcraft'); ?></a>
 <header class="site-header" data-site-header>
-  <div class="announcement-bar">
-    <div class="shell announcement-shell">
-      <p><?php esc_html_e('OEM / ODM LED mirrors, lighted medicine cabinets, and project-ready quote support for global B2B buyers.', 'mirrorcraft'); ?></p>
-    </div>
-  </div>
   <div class="shell header-shell">
     <div class="site-brand">
       <?php mirrorcraft_render_brand_logo(); ?>

@@ -370,24 +370,24 @@ function mirrorcraft_get_product_family_cards() {
   return array(
     array(
       'tag'   => __('Backlit / Front-lit / Framed', 'mirrorcraft'),
-      'title' => __('LED Bathroom Mirrors', 'mirrorcraft'),
+      'title' => __('Bathroom Mirrors', 'mirrorcraft'),
       'text'  => __('Custom LED bathroom mirrors for hospitality bathrooms, multifamily units, premium residential builds, and branded product lines.', 'mirrorcraft'),
       'image' => mirrorcraft_get_product_category_image_url('bathroom-mirror'),
-      'link'  => mirrorcraft_link_by_slug('products/led-bathroom-mirrors', '/products/led-bathroom-mirrors/'),
+      'link'  => mirrorcraft_link_by_slug('products/bathroom-mirrors', '/products/bathroom-mirrors/'),
     ),
     array(
       'tag'   => __('Storage + Illumination', 'mirrorcraft'),
-      'title' => __('Lighted Medicine Cabinets', 'mirrorcraft'),
+      'title' => __('Medicine Cabinets', 'mirrorcraft'),
       'text'  => __('Mirror cabinet programs that combine illumination, storage, and cleaner installation logic for higher-value bathroom projects.', 'mirrorcraft'),
       'image' => mirrorcraft_get_product_category_image_url('medicine-cabinet'),
-      'link'  => mirrorcraft_link_by_slug('products/lighted-medicine-cabinets', '/products/lighted-medicine-cabinets/'),
+      'link'  => mirrorcraft_link_by_slug('products/medicine-cabinets', '/products/medicine-cabinets/'),
     ),
     array(
       'tag'   => __('Decorative + Premium', 'mirrorcraft'),
-      'title' => __('Framed LED Mirrors', 'mirrorcraft'),
+      'title' => __('Framed Mirrors', 'mirrorcraft'),
       'text'  => __('Framed LED mirror programs for hospitality interiors, premium bathrooms, and buyers who need a stronger decorative story.', 'mirrorcraft'),
       'image' => mirrorcraft_get_product_category_image_url('bathroom-mirror'),
-      'link'  => mirrorcraft_link_by_slug('products/framed-led-mirrors', '/products/framed-led-mirrors/'),
+      'link'  => mirrorcraft_link_by_slug('products/framed-mirrors', '/products/framed-mirrors/'),
     ),
     array(
       'tag'   => __('Beauty + Vanity', 'mirrorcraft'),
@@ -398,10 +398,10 @@ function mirrorcraft_get_product_family_cards() {
     ),
     array(
       'tag'   => __('OEM / ODM / Private Label', 'mirrorcraft'),
-      'title' => __('Custom Mirror Programs', 'mirrorcraft'),
+      'title' => __('Custom Mirrors', 'mirrorcraft'),
       'text'  => __('OEM and ODM mirror development for importers, distributors, designers, and private label buyers who need more than an off-the-shelf model.', 'mirrorcraft'),
       'image' => mirrorcraft_get_customization_reference_image_url(),
-      'link'  => mirrorcraft_link_by_slug('products/custom-led-mirrors', '/products/custom-led-mirrors/'),
+      'link'  => mirrorcraft_link_by_slug('products/custom-mirrors', '/products/custom-mirrors/'),
     ),
   );
 }
