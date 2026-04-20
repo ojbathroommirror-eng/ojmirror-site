@@ -13,18 +13,6 @@ $factory_overview_image = trailingslashit(get_template_directory_uri()) . 'asset
 $factory_gallery = array(
   array(
     'image' => $factory_overview_image,
-    'title' => __('Factory Overview', 'mirrorcraft'),
-    'text'  => __('Production-ready LED mirror programs with export, sampling, and project support.', 'mirrorcraft'),
-  ),
-  array(
-    'image' => mirrorcraft_get_customization_reference_image_url(),
-    'title' => __('Workshop Details', 'mirrorcraft'),
-    'text'  => __('Customization review, engineering coordination, and finish direction for OEM and ODM orders.', 'mirrorcraft'),
-  ),
-  array(
-    'image' => mirrorcraft_get_product_category_image_url('medicine-cabinet'),
-    'title' => __('Assembly & Packing', 'mirrorcraft'),
-    'text'  => __('Assembly follow-up, inspection rhythm, and packing preparation for bulk production.', 'mirrorcraft'),
   ),
 );
 $contact_social_icons = array(
@@ -107,14 +95,21 @@ $contact_social_icons = array(
           <div class="contact-factory-grid">
             <?php foreach ($factory_gallery as $index => $item) : ?>
               <?php if (empty($item['image'])) { continue; } ?>
-              <article class="contact-factory-card<?php echo 0 === $index ? ' is-featured' : ''; ?>">
+              <?php $has_copy = !empty($item['title']) || !empty($item['text']); ?>
+              <article class="contact-factory-card<?php echo 0 === $index ? ' is-featured' : ''; ?><?php echo $has_copy ? '' : ' is-image-only'; ?>">
                 <figure class="contact-factory-figure">
-                  <img src="<?php echo esc_url($item['image']); ?>" alt="<?php echo esc_attr($item['title']); ?>" loading="lazy" decoding="async">
+                  <img src="<?php echo esc_url($item['image']); ?>" alt="<?php echo esc_attr($item['title'] ?? 'Factory image'); ?>" loading="lazy" decoding="async">
                 </figure>
-                <div class="contact-factory-copy">
-                  <h3><?php echo esc_html($item['title']); ?></h3>
-                  <p><?php echo esc_html($item['text']); ?></p>
-                </div>
+                <?php if ($has_copy) : ?>
+                  <div class="contact-factory-copy">
+                    <?php if (!empty($item['title'])) : ?>
+                      <h3><?php echo esc_html($item['title']); ?></h3>
+                    <?php endif; ?>
+                    <?php if (!empty($item['text'])) : ?>
+                      <p><?php echo esc_html($item['text']); ?></p>
+                    <?php endif; ?>
+                  </div>
+                <?php endif; ?>
               </article>
             <?php endforeach; ?>
           </div>

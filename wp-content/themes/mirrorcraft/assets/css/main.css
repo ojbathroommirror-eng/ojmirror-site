@@ -1311,6 +1311,10 @@ h3 {
   grid-template-columns: minmax(0, 1.18fr) minmax(240px, 0.82fr);
 }
 
+.contact-factory-card.is-image-only {
+  grid-template-columns: 1fr;
+}
+
 .contact-factory-figure {
   margin: 0;
   min-height: 100%;
@@ -1322,6 +1326,10 @@ h3 {
 
 .contact-factory-card.is-featured .contact-factory-figure {
   aspect-ratio: 16 / 10;
+}
+
+.contact-factory-card.is-image-only .contact-factory-figure {
+  aspect-ratio: 16 / 8;
 }
 
 .contact-factory-figure img {
