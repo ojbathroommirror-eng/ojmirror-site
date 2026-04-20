@@ -11,6 +11,19 @@ function mirrorcraft_get_inquiry_product_interest_options() {
   );
 }
 
+function mirrorcraft_get_contact_quote_product_options() {
+  return array(
+    __('Bathroom Mirrors', 'mirrorcraft'),
+    __('Medicine Cabinets', 'mirrorcraft'),
+    __('Framed Mirrors', 'mirrorcraft'),
+    __('Makeup / Vanity Mirrors', 'mirrorcraft'),
+    __('Custom Mirrors', 'mirrorcraft'),
+    __('Decorative Mirrors', 'mirrorcraft'),
+    __('Smart Mirrors', 'mirrorcraft'),
+    __('Other', 'mirrorcraft'),
+  );
+}
+
 function mirrorcraft_get_inquiry_project_type_options() {
   return array(
     __('Hospitality', 'mirrorcraft'),
@@ -19,6 +32,15 @@ function mirrorcraft_get_inquiry_project_type_options() {
     __('Healthcare', 'mirrorcraft'),
     __('Senior Living', 'mirrorcraft'),
     __('OEM / ODM / Custom', 'mirrorcraft'),
+  );
+}
+
+function mirrorcraft_get_contact_quick_inquiry_options() {
+  return array(
+    __('Hotel Project', 'mirrorcraft'),
+    __('Distributor', 'mirrorcraft'),
+    __('Custom Brand', 'mirrorcraft'),
+    __('Retail', 'mirrorcraft'),
   );
 }
 
@@ -107,6 +129,7 @@ function mirrorcraft_get_contact_form_state($context = 'page') {
       'phone'            => '',
       'company'          => '',
       'country'          => '',
+      'quantity'         => '',
       'product_interest' => '',
       'project_type'     => '',
       'message'          => '',
@@ -230,13 +253,15 @@ function mirrorcraft_build_inquiry_email_body($values) {
     sprintf(__('Inquiry Page: %s', 'mirrorcraft'), $values['source_url'] ?? __('Not recorded', 'mirrorcraft')),
     sprintf(__('Name: %s', 'mirrorcraft'), $values['name']),
     sprintf(__('Email: %s', 'mirrorcraft'), $values['email']),
+    sprintf(__('Phone / WhatsApp: %s', 'mirrorcraft'), $values['phone'] ?: __('Not provided', 'mirrorcraft')),
     sprintf(__('Company: %s', 'mirrorcraft'), $values['company'] ?: __('Not provided', 'mirrorcraft')),
     sprintf(__('Country: %s', 'mirrorcraft'), $values['country'] ?: __('Not provided', 'mirrorcraft')),
-    sprintf(__('Product Interest: %s', 'mirrorcraft'), $values['product_interest'] ?: __('Not provided', 'mirrorcraft')),
-    sprintf(__('Project Type: %s', 'mirrorcraft'), $values['project_type'] ?: __('Not provided', 'mirrorcraft')),
+    sprintf(__('Quantity: %s', 'mirrorcraft'), $values['quantity'] ?: __('Not provided', 'mirrorcraft')),
+    sprintf(__('Product Type: %s', 'mirrorcraft'), $values['product_interest'] ?: __('Not provided', 'mirrorcraft')),
+    sprintf(__('Quick Inquiry Type: %s', 'mirrorcraft'), $values['project_type'] ?: __('Not provided', 'mirrorcraft')),
     sprintf(__('Attachment: %s', 'mirrorcraft'), $values['attachment_url'] ?? __('Not provided', 'mirrorcraft')),
     '',
-    __('Message:', 'mirrorcraft'),
+    __('Custom Requirements:', 'mirrorcraft'),
     $values['message'],
   );
 
@@ -300,14 +325,20 @@ function mirrorcraft_handle_inquiry_submission() {
     'phone'            => sanitize_text_field(wp_unslash($_POST['contact_phone'] ?? '')),
     'company'          => sanitize_text_field(wp_unslash($_POST['contact_company'] ?? '')),
     'country'          => sanitize_text_field(wp_unslash($_POST['contact_country'] ?? '')),
+    'quantity'         => sanitize_text_field(wp_unslash($_POST['contact_quantity'] ?? '')),
     'product_interest' => sanitize_text_field(wp_unslash($_POST['contact_product_interest'] ?? '')),
     'project_type'     => sanitize_text_field(wp_unslash($_POST['contact_project_type'] ?? '')),
     'message'          => sanitize_textarea_field(wp_unslash($_POST['contact_message'] ?? '')),
     'source_url'       => $source_url,
   );
 
-  $allowed_product_interest = mirrorcraft_get_inquiry_product_interest_options();
-  $allowed_project_types    = mirrorcraft_get_inquiry_project_type_options();
+  $allowed_product_interest = ('contact-page' === $form_context)
+    ? mirrorcraft_get_contact_quote_product_options()
+    : mirrorcraft_get_inquiry_product_interest_options();
+  $allowed_project_types = array_values(array_unique(array_merge(
+    mirrorcraft_get_inquiry_project_type_options(),
+    mirrorcraft_get_contact_quick_inquiry_options()
+  )));
 
   if ($values['product_interest'] !== '' && !in_array($values['product_interest'], $allowed_product_interest, true)) {
     $values['product_interest'] = '';
@@ -329,8 +360,14 @@ function mirrorcraft_handle_inquiry_submission() {
     $errors['email'] = __('Please enter a valid email address.', 'mirrorcraft');
   }
 
+  if ('contact-page' === $form_context && $values['product_interest'] === '') {
+    $errors['product_interest'] = __('Please select a product type.', 'mirrorcraft');
+  }
+
   if ($values['message'] === '') {
-    $errors['message'] = __('Please enter your message.', 'mirrorcraft');
+    $errors['message'] = ('contact-page' === $form_context)
+      ? __('Please enter your custom requirements.', 'mirrorcraft')
+      : __('Please enter your message.', 'mirrorcraft');
   }
 
   $attachment = array(
@@ -401,6 +438,7 @@ function mirrorcraft_handle_inquiry_submission() {
     update_post_meta($post_id, '_mirrorcraft_inquiry_phone', $values['phone']);
     update_post_meta($post_id, '_mirrorcraft_inquiry_company', $values['company']);
     update_post_meta($post_id, '_mirrorcraft_inquiry_country', $values['country']);
+    update_post_meta($post_id, '_mirrorcraft_inquiry_quantity', $values['quantity']);
     update_post_meta($post_id, '_mirrorcraft_inquiry_product_interest', $values['product_interest']);
     update_post_meta($post_id, '_mirrorcraft_inquiry_project_type', $values['project_type']);
     update_post_meta($post_id, '_mirrorcraft_inquiry_source_url', $source_url);
@@ -491,6 +529,7 @@ function mirrorcraft_render_inquiry_meta_box($post) {
   $phone      = get_post_meta($post->ID, '_mirrorcraft_inquiry_phone', true);
   $company    = get_post_meta($post->ID, '_mirrorcraft_inquiry_company', true);
   $country    = get_post_meta($post->ID, '_mirrorcraft_inquiry_country', true);
+  $quantity   = get_post_meta($post->ID, '_mirrorcraft_inquiry_quantity', true);
   $product_interest = get_post_meta($post->ID, '_mirrorcraft_inquiry_product_interest', true);
   $project_type = get_post_meta($post->ID, '_mirrorcraft_inquiry_project_type', true);
   $source_url = get_post_meta($post->ID, '_mirrorcraft_inquiry_source_url', true);
@@ -512,8 +551,9 @@ function mirrorcraft_render_inquiry_meta_box($post) {
     <?php endif; ?>
     <p><strong><?php esc_html_e('Company', 'mirrorcraft'); ?>:</strong><br><?php echo esc_html($company ?: '—'); ?></p>
     <p><strong><?php esc_html_e('Country', 'mirrorcraft'); ?>:</strong><br><?php echo esc_html($country ?: '—'); ?></p>
-    <p><strong><?php esc_html_e('Product Interest', 'mirrorcraft'); ?>:</strong><br><?php echo esc_html($product_interest ?: '—'); ?></p>
-    <p><strong><?php esc_html_e('Project Type', 'mirrorcraft'); ?>:</strong><br><?php echo esc_html($project_type ?: '—'); ?></p>
+    <p><strong><?php esc_html_e('Quantity', 'mirrorcraft'); ?>:</strong><br><?php echo esc_html($quantity ?: '—'); ?></p>
+    <p><strong><?php esc_html_e('Product Type', 'mirrorcraft'); ?>:</strong><br><?php echo esc_html($product_interest ?: '—'); ?></p>
+    <p><strong><?php esc_html_e('Quick Inquiry Type', 'mirrorcraft'); ?>:</strong><br><?php echo esc_html($project_type ?: '—'); ?></p>
     <p><strong><?php esc_html_e('Mail Status', 'mirrorcraft'); ?>:</strong><br><?php echo esc_html('1' === $mail_sent ? __('Sent', 'mirrorcraft') : __('Saved only', 'mirrorcraft')); ?></p>
     <p><strong><?php esc_html_e('Attachment', 'mirrorcraft'); ?>:</strong><br>
       <?php if ($attachment_url) : ?>
