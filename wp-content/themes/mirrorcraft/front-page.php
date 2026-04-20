@@ -85,34 +85,30 @@ $resource_links = array(
 );
 ?>
 <main id="site-main" class="site-main home-minimal" tabindex="-1">
-  <section class="oj-hero oj-hero--editorial oj-section">
-    <div class="shell oj-wrap oj-grid oj-grid--hero">
+  <section class="oj-hero oj-hero--immersive oj-section">
+    <div class="oj-hero__backdrop" aria-hidden="true">
+      <?php if ($hero_image) : ?>
+        <img src="<?php echo esc_url($hero_image); ?>" alt="<?php echo esc_attr($hero_image_alt); ?>" loading="eager" fetchpriority="high" width="1600" height="900">
+      <?php endif; ?>
+    </div>
+    <div class="oj-hero__veil" aria-hidden="true"></div>
+    <div class="shell oj-wrap">
       <div class="oj-hero__content">
         <p class="oj-eyebrow"><?php esc_html_e('LED mirror manufacturer in China', 'mirrorcraft'); ?></p>
         <h1>
-          <span><?php esc_html_e('Custom', 'mirrorcraft'); ?></span>
-          <span><?php esc_html_e('Lighted Mirrors &', 'mirrorcraft'); ?></span>
-          <span><?php esc_html_e('Mirror Cabinets', 'mirrorcraft'); ?></span>
-          <span><?php esc_html_e('for Global', 'mirrorcraft'); ?></span>
-          <span><?php esc_html_e('B2B Buyers', 'mirrorcraft'); ?></span>
+          <span><?php esc_html_e('Wholesale LED Bathroom', 'mirrorcraft'); ?></span>
+          <span><?php esc_html_e('Mirrors & Cabinets', 'mirrorcraft'); ?></span>
         </h1>
-        <p class="oj-lead"><?php esc_html_e('OJMIRROR supplies LED bathroom mirrors, lighted medicine cabinets, vanity mirrors, framed mirror programs, and OEM / ODM custom development for hospitality, commercial, residential, beauty, and healthcare projects.', 'mirrorcraft'); ?></p>
+        <p class="oj-lead"><?php esc_html_e('OJMIRROR supports distributors, hospitality buyers, residential developers, and private-label programs with reliable LED mirror and cabinet manufacturing from China.', 'mirrorcraft'); ?></p>
         <div class="oj-actions">
           <a class="oj-button oj-button--primary" href="<?php echo esc_url($contact_url); ?>"><?php esc_html_e('Request a Quote', 'mirrorcraft'); ?></a>
           <a class="oj-button oj-button--ghost" href="<?php echo esc_url($products_url); ?>"><?php esc_html_e('Browse Products', 'mirrorcraft'); ?></a>
         </div>
         <ul class="oj-proofline" aria-label="<?php esc_attr_e('Key capabilities', 'mirrorcraft'); ?>">
-          <li><?php esc_html_e('OEM / ODM', 'mirrorcraft'); ?></li>
-          <li><?php esc_html_e('Sample Review', 'mirrorcraft'); ?></li>
-          <li><?php esc_html_e('QC Workflow', 'mirrorcraft'); ?></li>
-          <li><?php esc_html_e('Export Packaging', 'mirrorcraft'); ?></li>
-          <li><?php esc_html_e('Project Support', 'mirrorcraft'); ?></li>
+          <li><?php esc_html_e('15+ Years Supply Experience', 'mirrorcraft'); ?></li>
+          <li><?php esc_html_e('OEM / ODM Support', 'mirrorcraft'); ?></li>
+          <li><?php esc_html_e('Global Project Delivery', 'mirrorcraft'); ?></li>
         </ul>
-      </div>
-      <div class="oj-hero__media">
-        <?php if ($hero_image) : ?>
-          <img src="<?php echo esc_url($hero_image); ?>" alt="<?php echo esc_attr($hero_image_alt); ?>" loading="eager" fetchpriority="high" width="960" height="1080">
-        <?php endif; ?>
       </div>
     </div>
   </section>

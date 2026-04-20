@@ -2184,6 +2184,134 @@ h3 {
   grid-column: 7 / -1;
 }
 
+.oj-hero--immersive {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: clamp(580px, calc(100vh - 92px), 860px);
+  overflow: hidden;
+  padding-block: clamp(92px, 11vw, 148px);
+  background: #171413;
+}
+
+.oj-hero__backdrop,
+.oj-hero__veil {
+  position: absolute;
+  inset: 0;
+}
+
+.oj-hero__backdrop {
+  z-index: 0;
+}
+
+.oj-hero__backdrop img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.92) brightness(0.72);
+}
+
+.oj-hero__veil {
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(18, 14, 12, 0.74) 0%, rgba(18, 14, 12, 0.54) 38%, rgba(18, 14, 12, 0.38) 58%, rgba(18, 14, 12, 0.58) 100%),
+    linear-gradient(180deg, rgba(12, 10, 9, 0.18) 0%, rgba(12, 10, 9, 0.46) 100%);
+}
+
+.oj-hero--immersive .oj-wrap {
+  position: relative;
+  z-index: 2;
+}
+
+.oj-hero--immersive .oj-hero__content {
+  max-width: min(100%, 780px);
+  padding-right: 0;
+  padding-bottom: clamp(10px, 2vw, 34px);
+}
+
+.oj-hero--immersive .oj-eyebrow {
+  margin-bottom: 1.2rem;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+}
+
+.oj-hero--immersive h1 {
+  margin: 0;
+  max-width: 12ch;
+  color: #fff;
+  font-size: clamp(3.1rem, 5.65vw, 5.9rem);
+  line-height: 1.02;
+  letter-spacing: -0.05em;
+  font-family: "Avenir Next", "Helvetica Neue", "Segoe UI", sans-serif;
+  font-weight: 600;
+  text-shadow: 0 18px 48px rgba(0, 0, 0, 0.24);
+}
+
+.oj-hero--immersive h1 span {
+  display: block;
+}
+
+.oj-hero--immersive .oj-lead {
+  max-width: 40rem;
+  margin-top: 1.7rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: clamp(1rem, 1.35vw, 1.22rem);
+  line-height: 1.72;
+}
+
+.oj-hero--immersive .oj-actions {
+  gap: 0.95rem;
+  margin-top: 2rem;
+}
+
+.oj-hero--immersive .oj-button {
+  min-height: 50px;
+  padding: 0 1.45rem;
+  border-radius: 999px;
+  border-color: rgba(255, 255, 255, 0.78);
+  font-size: 0.92rem;
+}
+
+.oj-hero--immersive .oj-button--primary {
+  background: #fff;
+  color: #131110;
+}
+
+.oj-hero--immersive .oj-button--primary:hover,
+.oj-hero--immersive .oj-button--primary:focus-visible {
+  background: transparent;
+  color: #fff;
+}
+
+.oj-hero--immersive .oj-button--ghost {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.oj-hero--immersive .oj-button--ghost:hover,
+.oj-hero--immersive .oj-button--ghost:focus-visible {
+  background: #fff;
+  color: #131110;
+}
+
+.oj-hero--immersive .oj-proofline {
+  gap: 0.8rem;
+  padding-top: 0;
+  margin-top: 2rem;
+  border-top: 0;
+}
+
+.oj-hero--immersive .oj-proofline li {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.82rem;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0.6rem 0.9rem;
+  border-radius: 999px;
+  backdrop-filter: blur(10px);
+}
+
 .oj-hero--editorial {
   position: relative;
   overflow: hidden;
@@ -2566,6 +2694,20 @@ h3 {
 }
 
 @media (max-width: 1100px) {
+  .oj-hero--immersive {
+    min-height: 640px;
+    padding-block: 86px 78px;
+  }
+
+  .oj-hero--immersive h1 {
+    max-width: 11ch;
+    font-size: clamp(2.85rem, 6.9vw, 4.85rem);
+  }
+
+  .oj-hero--immersive .oj-lead {
+    max-width: 35rem;
+  }
+
   .header-shell {
     grid-template-columns: auto auto;
   }
@@ -2909,6 +3051,30 @@ h3 {
 @media (max-width: 720px) {
   .oj-section {
     padding-block: 4rem;
+  }
+
+  .oj-hero--immersive {
+    min-height: 560px;
+    padding-block: 94px 68px;
+  }
+
+  .oj-hero--immersive h1 {
+    max-width: 9ch;
+    font-size: clamp(2.35rem, 11vw, 4rem);
+  }
+
+  .oj-hero--immersive .oj-lead {
+    max-width: 100%;
+    font-size: 0.98rem;
+  }
+
+  .oj-hero--immersive .oj-actions {
+    gap: 0.8rem;
+  }
+
+  .oj-hero--immersive .oj-proofline {
+    gap: 0.65rem;
+    display: grid;
   }
 
   .oj-hero h1 {
