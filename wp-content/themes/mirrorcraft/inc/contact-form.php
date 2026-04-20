@@ -360,10 +360,6 @@ function mirrorcraft_handle_inquiry_submission() {
     $errors['email'] = __('Please enter a valid email address.', 'mirrorcraft');
   }
 
-  if ('contact-page' === $form_context && $values['product_interest'] === '') {
-    $errors['product_interest'] = __('Please select a product type.', 'mirrorcraft');
-  }
-
   if ($values['message'] === '') {
     $errors['message'] = ('contact-page' === $form_context)
       ? __('Please enter your custom requirements.', 'mirrorcraft')

@@ -5,6 +5,7 @@ const navToggle = document.querySelector('[data-nav-toggle]');
 const siteNav = document.querySelector('[data-nav]');
 const scrollTopButton = document.querySelector('[data-scroll-top]');
 const faqTriggers = Array.from(document.querySelectorAll('[data-faq-trigger]'));
+const fileInputFields = Array.from(document.querySelectorAll('[data-file-input]'));
 
 if (siteHeader) {
   const syncHeaderState = () => {
@@ -63,3 +64,22 @@ if (scrollTopButton) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 }
+
+fileInputFields.forEach((field) => {
+  const input = field.querySelector('input[type="file"]');
+  const fileName = field.querySelector('[data-file-name]');
+
+  if (!input || !fileName) {
+    return;
+  }
+
+  const defaultName = fileName.getAttribute('data-default-name') || 'No file selected';
+
+  const syncFileName = () => {
+    const selectedFile = input.files && input.files.length > 0 ? input.files[0].name : defaultName;
+    fileName.textContent = selectedFile;
+  };
+
+  syncFileName();
+  input.addEventListener('change', syncFileName);
+});

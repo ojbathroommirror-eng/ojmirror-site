@@ -496,7 +496,6 @@ function mirrorcraft_render_contact_form($context = 'page') {
   $product_interest_options = mirrorcraft_get_inquiry_product_interest_options();
   $project_type_options = mirrorcraft_get_inquiry_project_type_options();
   $is_contact_page = ('contact-page' === $context);
-  $contact_quote_options = mirrorcraft_get_contact_quote_product_options();
   $contact_quick_options = mirrorcraft_get_contact_quick_inquiry_options();
   $contact_whatsapp_link = mirrorcraft_get_whatsapp_link();
   $contact_whatsapp_external = mirrorcraft_has_whatsapp_number();
@@ -557,24 +556,6 @@ function mirrorcraft_render_contact_form($context = 'page') {
             <input type="text" name="contact_company" value="<?php echo esc_attr(mirrorcraft_contact_form_value($state, 'company')); ?>" placeholder="<?php esc_attr_e('Company name', 'mirrorcraft'); ?>">
           </label>
 
-          <label class="form-field">
-            <span class="form-label"><?php esc_html_e('Product Type', 'mirrorcraft'); ?> <span class="form-required">*</span></span>
-            <select name="contact_product_interest" required>
-              <option value=""><?php esc_html_e('Select a product type', 'mirrorcraft'); ?></option>
-              <?php foreach ($contact_quote_options as $option) : ?>
-                <option value="<?php echo esc_attr($option); ?>" <?php selected(mirrorcraft_contact_form_value($state, 'product_interest'), $option); ?>><?php echo esc_html($option); ?></option>
-              <?php endforeach; ?>
-            </select>
-            <?php if (mirrorcraft_contact_form_error($state, 'product_interest')) : ?>
-              <small class="form-error"><?php echo esc_html(mirrorcraft_contact_form_error($state, 'product_interest')); ?></small>
-            <?php endif; ?>
-          </label>
-
-          <label class="form-field">
-            <span class="form-label"><?php esc_html_e('Quantity', 'mirrorcraft'); ?></span>
-            <input type="text" name="contact_quantity" value="<?php echo esc_attr(mirrorcraft_contact_form_value($state, 'quantity')); ?>" placeholder="<?php esc_attr_e('e.g. 300 pcs / 1x40HQ', 'mirrorcraft'); ?>">
-          </label>
-
           <label class="form-field form-field-full">
             <span class="form-label"><?php esc_html_e('Custom Requirements', 'mirrorcraft'); ?> <span class="form-required">*</span></span>
             <textarea name="contact_message" rows="8" placeholder="<?php esc_attr_e('Tell us the size, function, quantity, target market, or any drawing details.', 'mirrorcraft'); ?>" required><?php echo esc_textarea(mirrorcraft_contact_form_value($state, 'message')); ?></textarea>
@@ -585,7 +566,16 @@ function mirrorcraft_render_contact_form($context = 'page') {
 
           <label class="form-field form-field-full">
             <span class="form-label"><?php esc_html_e('Upload Drawing', 'mirrorcraft'); ?></span>
-            <input type="file" name="contact_attachment" accept=".jpg,.jpeg,.png,.webp,.pdf,.doc,.docx,.xls,.xlsx">
+            <div class="contact-file-input" data-file-input>
+              <input
+                class="contact-file-input-native"
+                id="contact-attachment-contact-page"
+                type="file"
+                name="contact_attachment"
+                accept=".jpg,.jpeg,.png,.webp,.pdf,.doc,.docx,.xls,.xlsx">
+              <span class="contact-file-input-button" aria-hidden="true"><?php esc_html_e('Choose File', 'mirrorcraft'); ?></span>
+              <span class="contact-file-input-name" data-file-name data-default-name="<?php esc_attr_e('No file selected', 'mirrorcraft'); ?>"><?php esc_html_e('No file selected', 'mirrorcraft'); ?></span>
+            </div>
             <small class="form-note"><?php esc_html_e('Upload drawings, reference photos, or requirement sheets up to 8MB.', 'mirrorcraft'); ?></small>
             <?php if (mirrorcraft_contact_form_error($state, 'attachment')) : ?>
               <small class="form-error"><?php echo esc_html(mirrorcraft_contact_form_error($state, 'attachment')); ?></small>
