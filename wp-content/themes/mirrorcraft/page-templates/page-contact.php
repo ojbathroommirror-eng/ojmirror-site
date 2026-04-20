@@ -29,7 +29,11 @@ $contact_social_icons = array(
       <div class="shell contact-page-shell">
         <article class="contact-page-intro">
           <?php mirrorcraft_render_breadcrumbs(); ?>
-          <h1 class="contact-page-title"><?php esc_html_e("Let's Discuss Your LED Mirrors Project", 'mirrorcraft'); ?></h1>
+          <h1 class="contact-page-title">
+            <span><?php esc_html_e("Let's Discuss", 'mirrorcraft'); ?></span>
+            <span><?php esc_html_e('Your LED Mirrors', 'mirrorcraft'); ?></span>
+            <span><?php esc_html_e('Project', 'mirrorcraft'); ?></span>
+          </h1>
           <p class="contact-page-lead"><?php esc_html_e('We are here to support your wholesale, OEM, and project sourcing needs for LED bathroom mirrors, medicine cabinets, and custom mirror programs.', 'mirrorcraft'); ?></p>
 
           <div class="contact-page-details">
