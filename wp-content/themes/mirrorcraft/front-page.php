@@ -4,7 +4,12 @@ get_header();
 $product_routes = mirrorcraft_get_product_family_cards();
 $application_cards = mirrorcraft_get_application_cards();
 $process_steps = mirrorcraft_get_process_steps();
-$hero_image = mirrorcraft_get_active_hero_image_url();
+$hero_image = mirrorcraft_theme_image_url('home-hero-banner.png');
+
+if (!$hero_image) {
+  $hero_image = mirrorcraft_get_active_hero_image_url();
+}
+
 $hero_image_alt = __('Custom LED mirror product display for hospitality and residential buyers', 'mirrorcraft');
 $contact_url = mirrorcraft_link_by_slug('contact', '/contact/');
 $products_url = mirrorcraft_link_by_slug('products', '/products/');
@@ -80,11 +85,17 @@ $resource_links = array(
 );
 ?>
 <main id="site-main" class="site-main home-minimal" tabindex="-1">
-  <section class="oj-hero oj-section">
+  <section class="oj-hero oj-hero--editorial oj-section">
     <div class="shell oj-wrap oj-grid oj-grid--hero">
       <div class="oj-hero__content">
         <p class="oj-eyebrow"><?php esc_html_e('LED mirror manufacturer in China', 'mirrorcraft'); ?></p>
-        <h1><?php esc_html_e('Custom Lighted Mirrors & Mirror Cabinets for Global B2B Buyers', 'mirrorcraft'); ?></h1>
+        <h1>
+          <span><?php esc_html_e('Custom', 'mirrorcraft'); ?></span>
+          <span><?php esc_html_e('Lighted Mirrors &', 'mirrorcraft'); ?></span>
+          <span><?php esc_html_e('Mirror Cabinets', 'mirrorcraft'); ?></span>
+          <span><?php esc_html_e('for Global', 'mirrorcraft'); ?></span>
+          <span><?php esc_html_e('B2B Buyers', 'mirrorcraft'); ?></span>
+        </h1>
         <p class="oj-lead"><?php esc_html_e('OJMIRROR supplies LED bathroom mirrors, lighted medicine cabinets, vanity mirrors, framed mirror programs, and OEM / ODM custom development for hospitality, commercial, residential, beauty, and healthcare projects.', 'mirrorcraft'); ?></p>
         <div class="oj-actions">
           <a class="oj-button oj-button--primary" href="<?php echo esc_url($contact_url); ?>"><?php esc_html_e('Request a Quote', 'mirrorcraft'); ?></a>
