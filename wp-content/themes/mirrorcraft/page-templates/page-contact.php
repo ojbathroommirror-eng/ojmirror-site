@@ -6,12 +6,13 @@ get_header();
 $contact_email = mirrorcraft_get_contact_email();
 $contact_phone = mirrorcraft_get_contact_phone();
 $contact_phone_href = mirrorcraft_get_contact_phone_href();
-$contact_address = '中山市火炬开发区中山港街道展兴路5号';
-$contact_map_link = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode($contact_address);
-$contact_map_embed_url = 'https://www.google.com/maps?output=embed&q=' . rawurlencode($contact_address);
+$contact_address = mirrorcraft_get_contact_address();
+$contact_map_link = mirrorcraft_get_contact_map_link();
+$contact_map_embed_url = mirrorcraft_get_contact_map_embed_url();
+$factory_overview_image = trailingslashit(get_template_directory_uri()) . 'assets/images/factory.png';
 $factory_gallery = array(
   array(
-    'image' => mirrorcraft_get_active_hero_image_url(),
+    'image' => $factory_overview_image,
     'title' => __('Factory Overview', 'mirrorcraft'),
     'text'  => __('Production-ready LED mirror programs with export, sampling, and project support.', 'mirrorcraft'),
   ),

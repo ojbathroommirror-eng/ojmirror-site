@@ -557,6 +557,7 @@ function mirrorcraft_get_contact_address() {
   $legacy_defaults = array(
     '',
     'Foshan, Guangdong, China',
+    '中山市火炬开发区中山港街道展兴路5号',
   );
 
   if (in_array($normalized_address, $legacy_defaults, true)) {
