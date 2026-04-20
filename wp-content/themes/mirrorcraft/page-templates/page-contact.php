@@ -9,7 +9,7 @@ $contact_phone_href = mirrorcraft_get_contact_phone_href();
 $contact_address = mirrorcraft_get_contact_address();
 $contact_map_link = mirrorcraft_get_contact_map_link();
 $contact_map_embed_url = mirrorcraft_get_contact_map_embed_url();
-$factory_overview_image = trailingslashit(get_template_directory_uri()) . 'assets/images/factory.png';
+$factory_overview_image = trailingslashit(get_template_directory_uri()) . 'assets/images/factory-20260420.png';
 $factory_gallery = array(
   array(
     'image' => $factory_overview_image,
