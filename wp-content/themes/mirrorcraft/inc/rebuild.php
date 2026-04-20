@@ -383,20 +383,6 @@ function mirrorcraft_get_product_family_cards() {
       'link'  => mirrorcraft_link_by_slug('products/medicine-cabinets', '/products/medicine-cabinets/'),
     ),
     array(
-      'tag'   => __('Decorative + Premium', 'mirrorcraft'),
-      'title' => __('Framed Mirrors', 'mirrorcraft'),
-      'text'  => __('Framed LED mirror programs for hospitality interiors, premium bathrooms, and buyers who need a stronger decorative story.', 'mirrorcraft'),
-      'image' => mirrorcraft_get_product_category_image_url('bathroom-mirror'),
-      'link'  => mirrorcraft_link_by_slug('products/framed-mirrors', '/products/framed-mirrors/'),
-    ),
-    array(
-      'tag'   => __('Beauty + Vanity', 'mirrorcraft'),
-      'title' => __('Makeup / Vanity Mirrors', 'mirrorcraft'),
-      'text'  => __('Task-lighting mirror programs for salons, vanity areas, beauty retail, and buyers who need closer-range grooming visibility.', 'mirrorcraft'),
-      'image' => mirrorcraft_get_product_category_image_url('makeup-mirror'),
-      'link'  => mirrorcraft_link_by_slug('products/makeup-mirrors', '/products/makeup-mirrors/'),
-    ),
-    array(
       'tag'   => __('OEM / ODM / Private Label', 'mirrorcraft'),
       'title' => __('Custom Mirrors', 'mirrorcraft'),
       'text'  => __('OEM and ODM mirror development for importers, distributors, designers, and private label buyers who need more than an off-the-shelf model.', 'mirrorcraft'),
