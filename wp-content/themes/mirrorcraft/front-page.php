@@ -33,6 +33,20 @@ $application_card_image_map = array(
   'senior-living'           => $theme_image_base . 'senior-living-bathroom-mirror.png',
   'education'               => $theme_image_base . 'school-washroom-mirror.png',
 );
+$application_card_copy_map = array(
+  'hospitality'             => __('Ideal for hotel projects, combining premium design, durability, and large-scale customization.', 'mirrorcraft'),
+  'residential'             => __('Perfect for apartments and housing projects, balancing aesthetics, functionality, and cost efficiency.', 'mirrorcraft'),
+  'commercial'              => __('Designed for high-traffic environments with a focus on durability, anti-fog performance, and low maintenance.', 'mirrorcraft'),
+  'beauty-wellness'         => __('High CRI lighting ensures accurate color rendering, ideal for makeup studios and salons.', 'mirrorcraft'),
+  'real-estate-development' => __('A standard solution for large-scale residential developments with consistent quality and bulk supply.', 'mirrorcraft'),
+  'retail-chain-stores'     => __('Enhances customer experience in fitting rooms and branded retail spaces.', 'mirrorcraft'),
+  'healthcare'              => __('Meets hygiene and safety standards with anti-fog, easy-to-clean, and corrosion-resistant features.', 'mirrorcraft'),
+  'senior-living'           => __('Designed for safety and accessibility, including anti-glare and shatterproof options.', 'mirrorcraft'),
+  'fitness-sports'          => __('Large-format mirrors with clear reflection, ideal for gyms and training environments.', 'mirrorcraft'),
+  'education'               => __('Built for durability and safety in school and campus facilities.', 'mirrorcraft'),
+  'transportation'          => __('Suitable for high-traffic transport hubs, focusing on reliability and easy maintenance.', 'mirrorcraft'),
+  'cruise-marine'           => __('Premium solutions for marine environments with moisture and corrosion resistance.', 'mirrorcraft'),
+);
 $application_cards_display = array();
 
 foreach ($application_cards as $application_card) {
@@ -53,6 +67,10 @@ foreach ($application_cards as $application_card) {
 
   if (empty($image)) {
     $image = $hero_image;
+  }
+
+  if ($slug !== '' && !empty($application_card_copy_map[$slug])) {
+    $application_card['text'] = $application_card_copy_map[$slug];
   }
 
   $application_card['image'] = $image;
@@ -249,7 +267,7 @@ $resource_links = array(
             </div>
             <div class="oj-application-card-body">
               <h3><?php echo esc_html($application['tag']); ?></h3>
-              <p><?php echo esc_html(wp_trim_words($application['text'], 18, '...')); ?></p>
+              <p><?php echo esc_html($application['text']); ?></p>
               <a class="oj-button oj-button--primary" href="<?php echo esc_url($application['link']); ?>"><?php esc_html_e('View market', 'mirrorcraft'); ?></a>
             </div>
           </article>
