@@ -18,6 +18,57 @@ $about_url = mirrorcraft_link_by_slug('about', '/about/');
 $manufacturing_url = mirrorcraft_link_by_slug('manufacturing', '/manufacturing/');
 $resources_url = mirrorcraft_link_by_slug('resources', '/resources/');
 $faq_url = mirrorcraft_link_by_slug('faq', '/faq/');
+$application_card_image_map = array(
+  'hospitality'             => mirrorcraft_theme_image_url('hospitality-led-mirror-project.png'),
+  'residential'             => mirrorcraft_theme_image_url('residential-led-bathroom-mirror.png'),
+  'commercial'              => mirrorcraft_theme_image_url('commercial-washroom-led-mirror.png'),
+  'healthcare'              => mirrorcraft_theme_image_url('healthcare-hospital-mirror.png'),
+  'beauty-wellness'         => mirrorcraft_theme_image_url('beauty-salon-led-mirror.png'),
+  'real-estate-development' => mirrorcraft_theme_image_url('real-estate-bathroom-mirror.png'),
+  'retail-chain-stores'     => mirrorcraft_theme_image_url('retail-store-fitting-mirror.png'),
+  'fitness-sports'          => mirrorcraft_theme_image_url('gym-fitness-mirror.png'),
+  'transportation'          => mirrorcraft_theme_image_url('airport-public-mirror.png'),
+  'cruise-marine'           => mirrorcraft_theme_image_url('cruise-ship-bathroom-mirror.png'),
+  'senior-living'           => mirrorcraft_theme_image_url('senior-living-bathroom-mirror.png'),
+  'education'               => mirrorcraft_theme_image_url('school-washroom-mirror.png'),
+);
+$application_cards_display = array();
+
+foreach ($application_cards as $application_card) {
+  $slug = $application_card['slug'] ?? '';
+  $image = '';
+
+  if ($slug !== '' && !empty($application_card_image_map[$slug])) {
+    $image = $application_card_image_map[$slug];
+  }
+
+  if (empty($image) && !empty($application_card['image'])) {
+    $image = $application_card['image'];
+  }
+
+  if (empty($image)) {
+    $image = mirrorcraft_get_product_category_image_url('bathroom-mirror');
+  }
+
+  if (empty($image)) {
+    $image = $hero_image;
+  }
+
+  $application_card['image'] = $image;
+  $application_cards_display[] = $application_card;
+}
+
+if (count($application_cards_display) < 12) {
+  $application_cards_display[] = array(
+    'tag'         => __('All Applications', 'mirrorcraft'),
+    'title'       => __('Browse All Application Pages', 'mirrorcraft'),
+    'text'        => __('See the full application library for hospitality, residential, commercial, wellness, healthcare, and project-led sourcing routes.', 'mirrorcraft'),
+    'image'       => $hero_image,
+    'link'        => $applications_url,
+    'is_overview' => true,
+  );
+}
+
 $latest_posts = get_posts(
   array(
     'post_type'           => 'post',
@@ -113,18 +164,12 @@ $resource_links = array(
     </div>
   </section>
 
-  <section class="oj-section oj-section--tight">
-    <div class="shell oj-wrap oj-intro__inner">
-      <p class="oj-section-label"><?php esc_html_e('Product categories', 'mirrorcraft'); ?></p>
-      <p class="oj-intro__text"><?php esc_html_e('This homepage is structured like a sourcing site first: start from the product type, move into smart feature and customization logic, then narrow the best application route before requesting pricing.', 'mirrorcraft'); ?></p>
-    </div>
-  </section>
-
   <section class="oj-section" id="products">
     <div class="shell oj-wrap">
-      <div class="oj-section-heading">
+      <div class="oj-section-heading oj-section-heading--products">
         <p class="oj-section-label"><?php esc_html_e('Featured Product Categories', 'mirrorcraft'); ?></p>
-        <h2><?php esc_html_e('Choose the mirror family before you choose the exact spec.', 'mirrorcraft'); ?></h2>
+        <h2><?php esc_html_e('Product Categories', 'mirrorcraft'); ?></h2>
+        <p class="oj-section-copy"><?php esc_html_e('Browse our LED bathroom mirrors, mirror cabinets, makeup mirrors, full-length mirrors, and custom mirrors. Designed for hotels, residential, commercial, and healthcare projects.', 'mirrorcraft'); ?></p>
       </div>
       <div class="card-grid card-grid-three">
         <?php foreach ($product_routes as $route) : ?>
@@ -191,27 +236,23 @@ $resource_links = array(
 
   <section class="oj-section section-alt" id="applications">
     <div class="shell oj-wrap">
-      <div class="oj-section-heading">
-        <p class="oj-section-label"><?php esc_html_e('Application and Industry', 'mirrorcraft'); ?></p>
-        <h2><?php esc_html_e('Match the right mirror route to the space where it will actually be used.', 'mirrorcraft'); ?></h2>
+      <div class="oj-section-heading oj-section-heading--applications">
+        <h2><?php esc_html_e('LED Mirror Solutions for Every Industry', 'mirrorcraft'); ?></h2>
+        <p class="oj-section-copy"><?php esc_html_e('From hotels to large-scale developments, we deliver custom LED mirror solutions engineered for durability, performance, and design.', 'mirrorcraft'); ?></p>
       </div>
-      <div class="card-grid card-grid-three">
-        <?php foreach ($application_cards as $application) : ?>
-          <article class="feature-card sector-card">
-            <div class="feature-card-media">
+      <div class="oj-application-cards">
+        <?php foreach ($application_cards_display as $application) : ?>
+          <article class="oj-application-card<?php echo !empty($application['is_overview']) ? ' oj-application-card--overview' : ''; ?>">
+            <div class="oj-application-card-media">
               <img src="<?php echo esc_url($application['image']); ?>" alt="<?php echo esc_attr($application['tag']); ?>" width="1400" height="1200" loading="lazy" decoding="async">
             </div>
-            <div class="feature-card-body">
-              <p class="feature-tag"><?php echo esc_html($application['tag']); ?></p>
+            <div class="oj-application-card-body">
               <h3><?php echo esc_html($application['tag']); ?></h3>
-              <p><?php echo esc_html(wp_trim_words($application['text'], 24, '...')); ?></p>
-              <a class="text-link" href="<?php echo esc_url($application['link']); ?>"><?php esc_html_e('View market page', 'mirrorcraft'); ?></a>
+              <p><?php echo esc_html(wp_trim_words($application['text'], 18, '...')); ?></p>
+              <a class="oj-button oj-button--primary" href="<?php echo esc_url($application['link']); ?>"><?php esc_html_e('View market', 'mirrorcraft'); ?></a>
             </div>
           </article>
         <?php endforeach; ?>
-      </div>
-      <div class="oj-inline-links">
-        <a href="<?php echo esc_url($applications_url); ?>"><?php esc_html_e('Browse all application pages', 'mirrorcraft'); ?></a>
       </div>
     </div>
   </section>

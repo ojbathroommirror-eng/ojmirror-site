@@ -404,6 +404,7 @@ function mirrorcraft_get_application_cards() {
     }
 
     $items[] = array(
+      'slug'  => $slug,
       'tag'   => $page['title'] ?? ucfirst(str_replace('-', ' ', $slug)),
       'title' => $page['hero_title'] ?? ($page['title'] ?? ucfirst(str_replace('-', ' ', $slug))),
       'text'  => $page['hero_text'] ?? '',
