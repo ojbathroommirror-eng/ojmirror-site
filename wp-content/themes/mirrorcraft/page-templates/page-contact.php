@@ -20,70 +20,12 @@ $factory_gallery = array(
     'image' => $factory_overview_image,
   ),
 );
-$contact_channels = array(
-  array(
-    'eyebrow'  => __('Email', 'mirrorcraft'),
-    'value'    => $contact_email,
-    'href'     => 'mailto:' . antispambot($contact_email),
-    'note'     => __('Share product type, quantity, and target market for a faster quotation response.', 'mirrorcraft'),
-    'class'    => '',
-    'external' => false,
-  ),
-  array(
-    'eyebrow'  => __('WhatsApp', 'mirrorcraft'),
-    'value'    => $contact_phone,
-    'href'     => $contact_whatsapp_link,
-    'note'     => __('The fastest way to discuss drawings, OEM details, and project follow-up with our sales team.', 'mirrorcraft'),
-    'class'    => ' is-highlighted',
-    'external' => $contact_whatsapp_external,
-  ),
-  array(
-    'eyebrow'  => __('Website', 'mirrorcraft'),
-    'value'    => $website_label,
-    'href'     => $website_url,
-    'note'     => __('Browse products, applications, and company capabilities before sending your inquiry.', 'mirrorcraft'),
-    'class'    => '',
-    'external' => false,
-  ),
-  array(
-    'eyebrow'  => __('Address', 'mirrorcraft'),
-    'value'    => $contact_short_address,
-    'href'     => $contact_map_link,
-    'note'     => __('Factory and project support base in Zhongshan, Guangdong, China.', 'mirrorcraft'),
-    'class'    => '',
-    'external' => true,
-  ),
-);
 $why_contact_items = array(
   __('Fast response within 24 hours', 'mirrorcraft'),
   __('Professional OEM / ODM support', 'mirrorcraft'),
   __('Experience with global projects', 'mirrorcraft'),
   __('Reliable quality and delivery', 'mirrorcraft'),
   __('Factory direct pricing', 'mirrorcraft'),
-);
-$response_promises = array(
-  __('Reply within 24 hours', 'mirrorcraft'),
-  __('Professional quotation', 'mirrorcraft'),
-  __('Technical support for your project', 'mirrorcraft'),
-  __('Clear communication from start to finish', 'mirrorcraft'),
-);
-$contact_faq_items = array(
-  array(
-    'question' => __('How fast can I get a quotation?', 'mirrorcraft'),
-    'answer'   => __('Within 24 hours after receiving your request.', 'mirrorcraft'),
-  ),
-  array(
-    'question' => __('Can you support custom designs?', 'mirrorcraft'),
-    'answer'   => __('Yes, OEM and ODM are fully supported.', 'mirrorcraft'),
-  ),
-  array(
-    'question' => __('What information should I provide?', 'mirrorcraft'),
-    'answer'   => __('Product type, size, quantity, and any custom requirements help us quote more accurately.', 'mirrorcraft'),
-  ),
-  array(
-    'question' => __('Do you support international shipping?', 'mirrorcraft'),
-    'answer'   => __('Yes, we export to more than 80 countries and support project shipments worldwide.', 'mirrorcraft'),
-  ),
 );
 ?>
 <main id="site-main" class="site-main page-shell" tabindex="-1">
@@ -93,14 +35,22 @@ $contact_faq_items = array(
         <article class="contact-page-intro">
           <?php mirrorcraft_render_breadcrumbs(); ?>
           <p class="eyebrow"><?php esc_html_e('Contact Us', 'mirrorcraft'); ?></p>
-          <h1 class="contact-page-title"><?php esc_html_e('Contact LED Mirror Manufacturer in China', 'mirrorcraft'); ?></h1>
+          <h1 class="contact-page-title">
+            <span><?php esc_html_e('Contact LED Mirror', 'mirrorcraft'); ?></span>
+            <span><?php esc_html_e('Manufacturer in China', 'mirrorcraft'); ?></span>
+          </h1>
           <p class="contact-page-lead"><?php esc_html_e("Tell us your requirements - we'll provide a customized solution within 24 hours.", 'mirrorcraft'); ?></p>
           <p class="contact-page-highlight"><?php esc_html_e('Fast response. Professional support. Reliable solutions.', 'mirrorcraft'); ?></p>
-          <ul class="contact-hero-points">
-            <li><?php esc_html_e('Factory direct pricing for wholesale and project sourcing', 'mirrorcraft'); ?></li>
-            <li><?php esc_html_e('OEM / ODM support for LED bathroom mirrors, medicine cabinets, and custom programs', 'mirrorcraft'); ?></li>
-            <li><?php esc_html_e('Reliable communication from inquiry to delivery', 'mirrorcraft'); ?></li>
-          </ul>
+          <div class="contact-page-proof-inline">
+            <p class="eyebrow"><?php esc_html_e('Why Contact OJMIRROR', 'mirrorcraft'); ?></p>
+            <h2><?php esc_html_e('Why Contact OJMIRROR', 'mirrorcraft'); ?></h2>
+            <ul class="contact-proof-list">
+              <?php foreach ($why_contact_items as $item) : ?>
+                <li><?php echo esc_html($item); ?></li>
+              <?php endforeach; ?>
+            </ul>
+            <p class="contact-proof-highlight"><?php esc_html_e('We help you save time, reduce cost, and win projects.', 'mirrorcraft'); ?></p>
+          </div>
         </article>
 
         <section class="contact-page-form-panel" aria-labelledby="contact-form-heading">
@@ -110,77 +60,6 @@ $contact_faq_items = array(
           <p class="contact-form-callout"><?php esc_html_e('Free design support. No MOQ for sample testing.', 'mirrorcraft'); ?></p>
           <?php mirrorcraft_render_contact_form('contact-page'); ?>
         </section>
-      </div>
-    </section>
-
-    <section class="section contact-touch-section">
-      <div class="shell">
-        <div class="section-heading contact-touch-heading">
-          <p class="eyebrow"><?php esc_html_e('Get in Touch', 'mirrorcraft'); ?></p>
-          <h2><?php esc_html_e('Reach our LED mirror sales and project team through the channel that suits you best.', 'mirrorcraft'); ?></h2>
-        </div>
-
-        <div class="contact-touch-grid">
-          <?php foreach ($contact_channels as $channel) : ?>
-            <article class="contact-touch-card<?php echo esc_attr($channel['class']); ?>">
-              <p class="contact-touch-eyebrow"><?php echo esc_html($channel['eyebrow']); ?></p>
-              <h3>
-                <a
-                  href="<?php echo esc_url($channel['href']); ?>"
-                  <?php if (!empty($channel['external'])) : ?>target="_blank" rel="noopener noreferrer"<?php endif; ?>
-                >
-                  <?php echo esc_html($channel['value']); ?>
-                </a>
-              </h3>
-              <p><?php echo esc_html($channel['note']); ?></p>
-            </article>
-          <?php endforeach; ?>
-        </div>
-      </div>
-    </section>
-
-    <section class="section contact-proof-section">
-      <div class="shell contact-proof-shell">
-        <article class="contact-proof-card">
-          <p class="eyebrow"><?php esc_html_e('Why Contact OJMIRROR', 'mirrorcraft'); ?></p>
-          <h2><?php esc_html_e('Why Contact OJMIRROR', 'mirrorcraft'); ?></h2>
-          <ul class="contact-proof-list">
-            <?php foreach ($why_contact_items as $item) : ?>
-              <li><?php echo esc_html($item); ?></li>
-            <?php endforeach; ?>
-          </ul>
-          <p class="contact-proof-highlight"><?php esc_html_e('We help you save time, reduce cost, and win projects.', 'mirrorcraft'); ?></p>
-        </article>
-
-        <article class="contact-proof-card contact-proof-card-promise">
-          <p class="eyebrow"><?php esc_html_e('Our Response Promise', 'mirrorcraft'); ?></p>
-          <h2><?php esc_html_e('Our Response Promise', 'mirrorcraft'); ?></h2>
-          <ul class="contact-proof-list contact-proof-list-checks">
-            <?php foreach ($response_promises as $item) : ?>
-              <li><?php echo esc_html($item); ?></li>
-            <?php endforeach; ?>
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <section class="section contact-faq-section">
-      <div class="shell">
-        <div class="section-heading contact-faq-heading">
-          <p class="eyebrow"><?php esc_html_e('FAQ', 'mirrorcraft'); ?></p>
-          <h2><?php esc_html_e('Questions buyers ask before submitting a quote request.', 'mirrorcraft'); ?></h2>
-        </div>
-
-        <div class="contact-faq-list">
-          <?php foreach ($contact_faq_items as $item) : ?>
-            <details class="contact-faq-item">
-              <summary><?php echo esc_html($item['question']); ?></summary>
-              <div class="contact-faq-answer">
-                <p><?php echo esc_html($item['answer']); ?></p>
-              </div>
-            </details>
-          <?php endforeach; ?>
-        </div>
       </div>
     </section>
 

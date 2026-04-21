@@ -1128,10 +1128,10 @@ h3 {
   gap: 26px;
 }
 
-.contact-page-proof-stack {
+.contact-page-proof-inline {
   display: grid;
   gap: 18px;
-  padding-top: 4px;
+  padding-top: 6px;
 }
 
 .contact-page-intro .site-breadcrumbs {
@@ -1500,6 +1500,10 @@ h3 {
   font-weight: 700;
   line-height: 1.6;
   color: #1f473d;
+}
+
+.contact-page-proof-inline h2 {
+  margin: 0;
 }
 
 .contact-faq-heading {
