@@ -44,12 +44,16 @@ $footer_support_links = array(
     'url'   => mirrorcraft_get_product_category_page_link('custom-mirrors'),
   ),
   array(
-    'label' => __('Custom Design', 'mirrorcraft'),
-    'url'   => mirrorcraft_get_product_category_page_link('custom-mirrors'),
-  ),
-  array(
     'label' => __('FAQs', 'mirrorcraft'),
     'url'   => mirrorcraft_link_by_slug('faq', '/faq/'),
+  ),
+  array(
+    'label' => __('Privacy Policy', 'mirrorcraft'),
+    'url'   => mirrorcraft_link_by_slug('privacy-policy', '/privacy-policy/'),
+  ),
+  array(
+    'label' => __('Terms and Conditions', 'mirrorcraft'),
+    'url'   => mirrorcraft_link_by_slug('terms-and-conditions', '/terms-and-conditions/'),
   ),
   array(
     'label' => __('Request a Quote', 'mirrorcraft'),
@@ -104,9 +108,9 @@ $footer_social_icons = array(
 
         <div class="footer-social-wrap">
           <p class="footer-meta-title"><?php esc_html_e('Social', 'mirrorcraft'); ?></p>
-          <div class="footer-social-list" aria-label="<?php esc_attr_e('Social channels', 'mirrorcraft'); ?>">
+          <div class="footer-social-list" aria-hidden="true">
             <?php foreach ($footer_social_icons as $social) : ?>
-              <span class="footer-social" aria-label="<?php echo esc_attr($social['label']); ?>">
+              <span class="footer-social">
                 <span class="footer-social-symbol" aria-hidden="true"><?php echo esc_html($social['symbol']); ?></span>
               </span>
             <?php endforeach; ?>
@@ -158,7 +162,7 @@ $footer_social_icons = array(
     </div>
   </div>
 </footer>
-<div class="floating-actions" aria-label="<?php esc_attr_e('Quick actions', 'mirrorcraft'); ?>">
+<div class="floating-actions">
   <?php if ($whatsapp_link !== '') : ?>
     <a
       class="floating-action floating-action-whatsapp"

@@ -28,11 +28,18 @@ function mirrorcraft_preload_hero_scene() {
     return;
   }
 
-  $hero_scene_url = mirrorcraft_get_active_hero_image_url();
-  $hero_scene_srcset = mirrorcraft_get_active_hero_image_srcset();
+  $hero_sources = function_exists('mirrorcraft_get_home_hero_background_sources')
+    ? mirrorcraft_get_home_hero_background_sources()
+    : array();
+  $hero_scene_url = $hero_sources['desktop'] ?? mirrorcraft_get_active_hero_image_url();
+  $hero_scene_srcset = '';
 
   if (!$hero_scene_url) {
     return;
+  }
+
+  if (!empty($hero_sources['mobile']) && $hero_sources['mobile'] !== $hero_scene_url) {
+    $hero_scene_srcset = $hero_sources['mobile'] . ' 768w, ' . $hero_scene_url . ' 1440w';
   }
 
   echo '<link rel="preload" as="image" href="' . esc_url($hero_scene_url) . '" imagesizes="100vw"';

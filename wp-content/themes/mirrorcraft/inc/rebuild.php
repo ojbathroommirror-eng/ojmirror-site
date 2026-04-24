@@ -11,6 +11,105 @@ function mirrorcraft_theme_image_url($filename) {
   return get_template_directory_uri() . $relative_path;
 }
 
+function mirrorcraft_theme_image_versioned_url($filename) {
+  $filename = ltrim((string) $filename, '/');
+
+  if ($filename === '') {
+    return '';
+  }
+
+  $url = mirrorcraft_theme_image_url($filename);
+
+  if ($url === '') {
+    return '';
+  }
+
+  return add_query_arg(
+    'ver',
+    mirrorcraft_asset_version('/assets/images/' . $filename),
+    $url
+  );
+}
+
+function mirrorcraft_theme_image_first_available_url($filenames, $versioned = true) {
+  foreach ((array) $filenames as $filename) {
+    $filename = ltrim((string) $filename, '/');
+
+    if ($filename === '') {
+      continue;
+    }
+
+    $url = $versioned
+      ? mirrorcraft_theme_image_versioned_url($filename)
+      : mirrorcraft_theme_image_url($filename);
+
+    if ($url !== '') {
+      return $url;
+    }
+  }
+
+  return '';
+}
+
+function mirrorcraft_theme_image_optimized_url($filename, $versioned = true) {
+  $filename = ltrim((string) $filename, '/');
+
+  if ($filename === '') {
+    return '';
+  }
+
+  $path_parts = pathinfo($filename);
+  $dirname = !empty($path_parts['dirname']) && '.' !== $path_parts['dirname']
+    ? trailingslashit($path_parts['dirname'])
+    : '';
+  $basename = $path_parts['filename'] ?? $filename;
+  $extension = strtolower((string) ($path_parts['extension'] ?? ''));
+
+  $candidates = array();
+
+  foreach (array('avif', 'webp') as $candidate_extension) {
+    if ($candidate_extension === $extension) {
+      continue;
+    }
+
+    $candidates[] = $dirname . $basename . '.' . $candidate_extension;
+  }
+
+  $candidates[] = $filename;
+
+  return mirrorcraft_theme_image_first_available_url($candidates, $versioned);
+}
+
+function mirrorcraft_get_home_hero_background_sources() {
+  $desktop = mirrorcraft_theme_image_first_available_url(
+    array(
+      'home-hero-banner-20260423c.webp',
+      'home-hero-banner-20260423c.jpg',
+      'home-hero-banner-20260422.webp',
+    )
+  );
+
+  $mobile = mirrorcraft_theme_image_first_available_url(
+    array(
+      'home-hero-banner-20260423c-mobile.webp',
+      'home-hero-banner-20260422-mobile.webp',
+    )
+  );
+
+  if ($desktop === '') {
+    $desktop = mirrorcraft_get_active_hero_image_url();
+  }
+
+  if ($mobile === '') {
+    $mobile = $desktop;
+  }
+
+  return array(
+    'desktop' => $desktop,
+    'mobile'  => $mobile,
+  );
+}
+
 function mirrorcraft_get_page_summary($post_id = 0, $fallback = '') {
   $post_id = $post_id ? (int) $post_id : (int) get_queried_object_id();
 
@@ -99,6 +198,16 @@ function mirrorcraft_get_core_page_blueprints() {
       'path'     => 'contact',
       'title'    => __('Contact', 'mirrorcraft'),
       'template' => 'page-templates/page-contact.php',
+    ),
+    array(
+      'path'     => 'privacy-policy',
+      'title'    => __('Privacy Policy', 'mirrorcraft'),
+      'template' => 'page-templates/page-privacy.php',
+    ),
+    array(
+      'path'     => 'terms-and-conditions',
+      'title'    => __('Terms and Conditions', 'mirrorcraft'),
+      'template' => 'page-templates/page-terms.php',
     ),
   );
 
@@ -287,17 +396,11 @@ function mirrorcraft_maybe_seed_requested_core_page() {
     return;
   }
 
-  if (get_page_by_path($request_path) instanceof WP_Post) {
-    return;
-  }
-
-  foreach (mirrorcraft_get_core_page_blueprints() as $blueprint) {
-    mirrorcraft_ensure_page_at_path(
-      $blueprint['path'] ?? '',
-      $blueprint['title'] ?? '',
-      $blueprint['template'] ?? ''
-    );
-  }
+  mirrorcraft_ensure_page_at_path(
+    $requested_blueprint['path'] ?? '',
+    $requested_blueprint['title'] ?? '',
+    $requested_blueprint['template'] ?? ''
+  );
 }
 add_action('init', 'mirrorcraft_maybe_seed_requested_core_page', 20);
 
@@ -369,6 +472,7 @@ function mirrorcraft_render_editor_content_section($args = array()) {
 function mirrorcraft_get_product_family_cards() {
   return array(
     array(
+      'slug'  => 'bathroom-mirrors',
       'tag'   => __('Backlit / Front-lit / Framed', 'mirrorcraft'),
       'title' => __('Bathroom Mirrors', 'mirrorcraft'),
       'text'  => __('Custom LED bathroom mirrors for hospitality bathrooms, multifamily units, premium residential builds, and branded product lines.', 'mirrorcraft'),
@@ -376,17 +480,31 @@ function mirrorcraft_get_product_family_cards() {
       'link'  => mirrorcraft_link_by_slug('products/bathroom-mirrors', '/products/bathroom-mirrors/'),
     ),
     array(
-      'tag'   => __('Storage + Illumination', 'mirrorcraft'),
-      'title' => __('Medicine Cabinets', 'mirrorcraft'),
-      'text'  => __('Mirror cabinet programs that combine illumination, storage, and cleaner installation logic for higher-value bathroom projects.', 'mirrorcraft'),
-      'image' => mirrorcraft_get_product_category_image_url('medicine-cabinet'),
-      'link'  => mirrorcraft_link_by_slug('products/medicine-cabinets', '/products/medicine-cabinets/'),
+      'slug'             => 'medicine-cabinets',
+      'tag'              => __('Storage + Illumination', 'mirrorcraft'),
+      'title'            => __('Medicine Cabinets', 'mirrorcraft'),
+      'text'             => __('Mirror cabinet programs that combine illumination, storage, and cleaner installation logic for higher-value bathroom projects.', 'mirrorcraft'),
+      'image'            => mirrorcraft_get_product_category_image_url('medicine-cabinet'),
+      'link'             => mirrorcraft_link_by_slug('products/medicine-cabinets', '/products/medicine-cabinets/'),
+      'media_fit'        => 'contain',
+      'media_position'   => '50% 50%',
+      'media_background' => '#231710',
+      'hover_scale'      => '1',
     ),
     array(
+      'slug'  => 'makeup-mirrors',
+      'tag'   => __('Vanity / Beauty / Task-lit', 'mirrorcraft'),
+      'title' => __('Makeup Mirrors', 'mirrorcraft'),
+      'text'  => __('Makeup mirror programs with focused task lighting, vanity-friendly proportions, and customization support for salons, dressing zones, and beauty-led retail.', 'mirrorcraft'),
+      'image' => mirrorcraft_get_product_category_image_url('makeup-mirror'),
+      'link'  => mirrorcraft_link_by_slug('products/makeup-mirrors', '/products/makeup-mirrors/'),
+    ),
+    array(
+      'slug'  => 'custom-mirrors',
       'tag'   => __('OEM / ODM / Private Label', 'mirrorcraft'),
       'title' => __('Custom Mirrors', 'mirrorcraft'),
       'text'  => __('OEM and ODM mirror development for importers, distributors, designers, and private label buyers who need more than an off-the-shelf model.', 'mirrorcraft'),
-      'image' => mirrorcraft_get_customization_reference_image_url(),
+      'image' => mirrorcraft_theme_image_optimized_url('custom-mirrors-reference-20260422.png'),
       'link'  => mirrorcraft_link_by_slug('products/custom-mirrors', '/products/custom-mirrors/'),
     ),
   );
@@ -497,21 +615,24 @@ function mirrorcraft_render_contact_form($context = 'page') {
   $product_interest_options = mirrorcraft_get_inquiry_product_interest_options();
   $project_type_options = mirrorcraft_get_inquiry_project_type_options();
   $is_contact_page = ('contact-page' === $context);
+  $is_home_cta = ('home-cta' === $context);
   $contact_quick_options = mirrorcraft_get_contact_quick_inquiry_options();
   $contact_whatsapp_link = mirrorcraft_get_whatsapp_link();
   $contact_whatsapp_external = mirrorcraft_has_whatsapp_number();
+  $products_url = mirrorcraft_link_by_slug('products', '/products/');
+  $response_anchor = $is_home_cta ? 'home-inquiry-form' : 'contact-form';
   ?>
-  <div class="contact-form-shell" id="contact-form">
+  <div class="contact-form-shell<?php echo $is_home_cta ? ' contact-form-shell-home-cta' : ''; ?>" id="<?php echo esc_attr($response_anchor); ?>">
     <?php if (!empty($state['message'])) : ?>
       <div class="contact-alert contact-alert-<?php echo esc_attr($state['status'] ?: 'info'); ?>" role="status" aria-live="polite">
         <?php echo esc_html($state['message']); ?>
       </div>
     <?php endif; ?>
 
-    <form class="contact-form<?php echo $is_contact_page ? ' contact-form-contact-page' : ''; ?>" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" enctype="multipart/form-data">
+    <form class="contact-form<?php echo $is_contact_page ? ' contact-form-contact-page' : ''; ?><?php echo $is_home_cta ? ' contact-form-home-cta' : ''; ?>" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" enctype="multipart/form-data">
       <input type="hidden" name="action" value="mirrorcraft_submit_inquiry">
       <input type="hidden" name="redirect_to" value="<?php echo esc_url($current_request_url); ?>">
-      <input type="hidden" name="response_anchor" value="contact-form">
+      <input type="hidden" name="response_anchor" value="<?php echo esc_attr($response_anchor); ?>">
       <input type="hidden" name="contact_form_context" value="<?php echo esc_attr($context); ?>">
       <input type="hidden" name="website" value="">
       <?php wp_nonce_field('mirrorcraft_submit_inquiry', 'mirrorcraft_inquiry_nonce'); ?>
@@ -583,6 +704,32 @@ function mirrorcraft_render_contact_form($context = 'page') {
             <?php endif; ?>
           </label>
         </div>
+      <?php elseif ($is_home_cta) : ?>
+        <div class="contact-home-cta-grid">
+          <label class="form-field">
+            <span class="form-label"><?php esc_html_e('Name', 'mirrorcraft'); ?> <span class="form-required">*</span></span>
+            <input type="text" name="contact_name" value="<?php echo esc_attr(mirrorcraft_contact_form_value($state, 'name')); ?>" placeholder="<?php esc_attr_e('Your name', 'mirrorcraft'); ?>" required>
+            <?php if (mirrorcraft_contact_form_error($state, 'name')) : ?>
+              <small class="form-error"><?php echo esc_html(mirrorcraft_contact_form_error($state, 'name')); ?></small>
+            <?php endif; ?>
+          </label>
+
+          <label class="form-field">
+            <span class="form-label"><?php esc_html_e('Email', 'mirrorcraft'); ?> <span class="form-required">*</span></span>
+            <input type="email" name="contact_email" value="<?php echo esc_attr(mirrorcraft_contact_form_value($state, 'email')); ?>" placeholder="<?php esc_attr_e('you@company.com', 'mirrorcraft'); ?>" required>
+            <?php if (mirrorcraft_contact_form_error($state, 'email')) : ?>
+              <small class="form-error"><?php echo esc_html(mirrorcraft_contact_form_error($state, 'email')); ?></small>
+            <?php endif; ?>
+          </label>
+
+          <label class="form-field">
+            <span class="form-label"><?php esc_html_e('Custom Requirements', 'mirrorcraft'); ?> <span class="form-required">*</span></span>
+            <textarea name="contact_message" rows="6" placeholder="<?php esc_attr_e('Tell us the size, function, quantity, target market, or any drawing details.', 'mirrorcraft'); ?>" required><?php echo esc_textarea(mirrorcraft_contact_form_value($state, 'message')); ?></textarea>
+            <?php if (mirrorcraft_contact_form_error($state, 'message')) : ?>
+              <small class="form-error"><?php echo esc_html(mirrorcraft_contact_form_error($state, 'message')); ?></small>
+            <?php endif; ?>
+          </label>
+        </div>
       <?php else : ?>
         <div class="form-grid">
           <label class="form-field">
@@ -647,7 +794,16 @@ function mirrorcraft_render_contact_form($context = 'page') {
 
         <label class="form-field form-field-full">
           <span><?php esc_html_e('Attachment (optional)', 'mirrorcraft'); ?></span>
-          <input type="file" name="contact_attachment" accept=".jpg,.jpeg,.png,.webp,.pdf,.doc,.docx,.xls,.xlsx">
+          <div class="contact-file-input" data-file-input>
+            <input
+              class="contact-file-input-native"
+              id="contact-attachment-default"
+              type="file"
+              name="contact_attachment"
+              accept=".jpg,.jpeg,.png,.webp,.pdf,.doc,.docx,.xls,.xlsx">
+            <span class="contact-file-input-button" aria-hidden="true"><?php esc_html_e('Choose File', 'mirrorcraft'); ?></span>
+            <span class="contact-file-input-name" data-file-name data-default-name="<?php esc_attr_e('No file selected', 'mirrorcraft'); ?>"><?php esc_html_e('No file selected', 'mirrorcraft'); ?></span>
+          </div>
           <small class="form-note"><?php esc_html_e('Accepted file types include images, PDF, Word, and Excel files up to 8MB.', 'mirrorcraft'); ?></small>
           <?php if (mirrorcraft_contact_form_error($state, 'attachment')) : ?>
             <small class="form-error"><?php echo esc_html(mirrorcraft_contact_form_error($state, 'attachment')); ?></small>
@@ -655,7 +811,7 @@ function mirrorcraft_render_contact_form($context = 'page') {
         </label>
       <?php endif; ?>
 
-      <div class="form-actions<?php echo $is_contact_page ? ' contact-page-form-actions' : ''; ?>">
+      <div class="form-actions<?php echo $is_contact_page ? ' contact-page-form-actions' : ''; ?><?php echo $is_home_cta ? ' home-cta-form-actions' : ''; ?>">
         <?php if ($is_contact_page) : ?>
           <a
             class="button button-secondary"
@@ -665,7 +821,12 @@ function mirrorcraft_render_contact_form($context = 'page') {
             <?php esc_html_e('Send Inquiry', 'mirrorcraft'); ?>
           </a>
         <?php endif; ?>
-        <button type="submit" class="button button-primary"><?php echo esc_html($is_contact_page ? __('Get Quote Now', 'mirrorcraft') : __('Send Inquiry', 'mirrorcraft')); ?></button>
+        <button type="submit" class="button button-primary"><?php echo esc_html($is_contact_page ? __('Get Quote Now', 'mirrorcraft') : ($is_home_cta ? __('Submit Your Inquiry', 'mirrorcraft') : __('Send Inquiry', 'mirrorcraft'))); ?></button>
+        <?php if ($is_home_cta) : ?>
+          <input type="hidden" name="contact_product_interest" value="<?php echo esc_attr(mirrorcraft_contact_form_value($state, 'product_interest')); ?>">
+          <input type="hidden" name="contact_project_type" value="<?php echo esc_attr(mirrorcraft_contact_form_value($state, 'project_type')); ?>">
+          <input type="hidden" name="contact_quantity" value="<?php echo esc_attr(mirrorcraft_contact_form_value($state, 'quantity')); ?>">
+        <?php endif; ?>
       </div>
     </form>
   </div>
