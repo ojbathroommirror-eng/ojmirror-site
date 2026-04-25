@@ -185,6 +185,10 @@ function mirrorcraft_get_core_page_blueprints() {
       'template' => 'page-templates/page-projects.php',
     ),
     array(
+      'path'  => 'blog',
+      'title' => __('Blog', 'mirrorcraft'),
+    ),
+    array(
       'path'     => 'resources',
       'title'    => __('Resources', 'mirrorcraft'),
       'template' => 'page-templates/page-resources.php',
@@ -404,29 +408,115 @@ function mirrorcraft_maybe_seed_requested_core_page() {
 }
 add_action('init', 'mirrorcraft_maybe_seed_requested_core_page', 20);
 
+function mirrorcraft_get_header_about_submenu_items() {
+  $items = array();
+
+  foreach (mirrorcraft_get_about_submenu_items() as $item) {
+    $key = (string) ($item['key'] ?? '');
+
+    if (in_array($key, array('about', 'projects', 'blog'), true)) {
+      continue;
+    }
+
+    $items[] = $item;
+  }
+
+  return $items;
+}
+
+function mirrorcraft_primary_nav_item_is_active($key) {
+  $key = trim((string) $key);
+
+  if ($key === '') {
+    return false;
+  }
+
+  $request_uri = isset($_SERVER['REQUEST_URI']) ? wp_unslash((string) $_SERVER['REQUEST_URI']) : '';
+  $request_path = mirrorcraft_normalize_request_path($request_uri);
+
+  switch ($key) {
+    case 'home':
+      return is_front_page();
+
+    case 'products':
+      return 0 === strpos($request_path, 'products')
+        || is_page_template('page-templates/page-products.php')
+        || is_page_template('page-templates/page-product-category.php');
+
+    case 'applications':
+      return 0 === strpos($request_path, 'applications')
+        || is_page_template('page-templates/page-applications.php')
+        || is_page_template('page-templates/page-application-section.php');
+
+    case 'projects':
+      return 'projects' === $request_path
+        || 0 === strpos($request_path, 'projects/')
+        || 'about/projects' === $request_path
+        || is_page_template('page-templates/page-projects.php');
+
+    case 'about':
+      return 'about' === $request_path
+        || (0 === strpos($request_path, 'about/') && 'about/projects' !== $request_path)
+        || is_page_template('page-templates/page-about.php')
+        || is_page_template('page-templates/page-about-section.php');
+
+    case 'blog':
+      return is_home()
+        || is_singular('post')
+        || is_archive()
+        || is_search()
+        || 'blog' === $request_path
+        || 0 === strpos($request_path, 'blog/')
+        || is_page('blog')
+        || is_page_template('page-blog.php');
+
+    case 'contact':
+      return 'contact' === $request_path
+        || 0 === strpos($request_path, 'contact/')
+        || is_page_template('page-templates/page-contact.php');
+  }
+
+  return false;
+}
+
 function mirrorcraft_rebuild_fallback_menu($args = array()) {
   $items = array(
     array(
+      'key'   => 'home',
       'label' => __('Home', 'mirrorcraft'),
       'url'   => home_url('/'),
     ),
     array(
-      'label'    => __('About', 'mirrorcraft'),
-      'url'      => mirrorcraft_link_by_slug('about', '/about/'),
-      'children' => mirrorcraft_get_about_submenu_items(),
-    ),
-    array(
+      'key'      => 'products',
       'label'    => __('Products', 'mirrorcraft'),
       'url'      => mirrorcraft_link_by_slug('products', '/products/'),
       'children' => mirrorcraft_get_products_submenu_items(),
     ),
     array(
+      'key'      => 'applications',
       'label'    => __('Applications', 'mirrorcraft'),
       'url'      => mirrorcraft_link_by_slug('applications', '/applications/'),
       'children' => mirrorcraft_get_applications_submenu_items(),
     ),
     array(
-      'label' => __('Contact', 'mirrorcraft'),
+      'key'   => 'projects',
+      'label' => __('Projects', 'mirrorcraft'),
+      'url'   => mirrorcraft_link_by_slug('projects', '/projects/'),
+    ),
+    array(
+      'key'      => 'about',
+      'label'    => __('About Us', 'mirrorcraft'),
+      'url'      => mirrorcraft_link_by_slug('about', '/about/'),
+      'children' => mirrorcraft_get_header_about_submenu_items(),
+    ),
+    array(
+      'key'   => 'blog',
+      'label' => __('Blog', 'mirrorcraft'),
+      'url'   => mirrorcraft_link_by_slug('blog', '/blog/'),
+    ),
+    array(
+      'key'   => 'contact',
+      'label' => __('Contact Us', 'mirrorcraft'),
       'url'   => mirrorcraft_link_by_slug('contact', '/contact/'),
     ),
   );
@@ -435,7 +525,17 @@ function mirrorcraft_rebuild_fallback_menu($args = array()) {
 
   foreach ($items as $item) {
     $has_children = !empty($item['children']) && is_array($item['children']);
-    $li_class = $has_children ? ' class="menu-item-has-children"' : '';
+    $item_classes = array();
+
+    if ($has_children) {
+      $item_classes[] = 'menu-item-has-children';
+    }
+
+    if (!empty($item['key']) && mirrorcraft_primary_nav_item_is_active($item['key'])) {
+      $item_classes[] = $has_children ? 'current-menu-parent' : 'current-menu-item';
+    }
+
+    $li_class = !empty($item_classes) ? ' class="' . esc_attr(implode(' ', $item_classes)) . '"' : '';
 
     echo '<li' . $li_class . '>';
     echo '<a href="' . esc_url($item['url']) . '">' . esc_html($item['label']) . '</a>';
