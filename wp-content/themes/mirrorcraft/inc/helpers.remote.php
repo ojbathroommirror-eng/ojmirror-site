@@ -1183,7 +1183,7 @@ function mirrorcraft_get_about_submenu_page_definitions() {
     'projects' => array(
       'title'       => __('Projects', 'mirrorcraft'),
       'path'        => 'about/projects',
-      'template'    => 'page-templates/page-projects.php',
+      'template'    => 'page-templates/page-about-section.php',
       'eyebrow'     => __('Projects', 'mirrorcraft'),
       'hero_text'   => __('We support hospitality, residential, commercial, healthcare, and custom-led projects with a sourcing workflow that keeps specification, sampling, production, and delivery aligned.', 'mirrorcraft'),
       'hero_chips'  => array(
@@ -1258,7 +1258,7 @@ function mirrorcraft_get_about_submenu_page_definitions() {
     'our-partners' => array(
       'title'       => __('Our Partners', 'mirrorcraft'),
       'path'        => 'about/our-partners',
-      'template'    => 'page-templates/page-our-partners.php',
+      'template'    => 'page-templates/page-about-section.php',
       'eyebrow'     => __('Our Partners', 'mirrorcraft'),
       'hero_text'   => __('We work with brand owners, importers, distributors, and project teams that need a dependable LED mirror manufacturing partner with clear communication and repeat-order support.', 'mirrorcraft'),
       'hero_chips'  => array(
@@ -3607,14 +3607,6 @@ function mirrorcraft_fallback_menu() {
 }
 
 function mirrorcraft_get_brand_logo_url() {
-  if (function_exists('mirrorcraft_theme_image_first_available_url')) {
-    $optimized_logo_url = mirrorcraft_theme_image_first_available_url(array('oj-brand-logo-128.png'));
-
-    if ($optimized_logo_url !== '') {
-      return $optimized_logo_url;
-    }
-  }
-
   $brand_logo_path = get_template_directory() . '/assets/images/oj-brand-logo.png';
 
   if (file_exists($brand_logo_path)) {
@@ -3632,30 +3624,6 @@ function mirrorcraft_get_brand_logo_url() {
   }
 
   return '';
-}
-
-function mirrorcraft_get_brand_logo_image_data() {
-  $image_data = array(
-    'src'    => mirrorcraft_get_brand_logo_url(),
-    'srcset' => '',
-    'sizes'  => '64px',
-    'width'  => 64,
-    'height' => 64,
-  );
-
-  if (function_exists('mirrorcraft_theme_image_first_available_url')) {
-    $small_logo_url = mirrorcraft_theme_image_first_available_url(array('oj-brand-logo-64.png'));
-    $large_logo_url = mirrorcraft_theme_image_first_available_url(array('oj-brand-logo-128.png'));
-
-    if ($small_logo_url !== '' && $large_logo_url !== '' && $small_logo_url !== $large_logo_url) {
-      $image_data['src'] = $small_logo_url;
-      $image_data['srcset'] = $small_logo_url . ' 64w, ' . $large_logo_url . ' 128w';
-    } elseif ($large_logo_url !== '') {
-      $image_data['src'] = $large_logo_url;
-    }
-  }
-
-  return $image_data;
 }
 
 function mirrorcraft_get_hero_scene_url() {
@@ -3750,17 +3718,12 @@ function mirrorcraft_get_product_category_image_url($key) {
     return '';
   }
 
-  $fallback_url = function_exists('mirrorcraft_theme_image_optimized_url')
-    ? mirrorcraft_theme_image_optimized_url($asset_map[$key])
-    : '';
+  $relative_path = '/assets/images/' . $asset_map[$key];
+  $asset_path = get_template_directory() . $relative_path;
+  $fallback_url = '';
 
-  if ($fallback_url === '') {
-    $relative_path = '/assets/images/' . $asset_map[$key];
-    $asset_path = get_template_directory() . $relative_path;
-
-    if (file_exists($asset_path)) {
-      $fallback_url = get_template_directory_uri() . $relative_path;
-    }
+  if (file_exists($asset_path)) {
+    $fallback_url = get_template_directory_uri() . $relative_path;
   }
 
   $front_page_id = mirrorcraft_get_front_page_id();
@@ -3771,48 +3734,6 @@ function mirrorcraft_get_product_category_image_url($key) {
   }
 
   return $fallback_url;
-}
-
-function mirrorcraft_get_product_category_image_data($key, $sizes = '') {
-  $asset_map = array(
-    'bathroom-mirror'  => 'product-bathroom-mirror.jpg',
-    'medicine-cabinet' => 'product-medicine-cabinet.jpg',
-    'makeup-mirror'    => 'product-makeup-mirror.jpg',
-  );
-  $dimension_map = array(
-    'bathroom-mirror'  => array('width' => 1200, 'height' => 1200),
-    'medicine-cabinet' => array('width' => 1200, 'height' => 1200),
-    'makeup-mirror'    => array('width' => 1200, 'height' => 826),
-  );
-  $image_data = array(
-    'src'    => mirrorcraft_get_product_category_image_url($key),
-    'srcset' => '',
-    'sizes'  => $sizes,
-    'width'  => 1200,
-    'height' => 1200,
-  );
-
-  if (!empty($dimension_map[$key])) {
-    $image_data['width'] = (int) $dimension_map[$key]['width'];
-    $image_data['height'] = (int) $dimension_map[$key]['height'];
-  }
-
-  if (empty($asset_map[$key]) || $image_data['src'] === '') {
-    return $image_data;
-  }
-
-  $path_parts = pathinfo($asset_map[$key]);
-  $dirname = !empty($path_parts['dirname']) && '.' !== $path_parts['dirname']
-    ? trailingslashit($path_parts['dirname'])
-    : '';
-  $basename = $path_parts['filename'] ?? $asset_map[$key];
-  $responsive_url = mirrorcraft_theme_image_first_available_url(array($dirname . $basename . '-768.jpg'));
-
-  if ($responsive_url !== '' && $responsive_url !== $image_data['src']) {
-    $image_data['srcset'] = $responsive_url . ' 768w, ' . $image_data['src'] . ' ' . $image_data['width'] . 'w';
-  }
-
-  return $image_data;
 }
 
 function mirrorcraft_get_customization_reference_image_url() {
@@ -4017,7 +3938,7 @@ function mirrorcraft_render_brand_logo($args = array()) {
   $site_name = get_bloginfo('name') ?: 'OJMIRROR';
   $brand_name = $site_name;
   $brand_tagline = __('LED mirror and cabinet manufacturer', 'mirrorcraft');
-  $brand_logo = mirrorcraft_get_brand_logo_image_data();
+  $brand_logo_url = mirrorcraft_get_brand_logo_url();
 
   if (stripos($site_name, 'ojmirror') !== false) {
     $brand_name = 'OJMIRROR';
@@ -4027,9 +3948,9 @@ function mirrorcraft_render_brand_logo($args = array()) {
   $classes = trim('site-brand-fallback brand-lockup ' . $args['class_name']);
   ?>
   <a class="<?php echo esc_attr($classes); ?>" href="<?php echo esc_url(home_url('/')); ?>" aria-label="<?php echo esc_attr($brand_name); ?>">
-    <?php if (!empty($brand_logo['src'])) : ?>
+    <?php if ($brand_logo_url) : ?>
       <span class="site-brand-mark brand-image-mark" aria-hidden="true">
-        <img class="brand-image" src="<?php echo esc_url($brand_logo['src']); ?>" <?php echo !empty($brand_logo['srcset']) ? 'srcset="' . esc_attr($brand_logo['srcset']) . '" sizes="' . esc_attr($brand_logo['sizes']) . '"' : ''; ?> alt="" width="<?php echo esc_attr((string) $brand_logo['width']); ?>" height="<?php echo esc_attr((string) $brand_logo['height']); ?>" decoding="async">
+        <img class="brand-image" src="<?php echo esc_url($brand_logo_url); ?>" alt="" width="64" height="64" decoding="async">
       </span>
     <?php else : ?>
       <span class="site-brand-mark brand-claw-mark" aria-hidden="true">

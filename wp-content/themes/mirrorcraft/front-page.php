@@ -2,6 +2,11 @@
 get_header();
 
 $product_routes = mirrorcraft_get_product_family_cards();
+$product_route_image_keys = array(
+  'bathroom-mirrors'  => 'bathroom-mirror',
+  'medicine-cabinets' => 'medicine-cabinet',
+  'makeup-mirrors'    => 'makeup-mirror',
+);
 $application_cards = mirrorcraft_get_application_cards();
 $hero_sources = function_exists('mirrorcraft_get_home_hero_background_sources')
   ? mirrorcraft_get_home_hero_background_sources()
@@ -17,17 +22,13 @@ if (!$hero_image_mobile) {
   $hero_image_mobile = $hero_image;
 }
 
-$hero_shell_style = '';
-
-if ($hero_image) {
-  $hero_shell_style = sprintf("--oj-hero-shell-image:url('%s');", esc_url_raw($hero_image));
-}
-
-if ($hero_image_mobile) {
-  $hero_shell_style .= sprintf("--oj-hero-shell-image-mobile:url('%s');", esc_url_raw($hero_image_mobile));
-}
-
 $hero_image_alt = __('Custom LED mirror product display for hospitality and residential buyers', 'mirrorcraft');
+$hero_image_srcset = '';
+
+if ($hero_image_mobile && $hero_image_mobile !== $hero_image) {
+  $hero_image_srcset = $hero_image_mobile . ' 768w, ' . $hero_image . ' 1440w';
+}
+
 $contact_url = mirrorcraft_link_by_slug('contact', '/contact/');
 $products_url = mirrorcraft_link_by_slug('products', '/products/');
 $applications_url = mirrorcraft_link_by_slug('applications', '/applications/');
@@ -377,74 +378,83 @@ $custom_feature_icons = array(
 $testimonials = array(
   array(
     'quote'   => __('The mirror quality is excellent, with consistent lighting and premium finishing. It meets the standards required for our retail distribution.', 'mirrorcraft'),
-    'name'    => __('Distributor', 'mirrorcraft'),
-    'country' => __('USA', 'mirrorcraft'),
-    'country_code' => 'US',
-    'role'    => __('LED Bathroom Mirrors', 'mirrorcraft'),
+    'name'    => __('Liam Brown', 'mirrorcraft'),
+    'country' => __('United States', 'mirrorcraft'),
+    'country_code' => __('United States', 'mirrorcraft'),
+    'role'    => __('Distributor', 'mirrorcraft'),
+    'product' => __('LED Bathroom Mirrors', 'mirrorcraft'),
     'badge'   => 'LB',
   ),
   array(
     'quote'   => __('Packaging is very secure and well-designed for international shipping. We received all units in perfect condition.', 'mirrorcraft'),
-    'name'    => __('Importer', 'mirrorcraft'),
-    'country' => __('UK', 'mirrorcraft'),
-    'country_code' => 'UK',
-    'role'    => __('Framed Mirrors', 'mirrorcraft'),
+    'name'    => __('Fiona Mitchell', 'mirrorcraft'),
+    'country' => __('United Kingdom', 'mirrorcraft'),
+    'country_code' => __('United Kingdom', 'mirrorcraft'),
+    'role'    => __('Importer', 'mirrorcraft'),
+    'product' => __('Framed Mirrors', 'mirrorcraft'),
     'badge'   => 'FM',
   ),
   array(
     'quote'   => __('Their team handled our hotel project professionally, from drawings to mass production. Delivery was on time and well organized.', 'mirrorcraft'),
-    'name'    => __('Project Contractor', 'mirrorcraft'),
-    'country' => __('UAE', 'mirrorcraft'),
-    'country_code' => 'UAE',
-    'role'    => __('Hospitality Mirrors', 'mirrorcraft'),
+    'name'    => __('Hassan Mahmoud', 'mirrorcraft'),
+    'country' => __('United Arab Emirates', 'mirrorcraft'),
+    'country_code' => __('United Arab Emirates', 'mirrorcraft'),
+    'role'    => __('Project Contractor', 'mirrorcraft'),
+    'product' => __('Hospitality Mirrors', 'mirrorcraft'),
     'badge'   => 'HM',
   ),
   array(
     'quote'   => __('Communication was fast and clear throughout the entire process. It made sourcing much easier for our team.', 'mirrorcraft'),
-    'name'    => __('Procurement Manager', 'mirrorcraft'),
+    'name'    => __('Mason Carter', 'mirrorcraft'),
     'country' => __('Canada', 'mirrorcraft'),
-    'country_code' => 'CA',
-    'role'    => __('Mirror Cabinets', 'mirrorcraft'),
+    'country_code' => __('Canada', 'mirrorcraft'),
+    'role'    => __('Procurement Manager', 'mirrorcraft'),
+    'product' => __('Mirror Cabinets', 'mirrorcraft'),
     'badge'   => 'MC',
   ),
   array(
     'quote'   => __('Very flexible on customization - shapes, sizes, frames, and lighting functions. A strong OEM partner.', 'mirrorcraft'),
-    'name'    => __('Brand Owner', 'mirrorcraft'),
+    'name'    => __('Chloe Lawson', 'mirrorcraft'),
     'country' => __('Australia', 'mirrorcraft'),
-    'country_code' => 'AU',
-    'role'    => __('Custom LED Mirrors', 'mirrorcraft'),
+    'country_code' => __('Australia', 'mirrorcraft'),
+    'role'    => __('Brand Owner', 'mirrorcraft'),
+    'product' => __('Custom LED Mirrors', 'mirrorcraft'),
     'badge'   => 'CL',
   ),
   array(
     'quote'   => __('The lighting performance is impressive, especially the CRI and brightness consistency. Ideal for makeup and bathroom use.', 'mirrorcraft'),
-    'name'    => __('Retail Buyer', 'mirrorcraft'),
+    'name'    => __('Victoria Meyer', 'mirrorcraft'),
     'country' => __('Germany', 'mirrorcraft'),
-    'country_code' => 'DE',
-    'role'    => __('Vanity Mirrors', 'mirrorcraft'),
+    'country_code' => __('Germany', 'mirrorcraft'),
+    'role'    => __('Retail Buyer', 'mirrorcraft'),
+    'product' => __('Vanity Mirrors', 'mirrorcraft'),
     'badge'   => 'VM',
   ),
   array(
     'quote'   => __('Production lead time was reliable, and the schedule was strictly followed. This is very important for our project timelines.', 'mirrorcraft'),
-    'name'    => __('Developer', 'mirrorcraft'),
+    'name'    => __('Ryan Edwards', 'mirrorcraft'),
     'country' => __('Singapore', 'mirrorcraft'),
-    'country_code' => 'SG',
-    'role'    => __('Real Estate Projects', 'mirrorcraft'),
+    'country_code' => __('Singapore', 'mirrorcraft'),
+    'role'    => __('Developer', 'mirrorcraft'),
+    'product' => __('Real Estate Projects', 'mirrorcraft'),
     'badge'   => 'RE',
   ),
   array(
     'quote'   => __('They are responsive and responsible. Any questions or small issues were handled quickly and professionally.', 'mirrorcraft'),
-    'name'    => __('Wholesaler', 'mirrorcraft'),
+    'name'    => __('Bruno Martin', 'mirrorcraft'),
     'country' => __('France', 'mirrorcraft'),
-    'country_code' => 'FR',
-    'role'    => __('Bathroom Mirrors', 'mirrorcraft'),
+    'country_code' => __('France', 'mirrorcraft'),
+    'role'    => __('Wholesaler', 'mirrorcraft'),
+    'product' => __('Bathroom Mirrors', 'mirrorcraft'),
     'badge'   => 'BM',
   ),
   array(
     'quote'   => __('We have been working together for multiple orders. Consistent quality and dependable service make them a trusted partner.', 'mirrorcraft'),
-    'name'    => __('Distributor', 'mirrorcraft'),
-    'country' => __('USA', 'mirrorcraft'),
-    'country_code' => 'US',
-    'role'    => __('OEM / ODM Mirrors', 'mirrorcraft'),
+    'name'    => __('Olivia Davis', 'mirrorcraft'),
+    'country' => __('United States', 'mirrorcraft'),
+    'country_code' => __('United States', 'mirrorcraft'),
+    'role'    => __('Distributor', 'mirrorcraft'),
+    'product' => __('OEM / ODM Mirrors', 'mirrorcraft'),
     'badge'   => 'OD',
   ),
 );
@@ -491,14 +501,31 @@ $resource_cards = array(
 <main id="site-main" class="site-main home-minimal" tabindex="-1">
   <section class="oj-hero oj-hero--immersive oj-section">
     <div class="shell oj-wrap">
-      <div class="oj-hero__shell"<?php echo $hero_shell_style ? ' style="' . esc_attr($hero_shell_style) . '"' : ''; ?>>
+      <div class="oj-hero__shell">
+        <?php if ($hero_image) : ?>
+          <picture class="oj-hero__backdrop">
+            <?php if ($hero_image_mobile && $hero_image_mobile !== $hero_image) : ?>
+              <source media="(max-width: 1100px)" srcset="<?php echo esc_url($hero_image_mobile); ?>">
+            <?php endif; ?>
+            <img
+              src="<?php echo esc_url($hero_image); ?>"
+              <?php echo $hero_image_srcset !== '' ? 'srcset="' . esc_attr($hero_image_srcset) . '" sizes="100vw"' : ''; ?>
+              alt="<?php echo esc_attr($hero_image_alt); ?>"
+              width="1440"
+              height="1024"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            >
+          </picture>
+        <?php endif; ?>
         <div class="oj-hero__content">
           <p class="oj-eyebrow"><?php esc_html_e('LED mirror manufacturer in China', 'mirrorcraft'); ?></p>
           <h1>
-            <span><?php esc_html_e('Wholesale LED', 'mirrorcraft'); ?></span>
-            <span><?php esc_html_e('Bathroom', 'mirrorcraft'); ?></span>
-          <span><?php esc_html_e('Mirrors & Cabinets', 'mirrorcraft'); ?></span>
-        </h1>
+            <span class="oj-hero__headline-line"><?php esc_html_e('Wholesale LED', 'mirrorcraft'); ?></span>
+            <span class="oj-hero__headline-line"><?php esc_html_e('Bathroom', 'mirrorcraft'); ?></span>
+            <span class="oj-hero__headline-line oj-hero__headline-line--compact"><?php esc_html_e('Mirrors & Cabinets', 'mirrorcraft'); ?></span>
+          </h1>
           <p class="oj-lead"><?php esc_html_e('OJMIRROR supports distributors, hospitality buyers, residential developers, and private-label programs with reliable LED mirror and cabinet manufacturing from China.', 'mirrorcraft'); ?></p>
           <div class="oj-actions">
             <a class="oj-button oj-button--primary" href="<?php echo esc_url($contact_url); ?>"><?php esc_html_e('Request a Quote', 'mirrorcraft'); ?></a>
@@ -525,6 +552,14 @@ $resource_cards = array(
           <?php
           $route_slug = !empty($route['slug']) ? ' product-card--' . sanitize_html_class($route['slug']) : '';
           $route_media_styles = array();
+          $route_image_data = array(
+            'src'    => $route['image'] ?? '',
+            'srcset' => '',
+            'sizes'  => '',
+            'width'  => 1200,
+            'height' => 1200,
+          );
+          $route_image_key = !empty($route['slug']) ? ($product_route_image_keys[$route['slug']] ?? '') : '';
 
           if (!empty($route['media_fit'])) {
             $route_media_styles[] = '--oj-product-media-fit:' . $route['media_fit'];
@@ -541,10 +576,29 @@ $resource_cards = array(
           if (!empty($route['hover_scale'])) {
             $route_media_styles[] = '--oj-product-media-hover-scale:' . $route['hover_scale'];
           }
+
+          if ($route_image_key !== '' && function_exists('mirrorcraft_get_product_category_image_data')) {
+            $candidate_image_data = mirrorcraft_get_product_category_image_data(
+              $route_image_key,
+              '(max-width: 720px) calc(100vw - 44px), (max-width: 1100px) calc((100vw - 88px) / 2), 380px'
+            );
+
+            if (!empty($candidate_image_data['src'])) {
+              $route_image_data = $candidate_image_data;
+            }
+          }
           ?>
           <article class="feature-card product-card<?php echo esc_attr($route_slug); ?>">
             <div class="feature-card-media"<?php echo !empty($route_media_styles) ? ' style="' . esc_attr(implode(';', $route_media_styles)) . '"' : ''; ?>>
-              <img src="<?php echo esc_url($route['image']); ?>" alt="<?php echo esc_attr($route['title']); ?>" width="1200" height="1200" loading="lazy" decoding="async">
+              <img
+                src="<?php echo esc_url($route_image_data['src']); ?>"
+                <?php echo !empty($route_image_data['srcset']) ? 'srcset="' . esc_attr($route_image_data['srcset']) . '" sizes="' . esc_attr($route_image_data['sizes']) . '"' : ''; ?>
+                alt="<?php echo esc_attr($route['title']); ?>"
+                width="<?php echo esc_attr((string) $route_image_data['width']); ?>"
+                height="<?php echo esc_attr((string) $route_image_data['height']); ?>"
+                loading="lazy"
+                decoding="async"
+              >
             </div>
             <div class="feature-card-body">
               <p class="feature-tag"><?php echo esc_html($route['tag']); ?></p>
@@ -834,7 +888,12 @@ $resource_cards = array(
 
               <div class="oj-testimonial-card__meta">
                 <p class="oj-testimonial-card__buyer"><?php echo esc_html($item['name']); ?>, <?php echo esc_html($item['country']); ?></p>
-                <p class="oj-testimonial-card__detail"><?php echo esc_html($item['role']); ?></p>
+                <p class="oj-testimonial-card__detail">
+                  <?php echo esc_html($item['role']); ?>
+                  <?php if (!empty($item['product'])) : ?>
+                    <?php echo esc_html(' · ' . $item['product']); ?>
+                  <?php endif; ?>
+                </p>
               </div>
 
               <span class="oj-testimonial-card__country"><?php echo esc_html($item['country_code']); ?></span>

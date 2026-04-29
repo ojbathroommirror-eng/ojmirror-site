@@ -192,27 +192,27 @@ $about_projects_url = mirrorcraft_link_by_slug('projects', '/projects/');
 $about_email        = mirrorcraft_get_contact_email();
 $about_phone        = mirrorcraft_get_contact_phone();
 
-$about_hero_image = mirrorcraft_theme_image_url('home-hero-banner-20260422.png');
+$about_hero_image = mirrorcraft_theme_image_optimized_url('home-hero-banner-20260422.png');
 
 if ($about_hero_image === '') {
-  $about_hero_image = mirrorcraft_theme_image_url('hospitality-led-mirror-project.png');
+  $about_hero_image = mirrorcraft_theme_image_optimized_url('hospitality-led-mirror-project.png');
 }
 
 $about_collage_images = array(
   array(
-    'src' => mirrorcraft_theme_image_url('who-we-are-workshop.png'),
+    'src' => mirrorcraft_theme_image_optimized_url('who-we-are-workshop.png'),
     'alt' => __('Mirror workshop production line', 'mirrorcraft'),
   ),
   array(
-    'src' => mirrorcraft_theme_image_url('factory.png'),
+    'src' => mirrorcraft_theme_image_optimized_url('factory.png'),
     'alt' => __('Laser cutting and mirror fabrication process', 'mirrorcraft'),
   ),
   array(
-    'src' => mirrorcraft_theme_image_url('who-we-are-inspection.png'),
+    'src' => mirrorcraft_theme_image_optimized_url('who-we-are-inspection.png'),
     'alt' => __('Mirror quality inspection', 'mirrorcraft'),
   ),
   array(
-    'src' => mirrorcraft_theme_image_url('home-hero-banner-20260422.png'),
+    'src' => mirrorcraft_theme_image_optimized_url('home-hero-banner-20260422.png'),
     'alt' => __('LED mirror application scene', 'mirrorcraft'),
   ),
 );
@@ -293,51 +293,51 @@ $about_capabilities = array(
 
 $about_capability_images = array(
   array(
-    'src' => mirrorcraft_theme_image_url('beauty-salon-led-mirror.png'),
+    'src' => mirrorcraft_theme_image_optimized_url('beauty-salon-led-mirror.png'),
     'alt' => __('Oval LED mirror', 'mirrorcraft'),
   ),
   array(
-    'src' => mirrorcraft_theme_image_url('home-hero-banner-20260422.png'),
+    'src' => mirrorcraft_theme_image_optimized_url('home-hero-banner-20260422.png'),
     'alt' => __('Rounded rectangle LED mirror', 'mirrorcraft'),
   ),
   array(
-    'src' => mirrorcraft_theme_image_url('hospitality-led-mirror-project.png'),
+    'src' => mirrorcraft_theme_image_optimized_url('hospitality-led-mirror-project.png'),
     'alt' => __('Framed LED mirror', 'mirrorcraft'),
   ),
   array(
-    'src' => mirrorcraft_theme_image_url('residential-led-bathroom-mirror.png'),
+    'src' => mirrorcraft_theme_image_optimized_url('residential-led-bathroom-mirror.png'),
     'alt' => __('Bathroom mirror application', 'mirrorcraft'),
   ),
 );
 
 $about_industries = array(
   array(
-    'image' => mirrorcraft_theme_image_url('hospitality-led-mirror-project.png'),
+    'image' => mirrorcraft_theme_image_optimized_url('hospitality-led-mirror-project.png'),
     'title' => __('Hospitality', 'mirrorcraft'),
     'text'  => __('Hotels, resorts, and serviced apartments.', 'mirrorcraft'),
   ),
   array(
-    'image' => mirrorcraft_theme_image_url('residential-led-bathroom-mirror.png'),
+    'image' => mirrorcraft_theme_image_optimized_url('residential-led-bathroom-mirror.png'),
     'title' => __('Residential', 'mirrorcraft'),
     'text'  => __('Luxury homes and apartment projects.', 'mirrorcraft'),
   ),
   array(
-    'image' => mirrorcraft_theme_image_url('commercial-washroom-led-mirror.png'),
+    'image' => mirrorcraft_theme_image_optimized_url('commercial-washroom-led-mirror.png'),
     'title' => __('Commercial', 'mirrorcraft'),
     'text'  => __('Offices, public spaces, and commercial buildings.', 'mirrorcraft'),
   ),
   array(
-    'image' => mirrorcraft_theme_image_url('beauty-salon-led-mirror.png'),
+    'image' => mirrorcraft_theme_image_optimized_url('beauty-salon-led-mirror.png'),
     'title' => __('Beauty & Wellness', 'mirrorcraft'),
     'text'  => __('Salons, spas, and beauty studios.', 'mirrorcraft'),
   ),
   array(
-    'image' => mirrorcraft_theme_image_url('healthcare-hospital-mirror.png'),
+    'image' => mirrorcraft_theme_image_optimized_url('healthcare-hospital-mirror.png'),
     'title' => __('Healthcare', 'mirrorcraft'),
     'text'  => __('Hospitals, clinics, and healthcare facilities.', 'mirrorcraft'),
   ),
   array(
-    'image' => mirrorcraft_theme_image_url('retail-store-fitting-mirror.png'),
+    'image' => mirrorcraft_theme_image_optimized_url('retail-store-fitting-mirror.png'),
     'title' => __('Retail', 'mirrorcraft'),
     'text'  => __('Shops, showrooms, and chain stores.', 'mirrorcraft'),
   ),
@@ -378,22 +378,22 @@ $about_process_steps = array(
 
 $about_quality_images = array(
   array(
-    'src' => mirrorcraft_theme_image_url('who-we-are-warehouse.png'),
+    'src' => mirrorcraft_theme_image_optimized_url('who-we-are-warehouse.png'),
     'alt' => __('Drop test and transport packaging', 'mirrorcraft'),
     'label' => __('Drop Test', 'mirrorcraft'),
   ),
   array(
-    'src' => mirrorcraft_theme_image_url('home-hero-banner-20260422.png'),
+    'src' => mirrorcraft_theme_image_optimized_url('home-hero-banner-20260422.png'),
     'alt' => __('LED mirror lighting test', 'mirrorcraft'),
     'label' => __('Light Test', 'mirrorcraft'),
   ),
   array(
-    'src' => mirrorcraft_theme_image_url('who-we-are-inspection.png'),
+    'src' => mirrorcraft_theme_image_optimized_url('who-we-are-inspection.png'),
     'alt' => __('Final mirror inspection', 'mirrorcraft'),
     'label' => __('Inspection', 'mirrorcraft'),
   ),
   array(
-    'src' => mirrorcraft_theme_image_url('who-we-are-warehouse.png'),
+    'src' => mirrorcraft_theme_image_optimized_url('who-we-are-warehouse.png'),
     'alt' => __('Secure export packaging', 'mirrorcraft'),
     'label' => __('Secure Packaging', 'mirrorcraft'),
   ),
@@ -414,7 +414,7 @@ $about_certifications = array('CE', 'RoHS', 'IP44', 'SAA', 'UL');
       </div>
       <div class="about-page-hero__media">
         <?php if ($about_hero_image !== '') : ?>
-          <img src="<?php echo esc_url($about_hero_image); ?>" alt="<?php esc_attr_e('LED mirror bathroom scene', 'mirrorcraft'); ?>" loading="eager" decoding="async">
+          <img src="<?php echo esc_url($about_hero_image); ?>" alt="<?php esc_attr_e('LED mirror bathroom scene', 'mirrorcraft'); ?>" loading="eager" fetchpriority="high" decoding="async">
         <?php endif; ?>
       </div>
     </div>

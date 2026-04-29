@@ -39,12 +39,29 @@ function mirrorcraft_theme_image_first_available_url($filenames, $versioned = tr
       continue;
     }
 
-    $url = $versioned
-      ? mirrorcraft_theme_image_versioned_url($filename)
-      : mirrorcraft_theme_image_url($filename);
+    $path_parts = pathinfo($filename);
+    $dirname = !empty($path_parts['dirname']) && '.' !== $path_parts['dirname']
+      ? trailingslashit($path_parts['dirname'])
+      : '';
+    $basename = $path_parts['filename'] ?? $filename;
+    $extension = strtolower((string) ($path_parts['extension'] ?? ''));
+    $candidates = array();
 
-    if ($url !== '') {
-      return $url;
+    if ($extension !== 'avif' && $extension !== 'webp') {
+      $candidates[] = $dirname . $basename . '.avif';
+      $candidates[] = $dirname . $basename . '.webp';
+    }
+
+    $candidates[] = $filename;
+
+    foreach ($candidates as $candidate) {
+      $url = $versioned
+        ? mirrorcraft_theme_image_versioned_url($candidate)
+        : mirrorcraft_theme_image_url($candidate);
+
+      if ($url !== '') {
+        return $url;
+      }
     }
   }
 

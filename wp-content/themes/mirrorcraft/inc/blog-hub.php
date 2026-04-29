@@ -1,6 +1,20 @@
 <?php
 
 function mirrorcraft_enqueue_blog_hub_assets() {
+  if (is_front_page()) {
+    return;
+  }
+
+  if (
+    !is_home()
+    && !is_archive()
+    && !is_search()
+    && !is_page('blog')
+    && !is_page_template('page-blog.php')
+  ) {
+    return;
+  }
+
   $style_path = '/assets/css/blog-hub.css';
   $style_file = get_template_directory() . $style_path;
 
@@ -11,7 +25,7 @@ function mirrorcraft_enqueue_blog_hub_assets() {
   wp_enqueue_style(
     'mirrorcraft-blog-hub',
     get_template_directory_uri() . $style_path,
-    array('mirrorcraft-main'),
+    array('mirrorcraft-critical'),
     mirrorcraft_asset_version($style_path)
   );
 }
@@ -656,6 +670,442 @@ function mirrorcraft_render_blog_support_banner() {
   <?php
 }
 
+function mirrorcraft_get_blog_hub_home_posts($query = null, $limit = 7) {
+  $limit = max(1, (int) $limit);
+  $posts = mirrorcraft_get_blog_hub_query_posts($query);
+
+  if (count($posts) >= $limit) {
+    return array_slice($posts, 0, $limit);
+  }
+
+  $existing_ids = wp_list_pluck($posts, 'ID');
+  $fallback_posts = get_posts(
+    array(
+      'post_type'           => 'post',
+      'post_status'         => 'publish',
+      'posts_per_page'      => $limit - count($posts),
+      'ignore_sticky_posts' => true,
+      'post__not_in'        => array_filter(array_map('intval', $existing_ids)),
+    )
+  );
+
+  return array_slice(array_merge($posts, $fallback_posts), 0, $limit);
+}
+
+function mirrorcraft_find_blog_hub_category_link($fragments = array()) {
+  $fragments = array_filter(array_map('sanitize_title', (array) $fragments));
+  $terms = mirrorcraft_get_blog_hub_category_terms(24);
+
+  foreach ($terms as $term) {
+    if (!$term instanceof WP_Term) {
+      continue;
+    }
+
+    $haystack = sanitize_title($term->slug . ' ' . $term->name);
+
+    foreach ($fragments as $fragment) {
+      if ($fragment !== '' && false !== strpos($haystack, $fragment)) {
+        $term_link = get_term_link($term);
+        return is_wp_error($term_link) ? '' : $term_link;
+      }
+    }
+  }
+
+  return '';
+}
+
+function mirrorcraft_get_blog_hub_summary_categories() {
+  $fallback_url = mirrorcraft_get_blog_hub_index_url();
+
+  return array(
+    array(
+      'icon'  => 'guide',
+      'label' => __('LED Mirror Guide', 'mirrorcraft'),
+      'url'   => mirrorcraft_find_blog_hub_category_link(array('guide', 'buyer')) ?: $fallback_url,
+    ),
+    array(
+      'icon'  => 'mirror',
+      'label' => __('Bathroom Mirror Knowledge', 'mirrorcraft'),
+      'url'   => mirrorcraft_find_blog_hub_category_link(array('bathroom', 'mirror', 'knowledge')) ?: $fallback_url,
+    ),
+    array(
+      'icon'  => 'cabinet',
+      'label' => __('Mirror Cabinet Solutions', 'mirrorcraft'),
+      'url'   => mirrorcraft_find_blog_hub_category_link(array('cabinet', 'medicine')) ?: $fallback_url,
+    ),
+    array(
+      'icon'  => 'custom',
+      'label' => __('Custom Mirror Projects', 'mirrorcraft'),
+      'url'   => mirrorcraft_find_blog_hub_category_link(array('custom', 'project')) ?: $fallback_url,
+    ),
+    array(
+      'icon'  => 'hotel',
+      'label' => __('Hotel & Commercial Projects', 'mirrorcraft'),
+      'url'   => mirrorcraft_find_blog_hub_category_link(array('hotel', 'commercial', 'project')) ?: $fallback_url,
+    ),
+    array(
+      'icon'  => 'quality',
+      'label' => __('Quality & Technology', 'mirrorcraft'),
+      'url'   => mirrorcraft_find_blog_hub_category_link(array('quality', 'technology')) ?: $fallback_url,
+    ),
+    array(
+      'icon'  => 'tools',
+      'label' => __('Installation & Maintenance', 'mirrorcraft'),
+      'url'   => mirrorcraft_find_blog_hub_category_link(array('installation', 'maintenance')) ?: $fallback_url,
+    ),
+  );
+}
+
+function mirrorcraft_get_blog_hub_summary_demo_featured() {
+  return array(
+    'label'   => __('Hotel & Commercial Projects', 'mirrorcraft'),
+    'title'   => __('How to Choose LED Bathroom Mirrors for Hotel Projects', 'mirrorcraft'),
+    'summary' => __('A complete guide for hotel buyers and project managers. Learn about lighting, functions, durability, certification, and customization options.', 'mirrorcraft'),
+    'date'    => __('May 20, 2024', 'mirrorcraft'),
+    'image'   => mirrorcraft_theme_image_first_available_url(
+      array(
+        'hospitality-led-mirror-project.webp',
+        'hospitality-led-mirror-project.png',
+        'residential-led-bathroom-mirror.webp',
+        'residential-led-bathroom-mirror.png',
+      )
+    ),
+    'alt'     => __('Hotel bathroom mirror project guide', 'mirrorcraft'),
+    'url'     => mirrorcraft_link_by_slug('contact', '/contact/'),
+  );
+}
+
+function mirrorcraft_get_blog_hub_summary_demo_articles() {
+  $read_url = mirrorcraft_link_by_slug('contact', '/contact/');
+
+  return array(
+    array(
+      'label' => __('LED Mirror Guide', 'mirrorcraft'),
+      'title' => __('LED Mirror Color Temperature Guide for Bathrooms', 'mirrorcraft'),
+      'date'  => __('May 18, 2024', 'mirrorcraft'),
+      'image' => mirrorcraft_theme_image_first_available_url(array('product-bathroom-mirror.webp', 'product-bathroom-mirror.jpg')),
+      'alt'   => __('LED mirror color temperature guide', 'mirrorcraft'),
+      'url'   => $read_url,
+    ),
+    array(
+      'label' => __('Quality & Technology', 'mirrorcraft'),
+      'title' => __('Anti-Fog Mirrors: How They Work and Why Projects Need Them', 'mirrorcraft'),
+      'date'  => __('May 15, 2024', 'mirrorcraft'),
+      'image' => mirrorcraft_theme_image_first_available_url(array('healthcare-hospital-mirror.webp', 'healthcare-hospital-mirror.png', 'product-bathroom-mirror.webp')),
+      'alt'   => __('Anti-fog mirror technology article', 'mirrorcraft'),
+      'url'   => $read_url,
+    ),
+    array(
+      'label' => __('Custom Mirror Projects', 'mirrorcraft'),
+      'title' => __('Custom Mirror Size Guide for Hotel Bathrooms', 'mirrorcraft'),
+      'date'  => __('May 12, 2024', 'mirrorcraft'),
+      'image' => mirrorcraft_theme_image_first_available_url(array('custom-mirrors-reference-20260422.webp', 'custom-mirrors-reference-20260422.png', 'residential-led-bathroom-mirror.webp')),
+      'alt'   => __('Custom mirror size guide for hotel bathrooms', 'mirrorcraft'),
+      'url'   => $read_url,
+    ),
+    array(
+      'label' => __('Bathroom Mirror Knowledge', 'mirrorcraft'),
+      'title' => __('Framed vs Frameless Bathroom Mirrors: Which Is Better?', 'mirrorcraft'),
+      'date'  => __('May 10, 2024', 'mirrorcraft'),
+      'image' => mirrorcraft_theme_image_first_available_url(array('product-bathroom-mirror.webp', 'product-bathroom-mirror.jpg')),
+      'alt'   => __('Framed vs frameless bathroom mirror comparison', 'mirrorcraft'),
+      'url'   => $read_url,
+    ),
+    array(
+      'label' => __('Mirror Cabinet Solutions', 'mirrorcraft'),
+      'title' => __('How to Choose Mirror Cabinets for Residential Projects', 'mirrorcraft'),
+      'date'  => __('May 8, 2024', 'mirrorcraft'),
+      'image' => mirrorcraft_theme_image_first_available_url(array('product-medicine-cabinet.webp', 'product-medicine-cabinet.jpg')),
+      'alt'   => __('Mirror cabinet selection guide', 'mirrorcraft'),
+      'url'   => $read_url,
+    ),
+    array(
+      'label' => __('Hotel & Commercial Projects', 'mirrorcraft'),
+      'title' => __('What Buyers Should Know Before Ordering LED Mirrors in Bulk', 'mirrorcraft'),
+      'date'  => __('May 5, 2024', 'mirrorcraft'),
+      'image' => mirrorcraft_theme_image_first_available_url(array('who-we-are-warehouse.webp', 'who-we-are-warehouse.png', 'factory.png')),
+      'alt'   => __('Bulk LED mirror order preparation article', 'mirrorcraft'),
+      'url'   => $read_url,
+    ),
+  );
+}
+
+function mirrorcraft_render_blog_hub_summary_icon($icon = 'guide') {
+  $icons = array(
+    'guide' => '<svg viewBox="0 0 24 24" role="presentation" focusable="false"><path d="M6 5.5A2.5 2.5 0 0 1 8.5 3H19v17.5H8.5A2.5 2.5 0 0 0 6 23V5.5Zm0 0A2.5 2.5 0 0 0 3.5 8v12.5H6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"/></svg>',
+    'mirror' => '<svg viewBox="0 0 24 24" role="presentation" focusable="false"><circle cx="12" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 17.5V21" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"/><path d="M9.5 21h5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"/></svg>',
+    'cabinet' => '<svg viewBox="0 0 24 24" role="presentation" focusable="false"><rect x="5" y="3.5" width="14" height="17" rx="1.8" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 3.5v17" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="10" cy="12" r="0.8" fill="currentColor"/><circle cx="14" cy="12" r="0.8" fill="currentColor"/></svg>',
+    'custom' => '<svg viewBox="0 0 24 24" role="presentation" focusable="false"><path d="M6 8.5V5h3.5M18 8.5V5h-3.5M6 15.5V19h3.5M18 15.5V19h-3.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"/><rect x="7.5" y="6.5" width="9" height="11" rx="1.8" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>',
+    'hotel' => '<svg viewBox="0 0 24 24" role="presentation" focusable="false"><path d="M5 20V7.5h14V20M3.5 20h17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"/><path d="M9 7.5V5h6v2.5M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 15.5h.01M12 15.5h.01M15.5 15.5h.01" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"/></svg>',
+    'quality' => '<svg viewBox="0 0 24 24" role="presentation" focusable="false"><path d="M12 3.5 19 6v5c0 4.5-2.7 7.9-7 9.5-4.3-1.6-7-5-7-9.5V6l7-2.5Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.7"/><path d="m9 12 2 2 4-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"/></svg>',
+    'tools' => '<svg viewBox="0 0 24 24" role="presentation" focusable="false"><path d="m6 7 3 3m0 0 2.5-2.5A3 3 0 1 0 8 4.5L10.5 7M9 10l-5 5 5 5 5-5m1-7 5 5m-2.5-7.5L15 8m0 0L9 14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"/></svg>',
+    'calendar' => '<svg viewBox="0 0 24 24" role="presentation" focusable="false"><rect x="4" y="6" width="16" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 4v4M16 4v4M4 10h16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"/></svg>',
+    'experience' => '<svg viewBox="0 0 24 24" role="presentation" focusable="false"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 8v4l2.5 2" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"/></svg>',
+    'globe' => '<svg viewBox="0 0 24 24" role="presentation" focusable="false"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 12h17M12 3.5c2.5 2.4 4 5.4 4 8.5s-1.5 6.1-4 8.5c-2.5-2.4-4-5.4-4-8.5s1.5-6.1 4-8.5Z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>',
+    'oem' => '<svg viewBox="0 0 24 24" role="presentation" focusable="false"><path d="m7 8 5 4-5 4V8Zm10 0-5 4 5 4V8Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"/><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>',
+    'certified' => '<svg viewBox="0 0 24 24" role="presentation" focusable="false"><path d="M12 3.5 6 6v5c0 4 2.2 7 6 8.5 3.8-1.5 6-4.5 6-8.5V6l-6-2.5Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.7"/><path d="m9.2 12.1 1.8 1.8 3.8-3.8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"/></svg>',
+  );
+
+  echo $icons[$icon] ?? $icons['guide']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+}
+
+function mirrorcraft_render_blog_hub_summary_featured($post) {
+  $post = get_post($post);
+
+  if (!$post instanceof WP_Post) {
+    return;
+  }
+
+  $category = mirrorcraft_get_blog_post_category_data($post->ID);
+  ?>
+  <article class="blog-summary-featured">
+    <a class="blog-summary-featured__media" href="<?php echo esc_url(get_permalink($post)); ?>">
+      <img src="<?php echo esc_url(mirrorcraft_get_article_image_url($post)); ?>" alt="<?php echo esc_attr(mirrorcraft_get_article_image_alt($post)); ?>" loading="eager" decoding="async">
+    </a>
+    <div class="blog-summary-featured__body">
+      <p class="blog-summary-featured__label"><?php echo esc_html($category['label']); ?></p>
+      <h2><a href="<?php echo esc_url(get_permalink($post)); ?>"><?php echo esc_html(get_the_title($post)); ?></a></h2>
+      <p class="blog-summary-featured__text"><?php echo esc_html(mirrorcraft_get_blog_hub_summary($post->ID, 26)); ?></p>
+      <a class="blog-summary-button" href="<?php echo esc_url(get_permalink($post)); ?>">
+        <?php esc_html_e('Read Article', 'mirrorcraft'); ?>
+        <span aria-hidden="true">→</span>
+      </a>
+      <p class="blog-summary-meta">
+        <span class="blog-summary-meta__icon" aria-hidden="true"><?php mirrorcraft_render_blog_hub_summary_icon('calendar'); ?></span>
+        <span><?php echo esc_html(get_the_date('F j, Y', $post)); ?></span>
+      </p>
+    </div>
+  </article>
+  <?php
+}
+
+function mirrorcraft_render_blog_hub_summary_demo_featured_card($item) {
+  if (!is_array($item) || empty($item['title'])) {
+    return;
+  }
+  ?>
+  <article class="blog-summary-featured">
+    <a class="blog-summary-featured__media" href="<?php echo esc_url($item['url']); ?>">
+      <img src="<?php echo esc_url($item['image']); ?>" alt="<?php echo esc_attr($item['alt']); ?>" loading="eager" decoding="async">
+    </a>
+    <div class="blog-summary-featured__body">
+      <p class="blog-summary-featured__label"><?php echo esc_html($item['label']); ?></p>
+      <h2><a href="<?php echo esc_url($item['url']); ?>"><?php echo esc_html($item['title']); ?></a></h2>
+      <p class="blog-summary-featured__text"><?php echo esc_html($item['summary']); ?></p>
+      <a class="blog-summary-button" href="<?php echo esc_url($item['url']); ?>">
+        <?php esc_html_e('Read Article', 'mirrorcraft'); ?>
+        <span aria-hidden="true">→</span>
+      </a>
+      <p class="blog-summary-meta">
+        <span class="blog-summary-meta__icon" aria-hidden="true"><?php mirrorcraft_render_blog_hub_summary_icon('calendar'); ?></span>
+        <span><?php echo esc_html($item['date']); ?></span>
+      </p>
+    </div>
+  </article>
+  <?php
+}
+
+function mirrorcraft_render_blog_hub_summary_article_card($post) {
+  $post = get_post($post);
+
+  if (!$post instanceof WP_Post) {
+    return;
+  }
+
+  $category = mirrorcraft_get_blog_post_category_data($post->ID);
+  ?>
+  <article class="blog-summary-card">
+    <a class="blog-summary-card__media" href="<?php echo esc_url(get_permalink($post)); ?>">
+      <img src="<?php echo esc_url(mirrorcraft_get_article_image_url($post)); ?>" alt="<?php echo esc_attr(mirrorcraft_get_article_image_alt($post)); ?>" loading="lazy" decoding="async">
+    </a>
+    <div class="blog-summary-card__body">
+      <p class="blog-summary-card__label"><?php echo esc_html($category['label']); ?></p>
+      <h3><a href="<?php echo esc_url(get_permalink($post)); ?>"><?php echo esc_html(get_the_title($post)); ?></a></h3>
+      <div class="blog-summary-card__footer">
+        <p class="blog-summary-meta">
+          <span class="blog-summary-meta__icon" aria-hidden="true"><?php mirrorcraft_render_blog_hub_summary_icon('calendar'); ?></span>
+          <span><?php echo esc_html(get_the_date('F j, Y', $post)); ?></span>
+        </p>
+        <a class="blog-summary-card__link" href="<?php echo esc_url(get_permalink($post)); ?>">
+          <?php esc_html_e('Read More', 'mirrorcraft'); ?>
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </article>
+  <?php
+}
+
+function mirrorcraft_render_blog_hub_summary_demo_article_card($item) {
+  if (!is_array($item) || empty($item['title'])) {
+    return;
+  }
+  ?>
+  <article class="blog-summary-card">
+    <a class="blog-summary-card__media" href="<?php echo esc_url($item['url']); ?>">
+      <img src="<?php echo esc_url($item['image']); ?>" alt="<?php echo esc_attr($item['alt']); ?>" loading="lazy" decoding="async">
+    </a>
+    <div class="blog-summary-card__body">
+      <p class="blog-summary-card__label"><?php echo esc_html($item['label']); ?></p>
+      <h3><a href="<?php echo esc_url($item['url']); ?>"><?php echo esc_html($item['title']); ?></a></h3>
+      <div class="blog-summary-card__footer">
+        <p class="blog-summary-meta">
+          <span class="blog-summary-meta__icon" aria-hidden="true"><?php mirrorcraft_render_blog_hub_summary_icon('calendar'); ?></span>
+          <span><?php echo esc_html($item['date']); ?></span>
+        </p>
+        <a class="blog-summary-card__link" href="<?php echo esc_url($item['url']); ?>">
+          <?php esc_html_e('Read More', 'mirrorcraft'); ?>
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </article>
+  <?php
+}
+
+function mirrorcraft_render_blog_hub_summary_home($query, $intro) {
+  $featured_post = mirrorcraft_get_blog_hub_summary_demo_featured();
+  $posts = mirrorcraft_get_blog_hub_summary_demo_articles();
+  $hero_image = mirrorcraft_theme_image_first_available_url(
+    array(
+      'home-hero-banner-20260423c.webp',
+      'home-hero-banner-20260423c.jpg',
+      'home-hero-banner-20260422.webp',
+      'home-hero-banner-20260422.png',
+    )
+  );
+  $summary_categories = mirrorcraft_get_blog_hub_summary_categories();
+  $blog_url = mirrorcraft_get_blog_hub_index_url();
+  $support_image = mirrorcraft_theme_image_first_available_url(
+    array(
+      'who-we-are-workshop.webp',
+      'who-we-are-workshop.png',
+      'factory.avif',
+      'factory.png',
+    )
+  );
+  $knowledge_gallery = array(
+    mirrorcraft_theme_image_first_available_url(array('who-we-are-workshop.webp', 'who-we-are-workshop.png')),
+    mirrorcraft_theme_image_first_available_url(array('product-bathroom-mirror.webp', 'product-bathroom-mirror.jpg')),
+    mirrorcraft_theme_image_first_available_url(array('who-we-are-inspection.webp', 'who-we-are-inspection.png')),
+  );
+  $knowledge_points = array(
+    array('icon' => 'experience', 'title' => __('10+ Years', 'mirrorcraft'), 'text' => __('Experience', 'mirrorcraft')),
+    array('icon' => 'globe', 'title' => __('100+ Countries', 'mirrorcraft'), 'text' => __('Exported', 'mirrorcraft')),
+    array('icon' => 'oem', 'title' => __('OEM & ODM', 'mirrorcraft'), 'text' => __('Customization', 'mirrorcraft')),
+    array('icon' => 'certified', 'title' => __('Quality & Safety', 'mirrorcraft'), 'text' => __('Certified', 'mirrorcraft')),
+  );
+  ?>
+  <main id="site-main" class="site-main page-shell blog-hub blog-hub--summary" tabindex="-1">
+    <section class="blog-summary-hero">
+      <div class="shell">
+        <div class="blog-summary-hero__panel">
+          <img class="blog-summary-hero__image" src="<?php echo esc_url($hero_image); ?>" alt="<?php esc_attr_e('Mirror knowledge and project insights', 'mirrorcraft'); ?>" loading="eager" decoding="async">
+          <div class="blog-summary-hero__overlay"></div>
+          <div class="blog-summary-hero__copy">
+            <p class="blog-summary-hero__eyebrow"><?php esc_html_e('Blog', 'mirrorcraft'); ?></p>
+            <h1><?php echo esc_html($intro['title']); ?></h1>
+            <p><?php echo esc_html($intro['lead']); ?></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <?php if (!empty($featured_post)) : ?>
+      <section class="blog-summary-featured-section">
+        <div class="shell">
+          <?php mirrorcraft_render_blog_hub_summary_demo_featured_card($featured_post); ?>
+        </div>
+      </section>
+    <?php endif; ?>
+
+    <section class="blog-summary-section">
+      <div class="shell">
+        <div class="blog-summary-section__head">
+          <h2><?php esc_html_e('Explore Blog Categories', 'mirrorcraft'); ?></h2>
+          <a href="<?php echo esc_url($blog_url); ?>"><?php esc_html_e('View All Categories', 'mirrorcraft'); ?> <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="blog-summary-category-grid">
+          <?php foreach ($summary_categories as $item) : ?>
+            <a class="blog-summary-category-card" href="<?php echo esc_url($item['url']); ?>">
+              <span class="blog-summary-category-card__icon" aria-hidden="true"><?php mirrorcraft_render_blog_hub_summary_icon($item['icon']); ?></span>
+              <span class="blog-summary-category-card__label"><?php echo esc_html($item['label']); ?></span>
+            </a>
+          <?php endforeach; ?>
+        </div>
+      </div>
+    </section>
+
+    <section class="blog-summary-section">
+      <div class="shell">
+        <div class="blog-summary-section__head">
+          <h2><?php esc_html_e('Latest Articles', 'mirrorcraft'); ?></h2>
+          <a href="<?php echo esc_url($blog_url); ?>"><?php esc_html_e('View All Articles', 'mirrorcraft'); ?> <span aria-hidden="true">→</span></a>
+        </div>
+        <?php if (!empty($posts)) : ?>
+        <div class="blog-summary-grid">
+          <?php foreach ($posts as $post_item) : ?>
+              <?php mirrorcraft_render_blog_hub_summary_demo_article_card($post_item); ?>
+          <?php endforeach; ?>
+        </div>
+        <?php endif; ?>
+      </div>
+    </section>
+
+    <section class="blog-summary-support">
+      <div class="shell">
+        <div class="blog-summary-support__card">
+          <?php if ($support_image !== '') : ?>
+            <img class="blog-summary-support__image" src="<?php echo esc_url($support_image); ?>" alt="<?php esc_attr_e('Mirror manufacturing support', 'mirrorcraft'); ?>" loading="lazy" decoding="async">
+          <?php endif; ?>
+          <div class="blog-summary-support__overlay"></div>
+          <div class="blog-summary-support__body">
+            <div class="blog-summary-support__intro">
+              <h2><?php esc_html_e('Need Help Choosing Mirrors for Your Project?', 'mirrorcraft'); ?></h2>
+            </div>
+            <div class="blog-summary-support__copy">
+              <p><?php esc_html_e('Our team can support size selection, lighting design, customization, samples, and bulk project solutions.', 'mirrorcraft'); ?></p>
+              <div class="blog-summary-support__actions">
+                <a class="blog-summary-button blog-summary-button--accent" href="<?php echo esc_url(mirrorcraft_link_by_slug('contact', '/contact/')); ?>"><?php esc_html_e('Contact Us', 'mirrorcraft'); ?></a>
+                <a class="blog-summary-button blog-summary-button--ghost" href="<?php echo esc_url(mirrorcraft_link_by_slug('contact', '/contact/')); ?>"><?php esc_html_e('Request a Quote', 'mirrorcraft'); ?></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="blog-summary-knowledge">
+      <div class="shell blog-summary-knowledge__shell">
+        <div class="blog-summary-knowledge__copy">
+          <h2><?php esc_html_e('Professional Mirror Knowledge for Global B2B Buyers', 'mirrorcraft'); ?></h2>
+          <p><?php esc_html_e('OJMIRROR is a professional LED mirror and bathroom mirror manufacturer with over 10 years of experience. We provide one-stop solutions including design, customization, production, quality control, and global delivery. Our mirrors are widely used in hotels, apartments, villas, and commercial projects worldwide.', 'mirrorcraft'); ?></p>
+          <div class="blog-summary-knowledge__points">
+            <?php foreach ($knowledge_points as $point) : ?>
+              <div class="blog-summary-point">
+                <span class="blog-summary-point__icon" aria-hidden="true"><?php mirrorcraft_render_blog_hub_summary_icon($point['icon']); ?></span>
+                <div>
+                  <strong><?php echo esc_html($point['title']); ?></strong>
+                  <span><?php echo esc_html($point['text']); ?></span>
+                </div>
+              </div>
+            <?php endforeach; ?>
+          </div>
+        </div>
+        <div class="blog-summary-knowledge__gallery">
+          <?php foreach ($knowledge_gallery as $gallery_image) : ?>
+            <?php if ($gallery_image === '') { continue; } ?>
+            <div class="blog-summary-knowledge__tile">
+              <img src="<?php echo esc_url($gallery_image); ?>" alt="<?php esc_attr_e('Mirror manufacturing knowledge', 'mirrorcraft'); ?>" loading="lazy" decoding="async">
+            </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
+    </section>
+  </main>
+  <?php
+}
+
 function mirrorcraft_render_blog_hub_page($args = array()) {
   global $wp_query;
 
@@ -681,6 +1131,11 @@ function mirrorcraft_render_blog_hub_page($args = array()) {
 
   if ($show_featured && !empty($posts)) {
     $featured_post = array_shift($posts);
+  }
+
+  if ('home' === $context) {
+    mirrorcraft_render_blog_hub_summary_home($query, $intro);
+    return;
   }
   ?>
   <main id="site-main" class="site-main page-shell blog-hub" tabindex="-1">
