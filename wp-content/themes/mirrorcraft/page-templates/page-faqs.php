@@ -3,41 +3,50 @@
 Template Name: FAQ Page
 */
 
-if (!function_exists('mirrorcraft_render_faq_hub_icon')) {
-  function mirrorcraft_render_faq_hub_icon($slug) {
+if (!function_exists('mirrorcraft_render_faq_b2b_icon')) {
+  function mirrorcraft_render_faq_b2b_icon($slug) {
     switch ($slug) {
       case 'company':
+      case 'manufacturing':
+      case 'real-estate':
         ?>
         <svg viewBox="0 0 24 24" role="presentation" focusable="false">
-          <path fill="currentColor" d="M4 21V5.5A1.5 1.5 0 0 1 5.5 4h7A1.5 1.5 0 0 1 14 5.5V8h4.5A1.5 1.5 0 0 1 20 9.5V21H4Zm2-2h2v-2H6v2Zm0-4h2v-2H6v2Zm0-4h2V9H6v2Zm4 8h2v-2h-2v2Zm0-4h2v-2h-2v2Zm0-4h2V9h-2v2Zm4 8h4V10h-4v9Z"/>
+          <path fill="currentColor" d="M4 21V5.5A1.5 1.5 0 0 1 5.5 4h8A1.5 1.5 0 0 1 15 5.5V8h3.5A1.5 1.5 0 0 1 20 9.5V21H4Zm2-2h2v-2H6v2Zm0-4h2v-2H6v2Zm0-4h2V9H6v2Zm4 8h2v-2h-2v2Zm0-4h2v-2h-2v2Zm0-4h2V9h-2v2Zm4 8h4V10h-4v9Z"/>
         </svg>
         <?php
         break;
       case 'customization':
+      case 'flexibility':
+      case 'brand':
         ?>
         <svg viewBox="0 0 24 24" role="presentation" focusable="false">
-          <path fill="currentColor" d="M3 17.25V21h3.75l11-11-3.75-3.75-11 11Zm2.92 2.33H5v-.92l8.06-8.06.92.92-8.06 8.06ZM20.71 7.04a1 1 0 0 0 0-1.41L18.37 3.3a1 1 0 0 0-1.41 0l-1.59 1.59 3.75 3.75 1.59-1.6ZM7 4h5v2H7V4Zm-3 7h5v2H4v-2Zm9 6h7v2h-7v-2Z"/>
+          <path fill="currentColor" d="m4 17.25 9.06-9.06 2.75 2.75L6.75 20H4v-2.75Zm10.76-8.17 1.41-1.41a1 1 0 0 0 0-1.42l-1.83-1.83a1 1 0 0 0-1.42 0l-1.41 1.41 3.25 3.25ZM14 4h6v2h-6V4Zm2 14h4v2h-4v-2Z"/>
+        </svg>
+        <?php
+        break;
+      case 'samples':
+      case 'shipping':
+      case 'distributor':
+      case 'export':
+        ?>
+        <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+          <path fill="currentColor" d="M3 7.25 12 3l9 4.25v9.5L12 21l-9-4.25v-9.5Zm2 .94v7.3l6 2.83v-7.3L5 8.19Zm8 10.13 6-2.83v-7.3l-6 2.83v7.3Zm-1-9.04 5.87-2.78L12 3.78 6.13 6.5 12 9.28Z"/>
         </svg>
         <?php
         break;
       case 'quality':
+      case 'trust':
+      case 'warranty':
         ?>
         <svg viewBox="0 0 24 24" role="presentation" focusable="false">
-          <path fill="currentColor" d="M12 2 4 5v6c0 5 3.4 9.74 8 11 4.6-1.26 8-6 8-11V5l-8-3Zm0 17.87C8.6 18.76 6 14.73 6 11V6.36l6-2.25 6 2.25V11c0 3.73-2.6 7.76-6 8.87Zm-1.2-4.37-2.6-2.6 1.41-1.4 1.19 1.18 3.79-3.78 1.41 1.41-5.2 5.19Z"/>
+          <path fill="currentColor" d="M12 2 4 5v6c0 5.25 3.4 9.88 8 11 4.6-1.12 8-5.75 8-11V5l-8-3Zm0 17.87C8.73 18.9 6 15.02 6 11V6.36l6-2.25 6 2.25V11c0 4.02-2.73 7.9-6 8.87Zm-1.28-4.19-2.5-2.5 1.41-1.41 1.09 1.09 3.65-3.65 1.41 1.41-5.06 5.06Z"/>
         </svg>
         <?php
         break;
-      case 'orders':
+      case 'production':
         ?>
         <svg viewBox="0 0 24 24" role="presentation" focusable="false">
-          <path fill="currentColor" d="M19.14 12.94a7.96 7.96 0 0 0 .06-.94c0-.32-.02-.63-.06-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.03 7.03 0 0 0-1.63-.94l-.36-2.54A.5.5 0 0 0 13.9 2h-3.8a.5.5 0 0 0-.49.42l-.36 2.54c-.58.22-1.12.53-1.63.94l-2.39-.96a.5.5 0 0 0-.6.22L2.71 8.48a.5.5 0 0 0 .12.64l2.03 1.58c-.04.31-.06.62-.06.94 0 .31.02.62.06.94L2.83 14.16a.5.5 0 0 0-.12.64l1.92 3.32c.13.22.39.31.6.22l2.39-.96c.51.41 1.05.72 1.63.94l.36 2.54c.04.24.25.42.49.42h3.8c.24 0 .45-.18.49-.42l.36-2.54c.58-.22 1.12-.53 1.63-.94l2.39.96c.22.09.47 0 .6-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58ZM12 15.5A3.5 3.5 0 1 1 12 8a3.5 3.5 0 0 1 0 7.5Z"/>
-        </svg>
-        <?php
-        break;
-      case 'shipping':
-        ?>
-        <svg viewBox="0 0 24 24" role="presentation" focusable="false">
-          <path fill="currentColor" d="M3 6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2h2.59a2 2 0 0 1 1.7.95l1.41 2.35c.2.33.3.71.3 1.1V16a2 2 0 0 1-2 2h-1.17a3 3 0 0 1-5.66 0H9.83a3 3 0 0 1-5.66 0H3V6Zm2 10a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm12 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm0-6v3h4v-.42L19.58 10H17Z"/>
+          <path fill="currentColor" d="M12 3a9 9 0 1 0 9 9 9.01 9.01 0 0 0-9-9Zm0 16a7 7 0 1 1 7-7 7.01 7.01 0 0 1-7 7Zm1-11h-2v5.41l3.2 3.2 1.41-1.41-2.61-2.62V8Z"/>
         </svg>
         <?php
         break;
@@ -49,16 +58,40 @@ if (!function_exists('mirrorcraft_render_faq_hub_icon')) {
         <?php
         break;
       case 'support':
+      case 'response':
         ?>
         <svg viewBox="0 0 24 24" role="presentation" focusable="false">
           <path fill="currentColor" d="M12 3a8 8 0 0 0-8 8v3a2 2 0 0 0 2 2h1v-5H6v-1a6 6 0 1 1 12 0v1h-1v5h1a2 2 0 0 0 2-2v-3a8 8 0 0 0-8-8Zm-5 9h2v5H7v-5Zm8 0h2v5h-2v-5Zm-6 8h6v2H9v-2Z"/>
         </svg>
         <?php
         break;
-      case 'shield':
+      case 'global':
         ?>
         <svg viewBox="0 0 24 24" role="presentation" focusable="false">
-          <path fill="currentColor" d="M12 2 4 5v6c0 5 3.4 9.74 8 11 4.6-1.26 8-6 8-11V5l-8-3Zm0 17.87C8.6 18.76 6 14.73 6 11V6.36l6-2.25 6 2.25V11c0 3.73-2.6 7.76-6 8.87Zm1-11.87h-2v4l3.5 2.1 1-1.64-2.5-1.46V8Z"/>
+          <path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10.01 10.01 0 0 0 12 2Zm6.93 9h-3.08a15.3 15.3 0 0 0-1.07-4.3A8.04 8.04 0 0 1 18.93 11ZM12 4.06c.8 1.09 1.87 3.13 2.32 6.94H9.68C10.13 7.19 11.2 5.15 12 4.06ZM4.07 13h3.08a15.3 15.3 0 0 0 1.07 4.3A8.04 8.04 0 0 1 4.07 13Zm3.08-2H4.07a8.04 8.04 0 0 1 4.15-4.3A15.3 15.3 0 0 0 7.15 11Zm4.85 8.94c-.8-1.09-1.87-3.13-2.32-6.94h4.64c-.45 3.81-1.52 5.85-2.32 6.94ZM14.78 17.3c.48-1.06.84-2.49 1.07-4.3h3.08a8.04 8.04 0 0 1-4.15 4.3Z"/>
+        </svg>
+        <?php
+        break;
+      case 'team':
+        ?>
+        <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+          <path fill="currentColor" d="M16 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm-8 1a3 3 0 1 0-3-3 3 3 0 0 0 3 3Zm8 1c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4Zm-8 1c-2.33 0-7 1.17-7 3.5V19h5v-2c0-1.01.47-1.95 1.35-2.75A6.89 6.89 0 0 0 8 14Z"/>
+        </svg>
+        <?php
+        break;
+      case 'claims':
+      case 'inspection':
+        ?>
+        <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+          <path fill="currentColor" d="M6 3h9l5 5v13a1 1 0 0 1-1 1H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm8 1.5V9h4.5L14 4.5ZM8 12h8v1.8H8V12Zm0 3.5h5v1.8H8v-1.8Z"/>
+          <path fill="currentColor" d="m15.21 14.79-1.42-1.42-2.18 2.18-.97-.97-1.41 1.41 2.38 2.38 3.6-3.58Z"/>
+        </svg>
+        <?php
+        break;
+      case 'hotel':
+        ?>
+        <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+          <path fill="currentColor" d="M4 11V5h5a3 3 0 0 1 3 3v3h8a2 2 0 0 1 2 2v6h-2v-2H4v2H2v-9h2Zm2-4v4h4V8a1 1 0 0 0-1-1H6Z"/>
         </svg>
         <?php
         break;
@@ -74,297 +107,472 @@ if (!function_exists('mirrorcraft_render_faq_hub_icon')) {
 
 get_header();
 
-$faq_quote_url   = mirrorcraft_link_by_slug('contact', '/contact/');
-$faq_expert_url  = mirrorcraft_has_whatsapp_number() ? mirrorcraft_get_whatsapp_link() : $faq_quote_url;
-$faq_expert_attr = mirrorcraft_has_whatsapp_number() ? ' target="_blank" rel="noopener noreferrer"' : '';
-$faq_hero_image  = mirrorcraft_theme_image_url('hospitality-led-mirror-project.png');
-$faq_cta_image   = mirrorcraft_theme_image_url('home-hero-banner-20260422.png');
+$faq_quote_url    = mirrorcraft_link_by_slug('contact', '/contact/');
+$faq_whatsapp_url = mirrorcraft_has_whatsapp_number() ? mirrorcraft_get_whatsapp_link() : $faq_quote_url;
+$faq_whatsapp_attr = mirrorcraft_has_whatsapp_number() ? ' target="_blank" rel="noopener noreferrer"' : '';
+$faq_chat_label   = mirrorcraft_has_whatsapp_number() ? __('Chat on WhatsApp', 'mirrorcraft') : __('Talk to an Expert', 'mirrorcraft');
 
-if ($faq_hero_image === '') {
-  $faq_hero_image = mirrorcraft_theme_image_url('home-hero-banner-20260422.png');
+$faq_hero_primary_image = mirrorcraft_theme_image_optimized_url('home-hero-banner-20260423c.jpg');
+$faq_hero_quality_image = mirrorcraft_theme_image_optimized_url('quality-control-ref/quality-control.png');
+$faq_hero_package_image = mirrorcraft_theme_image_optimized_url('quality-control-ref/corner-protection.png');
+$faq_hero_projects_image = mirrorcraft_theme_image_optimized_url('quality-control-ref/pallet-loading.png');
+$faq_cta_image = mirrorcraft_theme_image_optimized_url('decorative-mirrors/cta.png');
+
+if ($faq_hero_primary_image === '') {
+  $faq_hero_primary_image = mirrorcraft_theme_image_optimized_url('hospitality-led-mirror-project.png');
 }
 
 if ($faq_cta_image === '') {
-  $faq_cta_image = mirrorcraft_theme_image_url('hospitality-led-mirror-project.png');
+  $faq_cta_image = mirrorcraft_theme_image_optimized_url('full-length-solution-hotel.png');
 }
 
-$faq_sections = array(
+$faq_topics = array(
   array(
-    'slug'  => 'company',
-    'title' => __('Company & Capability', 'mirrorcraft'),
-    'items' => array(
-      array(
-        'id'       => 'Q1',
-        'question' => __('Are you a manufacturer or a trading company?', 'mirrorcraft'),
-        'answer'   => __('We are a professional manufacturer focused on LED mirrors, mirror cabinets, and OEM / ODM support for global B2B buyers.', 'mirrorcraft'),
-      ),
-      array(
-        'id'       => 'Q2',
-        'question' => __('What markets do you serve?', 'mirrorcraft'),
-        'answer'   => __('We support hospitality, residential, commercial, healthcare, retail, and private-label projects across multiple export markets.', 'mirrorcraft'),
-      ),
-      array(
-        'id'       => 'Q3',
-        'question' => __('Can you handle large-scale projects?', 'mirrorcraft'),
-        'answer'   => __('Yes. We support bulk programs for hotels, apartments, real-estate developments, distributors, and branded sourcing routes.', 'mirrorcraft'),
-      ),
-    ),
+    'slug'   => 'company',
+    'label'  => __('Company\'s Capability', 'mirrorcraft'),
+    'icon'   => 'company',
+    'anchor' => 'faq-01',
   ),
   array(
-    'slug'  => 'customization',
-    'title' => __('Customization', 'mirrorcraft'),
-    'items' => array(
-      array(
-        'id'       => 'Q4',
-        'question' => __('Do you offer custom mirror designs?', 'mirrorcraft'),
-        'answer'   => __('Yes. We support size, shape, frame, edge, lighting, packaging, and smart-feature customization for OEM and project orders.', 'mirrorcraft'),
-      ),
-      array(
-        'id'       => 'Q5',
-        'question' => __('Can you develop products from our drawing or concept?', 'mirrorcraft'),
-        'answer'   => __('Yes. We can review drawings, reference images, and samples, then organize a practical route for sampling and production.', 'mirrorcraft'),
-      ),
-      array(
-        'id'       => 'Q6',
-        'question' => __('What is the MOQ for custom orders?', 'mirrorcraft'),
-        'answer'   => __('MOQ depends on the product type, specifications, and packaging route. We confirm it case by case during quotation.', 'mirrorcraft'),
-      ),
-    ),
+    'slug'   => 'customization',
+    'label'  => __('OEM / ODM Customization', 'mirrorcraft'),
+    'icon'   => 'customization',
+    'anchor' => 'faq-02',
   ),
   array(
-    'slug'  => 'quality',
-    'title' => __('Product & Quality', 'mirrorcraft'),
-    'items' => array(
-      array(
-        'id'       => 'Q7',
-        'question' => __('What certifications can you support?', 'mirrorcraft'),
-        'answer'   => __('We can discuss CE, UL / ETL, RoHS, IP rating, and other compliance directions according to the target market and product route.', 'mirrorcraft'),
-      ),
-      array(
-        'id'       => 'Q8',
-        'question' => __('What is the typical lifespan of LED mirrors?', 'mirrorcraft'),
-        'answer'   => __('Typical LED life ranges from about 30,000 to 50,000 hours, depending on component choice, usage frequency, and installation environment.', 'mirrorcraft'),
-      ),
-      array(
-        'id'       => 'Q9',
-        'question' => __('Can you support high CRI lighting?', 'mirrorcraft'),
-        'answer'   => __('Yes. We can support higher CRI options for applications that need better color rendering, such as makeup and premium bathroom use.', 'mirrorcraft'),
-      ),
-    ),
+    'slug'   => 'samples',
+    'label'  => __('Samples & MOQ', 'mirrorcraft'),
+    'icon'   => 'samples',
+    'anchor' => 'faq-04',
   ),
   array(
-    'slug'  => 'orders',
-    'title' => __('Orders & Production', 'mirrorcraft'),
-    'items' => array(
-      array(
-        'id'       => 'Q10',
-        'question' => __('What is your lead time?', 'mirrorcraft'),
-        'answer'   => __('Samples usually take around 7 to 15 days, while bulk production typically ranges from 25 to 45 days depending on quantity and complexity.', 'mirrorcraft'),
-      ),
-      array(
-        'id'       => 'Q11',
-        'question' => __('Can I get samples before a bulk order?', 'mirrorcraft'),
-        'answer'   => __('Yes. Sample review is available to confirm finish, lighting, structure, and installation fit before mass production.', 'mirrorcraft'),
-      ),
-      array(
-        'id'       => 'Q12',
-        'question' => __('How do you ensure product quality?', 'mirrorcraft'),
-        'answer'   => __('We run QC checkpoints covering raw materials, in-line production checks, function testing, and final inspection before shipment.', 'mirrorcraft'),
-      ),
-    ),
+    'slug'   => 'quality',
+    'label'  => __('Quality & Certification', 'mirrorcraft'),
+    'icon'   => 'quality',
+    'anchor' => 'faq-05',
   ),
   array(
-    'slug'  => 'shipping',
-    'title' => __('Shipping & Packaging', 'mirrorcraft'),
-    'items' => array(
-      array(
-        'id'       => 'Q13',
-        'question' => __('How are the mirrors packaged?', 'mirrorcraft'),
-        'answer'   => __('We use export packaging that can include foam protection, carton box, corner protection, palletization, or wooden-crate solutions where required.', 'mirrorcraft'),
-      ),
-      array(
-        'id'       => 'Q14',
-        'question' => __('Do you support international shipping?', 'mirrorcraft'),
-        'answer'   => __('Yes. We support sea, air, and express routes depending on program urgency, shipment size, and destination market.', 'mirrorcraft'),
-      ),
-      array(
-        'id'       => 'Q15',
-        'question' => __('Can you handle drop shipping or mixed containers?', 'mirrorcraft'),
-        'answer'   => __('We can discuss flexible logistics routes for B2B clients, including mixed programs and project-based shipment planning.', 'mirrorcraft'),
-      ),
-    ),
+    'slug'   => 'production',
+    'label'  => __('Lead Time & Production', 'mirrorcraft'),
+    'icon'   => 'production',
+    'anchor' => 'faq-07',
   ),
   array(
-    'slug'  => 'pricing',
-    'title' => __('Pricing & Payment', 'mirrorcraft'),
-    'items' => array(
-      array(
-        'id'       => 'Q16',
-        'question' => __('How do I get a quote?', 'mirrorcraft'),
-        'answer'   => __('Send us your size, quantity, application, target market, and custom requirements, and we will prepare a quotation path for you.', 'mirrorcraft'),
-      ),
-      array(
-        'id'       => 'Q17',
-        'question' => __('What payment terms do you accept?', 'mirrorcraft'),
-        'answer'   => __('Typical terms are T/T with 30% deposit and 70% balance before shipment. Other arrangements can be discussed for approved programs.', 'mirrorcraft'),
-      ),
-    ),
+    'slug'   => 'shipping',
+    'label'  => __('Packaging & Shipping', 'mirrorcraft'),
+    'icon'   => 'shipping',
+    'anchor' => 'faq-08',
   ),
   array(
-    'slug'  => 'support',
-    'title' => __('After-Sales & Support', 'mirrorcraft'),
-    'items' => array(
-      array(
-        'id'       => 'Q18',
-        'question' => __('What warranty support do you offer?', 'mirrorcraft'),
-        'answer'   => __('Warranty coverage depends on the confirmed product route and project standard. We review each case according to the approved order scope.', 'mirrorcraft'),
-      ),
-      array(
-        'id'       => 'Q19',
-        'question' => __('What if products are damaged during shipping?', 'mirrorcraft'),
-        'answer'   => __('We review claims with photos, labels, and quantity records, then support practical solutions such as parts, remake, or compensation according to the case.', 'mirrorcraft'),
-      ),
-      array(
-        'id'       => 'Q20',
-        'question' => __('Do you provide technical support after delivery?', 'mirrorcraft'),
-        'answer'   => __('Yes. We can support installation guidance, technical clarification, parts follow-up, and after-sales coordination after shipment.', 'mirrorcraft'),
-      ),
-    ),
+    'slug'   => 'pricing',
+    'label'  => __('Pricing & Payment', 'mirrorcraft'),
+    'icon'   => 'pricing',
+    'anchor' => 'faq-09',
+  ),
+  array(
+    'slug'   => 'support',
+    'label'  => __('Warranty & After-Sales', 'mirrorcraft'),
+    'icon'   => 'support',
+    'anchor' => 'faq-10',
+  ),
+);
+
+$faq_highlights = array(
+  array(
+    'icon'  => 'response',
+    'title' => __('Fast response', 'mirrorcraft'),
+    'text'  => __('within 12 hours', 'mirrorcraft'),
+  ),
+  array(
+    'icon'  => 'global',
+    'title' => __('Global shipping', 'mirrorcraft'),
+    'text'  => __('support', 'mirrorcraft'),
+  ),
+  array(
+    'icon'  => 'team',
+    'title' => __('Professional B2B', 'mirrorcraft'),
+    'text'  => __('mirror team', 'mirrorcraft'),
+  ),
+);
+
+$faq_media_cards = array(
+  array(
+    'icon'  => 'quality',
+    'label' => __('Quality Control', 'mirrorcraft'),
+    'text'  => __('Checkpoint-based inspection before shipment', 'mirrorcraft'),
+    'image' => $faq_hero_quality_image,
+  ),
+  array(
+    'icon'  => 'shipping',
+    'label' => __('Secure Packaging', 'mirrorcraft'),
+    'text'  => __('Foam, corner, carton, and pallet options', 'mirrorcraft'),
+    'image' => $faq_hero_package_image,
+  ),
+  array(
+    'icon'  => 'global',
+    'label' => __('Global Projects', 'mirrorcraft'),
+    'text'  => __('Export programs for hotels, distributors, and developers', 'mirrorcraft'),
+    'image' => $faq_hero_projects_image,
+  ),
+);
+
+$faq_items = array(
+  array(
+    'id'       => 'faq-01',
+    'number'   => '01',
+    'question' => __('Are you a manufacturer or a trading company?', 'mirrorcraft'),
+    'answer'   => __('We are a professional LED mirror manufacturer with our own factory, engineering support, production workflow, and QC team, serving global B2B buyers directly.', 'mirrorcraft'),
+  ),
+  array(
+    'id'       => 'faq-02',
+    'number'   => '02',
+    'question' => __('Do you offer OEM / ODM customization?', 'mirrorcraft'),
+    'answer'   => __('Yes. We support OEM / ODM customization for mirror size, shape, frame, lighting, controls, logo, packaging, and private-label sourcing programs.', 'mirrorcraft'),
+  ),
+  array(
+    'id'       => 'faq-03',
+    'number'   => '03',
+    'question' => __('Can you develop mirrors from drawings or concepts?', 'mirrorcraft'),
+    'answer'   => __('Yes. You can send drawings, reference photos, target specifications, or project ideas, and our team can evaluate feasibility, sampling, and mass-production routing.', 'mirrorcraft'),
+  ),
+  array(
+    'id'       => 'faq-04',
+    'number'   => '04',
+    'question' => __('What is the MOQ for custom orders?', 'mirrorcraft'),
+    'answer'   => __('MOQ depends on the product structure, finish, electronics, and packaging route. We confirm the most practical MOQ after reviewing your specification and target market.', 'mirrorcraft'),
+  ),
+  array(
+    'id'       => 'faq-05',
+    'number'   => '05',
+    'question' => __('What certifications can you support?', 'mirrorcraft'),
+    'answer'   => __('We can discuss CE, UL / ETL, RoHS, IP rating, and market-specific compliance support based on the product route and destination requirements.', 'mirrorcraft'),
+  ),
+  array(
+    'id'       => 'faq-06',
+    'number'   => '06',
+    'question' => __('Can I get a sample before a bulk order?', 'mirrorcraft'),
+    'answer'   => __('Yes. Sample development is available so you can review structure, finish, lighting performance, installation details, and packaging before confirming a larger order.', 'mirrorcraft'),
+  ),
+  array(
+    'id'       => 'faq-07',
+    'number'   => '07',
+    'question' => __('What is your typical lead time?', 'mirrorcraft'),
+    'answer'   => __('Sample lead time is commonly around 7 to 15 days, while bulk production usually takes 25 to 45 days depending on quantity, customization level, and component availability.', 'mirrorcraft'),
+  ),
+  array(
+    'id'       => 'faq-08',
+    'number'   => '08',
+    'question' => __('How are the mirrors packaged for export?', 'mirrorcraft'),
+    'answer'   => __('We use export-ready protection routes that may include foam lining, corner protection, strong carton packing, pallet loading, or wooden-crate reinforcement when needed.', 'mirrorcraft'),
+  ),
+  array(
+    'id'       => 'faq-09',
+    'number'   => '09',
+    'question' => __('What payment terms do you accept?', 'mirrorcraft'),
+    'answer'   => __('Typical terms are T/T with a deposit before production and the balance before shipment. Specific payment arrangements can be discussed for approved programs.', 'mirrorcraft'),
+  ),
+  array(
+    'id'       => 'faq-10',
+    'number'   => '10',
+    'question' => __('What warranty support do you offer?', 'mirrorcraft'),
+    'answer'   => __('Warranty coverage usually ranges from 2 to 5 years depending on the mirror type, electrical configuration, and agreed product specification.', 'mirrorcraft'),
+  ),
+  array(
+    'id'       => 'faq-11',
+    'number'   => '11',
+    'question' => __('How do you ensure product quality?', 'mirrorcraft'),
+    'answer'   => __('We follow QC checkpoints from incoming materials to in-process assembly, lighting function tests, appearance review, and final packing inspection before shipment.', 'mirrorcraft'),
+  ),
+  array(
+    'id'       => 'faq-12',
+    'number'   => '12',
+    'question' => __('Do you support global shipping?', 'mirrorcraft'),
+    'answer'   => __('Yes. We support export shipping arrangements for different markets and can coordinate sea, air, or express delivery based on project scale and urgency.', 'mirrorcraft'),
   ),
 );
 
 $faq_advantages = array(
   array(
-    'slug'   => 'company',
-    'title'  => __('Why Choose Us', 'mirrorcraft'),
-    'points' => array(
-      __('15+ years manufacturing experience', 'mirrorcraft'),
-      __('Stable quality and practical OEM / ODM support', 'mirrorcraft'),
-      __('Flexible lead time and export follow-through', 'mirrorcraft'),
-      __('Low breakage packaging routes for B2B orders', 'mirrorcraft'),
-    ),
+    'icon'  => 'manufacturing',
+    'title' => __('Manufacturing Excellence', 'mirrorcraft'),
+    'text'  => __('10+ years specializing in LED mirrors with advanced equipment and a skilled production team.', 'mirrorcraft'),
   ),
   array(
-    'slug'   => 'shield',
-    'title'  => __('Risk-Free Guarantee', 'mirrorcraft'),
-    'points' => array(
-      __('2-5 years warranty by product route', 'mirrorcraft'),
-      __('Damage compensation handled on verified claims', 'mirrorcraft'),
-      __('QC checkpoints before every shipment', 'mirrorcraft'),
-      __('Fast after-sales response from the support team', 'mirrorcraft'),
-    ),
+    'icon'  => 'flexibility',
+    'title' => __('OEM / ODM Flexibility', 'mirrorcraft'),
+    'text'  => __('Flexible customization in size, design, functions, and packaging to match your brand and market.', 'mirrorcraft'),
+  ),
+  array(
+    'icon'  => 'trust',
+    'title' => __('Quality You Can Trust', 'mirrorcraft'),
+    'text'  => __('Strict QC from raw materials to final inspection to ensure stable quality and long-term cooperation.', 'mirrorcraft'),
+  ),
+  array(
+    'icon'  => 'export',
+    'title' => __('Export-Ready Solutions', 'mirrorcraft'),
+    'text'  => __('Professional export packaging solutions to ensure safe delivery and reduce transport risks.', 'mirrorcraft'),
   ),
 );
 
-$faq_cta_points = array(
-  __('Fast response within 12 hours', 'mirrorcraft'),
-  __('Global shipping support', 'mirrorcraft'),
-  __('Professional B2B mirror team', 'mirrorcraft'),
+$faq_support_blocks = array(
+  array(
+    'icon'  => 'warranty',
+    'title' => __('2-5 Years Warranty', 'mirrorcraft'),
+    'text'  => __('Different warranty options based on product types and project needs.', 'mirrorcraft'),
+  ),
+  array(
+    'icon'  => 'claims',
+    'title' => __('Verified Damage Claims', 'mirrorcraft'),
+    'text'  => __('Clear claims process and support to protect your business interests.', 'mirrorcraft'),
+  ),
+  array(
+    'icon'  => 'inspection',
+    'title' => __('QC Before Shipment', 'mirrorcraft'),
+    'text'  => __('100% inspection for appearance, functions and packaging before shipment.', 'mirrorcraft'),
+  ),
+  array(
+    'icon'  => 'response',
+    'title' => __('Fast After-Sales Response', 'mirrorcraft'),
+    'text'  => __('Professional B2B service team responds quickly to solve your issues.', 'mirrorcraft'),
+  ),
+);
+
+$faq_market_blocks = array(
+  array(
+    'icon'  => 'hotel',
+    'title' => __('Hotels & Resorts', 'mirrorcraft'),
+    'text'  => __('Custom solutions for hospitality projects worldwide.', 'mirrorcraft'),
+  ),
+  array(
+    'icon'  => 'real-estate',
+    'title' => __('Real Estate Projects', 'mirrorcraft'),
+    'text'  => __('Reliable partner for apartments, villas and commercial projects.', 'mirrorcraft'),
+  ),
+  array(
+    'icon'  => 'distributor',
+    'title' => __('Distributors & Wholesalers', 'mirrorcraft'),
+    'text'  => __('Competitive pricing and stable supply for long-term growth.', 'mirrorcraft'),
+  ),
+  array(
+    'icon'  => 'brand',
+    'title' => __('Custom Brand Programs', 'mirrorcraft'),
+    'text'  => __('Private label, packaging and branding to strengthen your market position.', 'mirrorcraft'),
+  ),
 );
 ?>
-<main id="site-main" class="site-main page-shell faq-hub-page" tabindex="-1">
+<main id="site-main" class="site-main faq-b2b-page" tabindex="-1">
   <?php while (have_posts()) : the_post(); ?>
-    <section class="section faq-hub-hero">
-      <div class="shell faq-hub-hero__shell">
-        <div class="faq-hub-hero__copy">
-          <?php mirrorcraft_render_breadcrumbs(); ?>
-          <p class="faq-hub-hero__eyebrow"><?php esc_html_e('FAQ', 'mirrorcraft'); ?></p>
-          <h1>
-            <span class="faq-hub-hero__title-line"><?php esc_html_e('Answers to Everything', 'mirrorcraft'); ?></span>
-            <span class="faq-hub-hero__title-line"><?php esc_html_e('You Need to Know', 'mirrorcraft'); ?></span>
-          </h1>
-          <p class="faq-hub-hero__lead"><?php esc_html_e('Professional LED mirror manufacturer for global B2B partners, OEM / ODM programs, and project-based sourcing routes.', 'mirrorcraft'); ?></p>
-          <div class="faq-hub-hero__actions">
-            <a class="button button-primary" href="<?php echo esc_url($faq_quote_url); ?>"><?php esc_html_e('Get a Quote', 'mirrorcraft'); ?></a>
-            <a class="button button-secondary" href="<?php echo esc_url($faq_expert_url); ?>"<?php echo $faq_expert_attr; ?>><?php esc_html_e('Talk to Expert', 'mirrorcraft'); ?></a>
-          </div>
-        </div>
-
-        <div class="faq-hub-hero__media">
-          <?php if ($faq_hero_image !== '') : ?>
-            <img src="<?php echo esc_url($faq_hero_image); ?>" alt="<?php esc_attr_e('LED mirror hero reference', 'mirrorcraft'); ?>" loading="eager" decoding="async">
-          <?php endif; ?>
-        </div>
-      </div>
-    </section>
-
-    <section class="section faq-hub-topics">
-      <div class="shell faq-hub-topics__shell">
-        <?php foreach ($faq_sections as $section) : ?>
-          <a class="faq-hub-topic" href="#faq-<?php echo esc_attr($section['slug']); ?>">
-            <span class="faq-hub-topic__icon" aria-hidden="true"><?php mirrorcraft_render_faq_hub_icon($section['slug']); ?></span>
-            <span class="faq-hub-topic__label"><?php echo esc_html($section['title']); ?></span>
-          </a>
-        <?php endforeach; ?>
-      </div>
-    </section>
-
-    <section class="section faq-hub-sections">
+    <section class="section faq-b2b-hero">
       <div class="shell">
-        <div class="faq-hub-heading">
-          <p class="eyebrow"><?php esc_html_e('FAQ Directory', 'mirrorcraft'); ?></p>
-          <h2><?php esc_html_e('Frequently Asked Questions', 'mirrorcraft'); ?></h2>
+        <div class="faq-b2b-hero__shell">
+          <div class="faq-b2b-hero__copy">
+            <p class="faq-b2b-kicker"><?php esc_html_e('FAQ', 'mirrorcraft'); ?></p>
+            <h1>
+              <span><?php esc_html_e('LED Mirror FAQ for', 'mirrorcraft'); ?></span>
+              <span><?php esc_html_e('Global B2B Buyers', 'mirrorcraft'); ?></span>
+            </h1>
+            <span class="faq-b2b-title-accent" aria-hidden="true"></span>
+            <p class="faq-b2b-hero__lead"><?php esc_html_e('Expert answers about OEM / ODM customization, MOQ, certifications, packaging, lead time, warranty, and project-based sourcing.', 'mirrorcraft'); ?></p>
+
+            <div class="faq-b2b-hero__actions">
+              <div class="faq-b2b-hero__action-row">
+                <a class="faq-b2b-button faq-b2b-button--primary" href="<?php echo esc_url($faq_quote_url); ?>"><?php esc_html_e('Request a Quote', 'mirrorcraft'); ?></a>
+                <a class="faq-b2b-button faq-b2b-button--secondary" href="<?php echo esc_url($faq_quote_url); ?>"><?php esc_html_e('Send Project Requirements', 'mirrorcraft'); ?></a>
+              </div>
+              <a class="faq-b2b-button faq-b2b-button--whatsapp" href="<?php echo esc_url($faq_whatsapp_url); ?>"<?php echo $faq_whatsapp_attr; ?>><?php echo esc_html($faq_chat_label); ?></a>
+            </div>
+
+            <ul class="faq-b2b-hero__facts">
+              <?php foreach ($faq_highlights as $highlight) : ?>
+                <li>
+                  <span class="faq-b2b-hero__fact-icon" aria-hidden="true"><?php mirrorcraft_render_faq_b2b_icon($highlight['icon']); ?></span>
+                  <span class="faq-b2b-hero__fact-copy">
+                    <strong><?php echo esc_html($highlight['title']); ?></strong>
+                    <span><?php echo esc_html($highlight['text']); ?></span>
+                  </span>
+                </li>
+              <?php endforeach; ?>
+            </ul>
+          </div>
+
+          <div class="faq-b2b-hero__media">
+            <figure class="faq-b2b-hero__primary">
+              <?php if ($faq_hero_primary_image !== '') : ?>
+                <img src="<?php echo esc_url($faq_hero_primary_image); ?>" alt="<?php esc_attr_e('LED bathroom mirror showcase', 'mirrorcraft'); ?>" loading="eager" fetchpriority="high" decoding="async">
+              <?php endif; ?>
+            </figure>
+
+            <div class="faq-b2b-hero__stack">
+              <?php foreach ($faq_media_cards as $card) : ?>
+                <article class="faq-b2b-media-card">
+                  <?php if (!empty($card['image'])) : ?>
+                    <img src="<?php echo esc_url($card['image']); ?>" alt="<?php echo esc_attr($card['label']); ?>" loading="lazy" decoding="async">
+                  <?php endif; ?>
+                  <div class="faq-b2b-media-card__overlay">
+                    <span class="faq-b2b-media-card__icon" aria-hidden="true"><?php mirrorcraft_render_faq_b2b_icon($card['icon']); ?></span>
+                    <strong><?php echo esc_html($card['label']); ?></strong>
+                    <span><?php echo esc_html($card['text']); ?></span>
+                  </div>
+                </article>
+              <?php endforeach; ?>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section faq-b2b-topics">
+      <div class="shell">
+        <div class="faq-b2b-topic-strip">
+          <?php foreach ($faq_topics as $topic_index => $topic) : ?>
+            <a class="faq-b2b-topic-chip<?php echo 0 === $topic_index ? ' is-active' : ''; ?>" href="#<?php echo esc_attr($topic['anchor']); ?>">
+              <span class="faq-b2b-topic-chip__icon" aria-hidden="true"><?php mirrorcraft_render_faq_b2b_icon($topic['icon']); ?></span>
+              <span><?php echo esc_html($topic['label']); ?></span>
+            </a>
+          <?php endforeach; ?>
+        </div>
+      </div>
+    </section>
+
+    <section class="section faq-b2b-main">
+      <div class="shell faq-b2b-main__shell">
+        <aside class="faq-b2b-directory">
+          <div class="faq-b2b-directory__card">
+            <p class="faq-b2b-card-eyebrow"><?php esc_html_e('FAQ Directory', 'mirrorcraft'); ?></p>
+            <ul class="faq-b2b-directory__list">
+              <?php foreach ($faq_topics as $topic_index => $topic) : ?>
+                <li>
+                  <a class="<?php echo 0 === $topic_index ? 'is-active' : ''; ?>" href="#<?php echo esc_attr($topic['anchor']); ?>">
+                    <span class="faq-b2b-directory__icon" aria-hidden="true"><?php mirrorcraft_render_faq_b2b_icon($topic['icon']); ?></span>
+                    <span><?php echo esc_html($topic['label']); ?></span>
+                    <span class="faq-b2b-directory__chevron" aria-hidden="true">&rsaquo;</span>
+                  </a>
+                </li>
+              <?php endforeach; ?>
+            </ul>
+
+            <div class="faq-b2b-directory__help">
+              <p><?php esc_html_e('Can\'t find the answer you need? Our experts are here to help.', 'mirrorcraft'); ?></p>
+              <a class="faq-b2b-link-button" href="<?php echo esc_url($faq_whatsapp_url); ?>"<?php echo $faq_whatsapp_attr; ?>><?php esc_html_e('Talk to an Expert', 'mirrorcraft'); ?></a>
+            </div>
+          </div>
+        </aside>
+
+        <div class="faq-b2b-faq-card">
+          <div class="faq-b2b-section-head faq-b2b-section-head--left">
+            <h2><?php esc_html_e('Frequently Asked Questions', 'mirrorcraft'); ?></h2>
+          </div>
+
+          <div class="faq-b2b-accordion">
+            <?php foreach ($faq_items as $index => $item) : ?>
+              <?php $is_open = 0 === $index; ?>
+              <article class="faq-b2b-question" id="<?php echo esc_attr($item['id']); ?>">
+                <button
+                  class="faq-b2b-trigger"
+                  type="button"
+                  aria-expanded="<?php echo $is_open ? 'true' : 'false'; ?>"
+                  aria-controls="<?php echo esc_attr($item['id']); ?>-panel"
+                  data-faq-trigger
+                >
+                  <span class="faq-b2b-question__number"><?php echo esc_html($item['number']); ?></span>
+                  <span class="faq-b2b-question__text"><?php echo esc_html($item['question']); ?></span>
+                  <span class="faq-b2b-symbol" aria-hidden="true"></span>
+                </button>
+
+                <div id="<?php echo esc_attr($item['id']); ?>-panel" class="faq-b2b-panel"<?php echo $is_open ? '' : ' hidden'; ?>>
+                  <p><?php echo esc_html($item['answer']); ?></p>
+                </div>
+              </article>
+            <?php endforeach; ?>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section faq-b2b-feature-section faq-b2b-feature-section--primary">
+      <div class="shell">
+        <div class="faq-b2b-section-head">
+          <h2><?php esc_html_e('Why B2B Buyers Choose OJMIRROR', 'mirrorcraft'); ?></h2>
+          <span class="faq-b2b-title-accent faq-b2b-title-accent--center" aria-hidden="true"></span>
         </div>
 
-        <div class="faq-hub-grid">
-          <?php foreach ($faq_sections as $section) : ?>
-            <article class="faq-hub-card" id="faq-<?php echo esc_attr($section['slug']); ?>">
-              <header class="faq-hub-card__header">
-                <span class="faq-hub-card__icon" aria-hidden="true"><?php mirrorcraft_render_faq_hub_icon($section['slug']); ?></span>
-                <h3><?php echo esc_html($section['title']); ?></h3>
-              </header>
-
-              <div class="faq-hub-card__body">
-                <?php foreach ($section['items'] as $item) : ?>
-                  <div class="faq-hub-qa">
-                    <h4><span><?php echo esc_html($item['id']); ?>:</span> <?php echo esc_html($item['question']); ?></h4>
-                    <p><?php echo esc_html($item['answer']); ?></p>
-                  </div>
-                <?php endforeach; ?>
-              </div>
-            </article>
-          <?php endforeach; ?>
-
-          <?php foreach ($faq_advantages as $block) : ?>
-            <article class="faq-hub-card faq-hub-card--checks">
-              <header class="faq-hub-card__header">
-                <span class="faq-hub-card__icon" aria-hidden="true"><?php mirrorcraft_render_faq_hub_icon($block['slug']); ?></span>
-                <h3><?php echo esc_html($block['title']); ?></h3>
-              </header>
-              <ul class="faq-hub-checks">
-                <?php foreach ($block['points'] as $point) : ?>
-                  <li><?php echo esc_html($point); ?></li>
-                <?php endforeach; ?>
-              </ul>
+        <div class="faq-b2b-feature-grid">
+          <?php foreach ($faq_advantages as $item) : ?>
+            <article class="faq-b2b-feature-card">
+              <span class="faq-b2b-feature-card__icon" aria-hidden="true"><?php mirrorcraft_render_faq_b2b_icon($item['icon']); ?></span>
+              <h3><?php echo esc_html($item['title']); ?></h3>
+              <p><?php echo esc_html($item['text']); ?></p>
             </article>
           <?php endforeach; ?>
         </div>
       </div>
     </section>
 
-    <section class="section faq-hub-cta">
-      <div class="shell faq-hub-cta__shell">
-        <div class="faq-hub-cta__media">
-          <?php if ($faq_cta_image !== '') : ?>
-            <img src="<?php echo esc_url($faq_cta_image); ?>" alt="<?php esc_attr_e('LED mirror project reference image', 'mirrorcraft'); ?>" loading="lazy" decoding="async">
-          <?php endif; ?>
+    <section class="section faq-b2b-feature-section faq-b2b-feature-section--compact faq-b2b-feature-section--secondary">
+      <div class="shell">
+        <div class="faq-b2b-section-head">
+          <h2><?php esc_html_e('Risk-Free Support', 'mirrorcraft'); ?></h2>
+          <span class="faq-b2b-title-accent faq-b2b-title-accent--center" aria-hidden="true"></span>
         </div>
 
-        <div class="faq-hub-cta__content">
-          <p class="eyebrow"><?php esc_html_e('Still Have Questions?', 'mirrorcraft'); ?></p>
-          <h2><?php esc_html_e('Our team is ready to help with practical product answers and fast support.', 'mirrorcraft'); ?></h2>
-          <p><?php esc_html_e('If you need help with custom size, certification direction, MOQ, packaging, or shipment planning, send the request and we will guide the next step clearly.', 'mirrorcraft'); ?></p>
+        <div class="faq-b2b-feature-grid faq-b2b-feature-grid--compact">
+          <?php foreach ($faq_support_blocks as $item) : ?>
+            <article class="faq-b2b-feature-card faq-b2b-feature-card--compact">
+              <span class="faq-b2b-feature-card__icon" aria-hidden="true"><?php mirrorcraft_render_faq_b2b_icon($item['icon']); ?></span>
+              <h3><?php echo esc_html($item['title']); ?></h3>
+              <p><?php echo esc_html($item['text']); ?></p>
+            </article>
+          <?php endforeach; ?>
+        </div>
+      </div>
+    </section>
 
-          <div class="faq-hub-cta__actions">
-            <a class="button button-primary" href="<?php echo esc_url($faq_quote_url); ?>"><?php esc_html_e('Get a Quote', 'mirrorcraft'); ?></a>
-            <a class="button button-secondary" href="<?php echo esc_url($faq_quote_url); ?>"><?php esc_html_e('Contact Us', 'mirrorcraft'); ?></a>
+    <section class="section faq-b2b-feature-section faq-b2b-feature-section--compact faq-b2b-feature-section--markets">
+      <div class="shell">
+        <div class="faq-b2b-section-head">
+          <h2><?php esc_html_e('Ideal for Hotels, Real Estate, Distributors & Custom Programs', 'mirrorcraft'); ?></h2>
+          <span class="faq-b2b-title-accent faq-b2b-title-accent--center" aria-hidden="true"></span>
+        </div>
+
+        <div class="faq-b2b-feature-grid faq-b2b-feature-grid--compact">
+          <?php foreach ($faq_market_blocks as $item) : ?>
+            <article class="faq-b2b-feature-card faq-b2b-feature-card--compact">
+              <span class="faq-b2b-feature-card__icon" aria-hidden="true"><?php mirrorcraft_render_faq_b2b_icon($item['icon']); ?></span>
+              <h3><?php echo esc_html($item['title']); ?></h3>
+              <p><?php echo esc_html($item['text']); ?></p>
+            </article>
+          <?php endforeach; ?>
+        </div>
+      </div>
+    </section>
+
+    <section class="section faq-b2b-cta">
+      <div class="shell">
+        <div class="faq-b2b-cta__shell">
+          <div class="faq-b2b-cta__content">
+            <div class="faq-b2b-cta__intro">
+              <h2><?php esc_html_e('Still Have Questions?', 'mirrorcraft'); ?></h2>
+              <p><?php esc_html_e('Send us your size, quantity, drawings, certification needs, and target market. We will provide the best solution and quote for your project.', 'mirrorcraft'); ?></p>
+            </div>
+
+            <div class="faq-b2b-cta__action-pane">
+              <div class="faq-b2b-cta__actions">
+                <a class="faq-b2b-button faq-b2b-button--primary" href="<?php echo esc_url($faq_quote_url); ?>"><?php esc_html_e('Get a Quote', 'mirrorcraft'); ?></a>
+                <a class="faq-b2b-button faq-b2b-button--dark" href="<?php echo esc_url($faq_whatsapp_url); ?>"<?php echo $faq_whatsapp_attr; ?>><?php esc_html_e('Talk to Expert', 'mirrorcraft'); ?></a>
+              </div>
+
+              <div class="faq-b2b-cta__meta">
+                <span><?php esc_html_e('Quick Quote Within 12 Hours', 'mirrorcraft'); ?></span>
+                <span><?php esc_html_e('100% Confidential', 'mirrorcraft'); ?></span>
+              </div>
+            </div>
           </div>
 
-          <ul class="faq-hub-cta__points">
-            <?php foreach ($faq_cta_points as $point) : ?>
-              <li><?php echo esc_html($point); ?></li>
-            <?php endforeach; ?>
-          </ul>
+          <div class="faq-b2b-cta__media">
+            <?php if ($faq_cta_image !== '') : ?>
+              <img src="<?php echo esc_url($faq_cta_image); ?>" alt="<?php esc_attr_e('Decorative mirror scene', 'mirrorcraft'); ?>" loading="lazy" decoding="async">
+            <?php endif; ?>
+          </div>
         </div>
       </div>
     </section>
