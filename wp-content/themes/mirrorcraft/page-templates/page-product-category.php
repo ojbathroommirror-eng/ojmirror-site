@@ -1523,6 +1523,9 @@ get_header();
         array('icon' => 'globe', 'title' => __('Project Country', 'mirrorcraft'), 'hint' => __('e.g. USA', 'mirrorcraft')),
         array('icon' => 'branding', 'title' => __('Packaging Requirement', 'mirrorcraft'), 'hint' => __('e.g. Carton-Foam', 'mirrorcraft')),
       );
+
+      require __DIR__ . '/custom-mirror-reference.php';
+      continue;
       ?>
       <style>
         .custom-mirror-page {
